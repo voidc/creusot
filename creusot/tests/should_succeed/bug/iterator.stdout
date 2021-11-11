@@ -1,0 +1,535 @@
+module Type
+  use Ref
+  use mach.int.Int
+  use mach.int.Int32
+  use mach.int.Int64
+  use mach.int.UInt32
+  use mach.int.UInt64
+  use string.Char
+  use floating_point.Single
+  use floating_point.Double
+  use prelude.Prelude
+  type core_ops_range_range 'idx = 
+    | Core_Ops_Range_Range 'idx 'idx
+    
+  type core_option_option 't = 
+    | Core_Option_Option_None
+    | Core_Option_Option_Some 't
+    
+  function core_option_option_Some_0 (self : core_option_option 't) : 't
+  val core_option_option_Some_0 (self : core_option_option 't) : 't
+    ensures { result = core_option_option_Some_0 self }
+    
+  axiom core_option_option_Some_0_acc : forall a : 't . core_option_option_Some_0 (Core_Option_Option_Some a : core_option_option 't) = a
+  type core_result_result 't 'e = 
+    | Core_Result_Result_Ok 't
+    | Core_Result_Result_Err 'e
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Item
+  type self   
+  type item   
+end
+module Core_Iter_Traits_Collect_Impl0_Item
+  type i   
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = i
+  type item  = 
+    Item0.item
+end
+module Core_Iter_Traits_Collect_Impl0_T_IntoIter
+  type i   
+  type intoIter  = 
+    i
+end
+module Core_Iter_Traits_Collect_Impl0_IntoIter_Interface
+  type i   
+  val into_iter (self : i) : i
+    requires {false}
+    
+end
+module Core_Iter_Traits_Collect_Impl0_IntoIter
+  type i   
+  val into_iter (self : i) : i
+    requires {false}
+    
+end
+module Core_Iter_Traits_Collect_IntoIterator_T_IntoIter
+  type self   
+  type intoIter   
+end
+module Core_Iter_Traits_Collect_IntoIterator_IntoIter_Interface
+  type self   
+  clone Core_Iter_Traits_Collect_IntoIterator_T_IntoIter as IntoIter0 with type self = self
+  val into_iter (self : self) : IntoIter0.intoIter
+    requires {false}
+    
+end
+module Core_Iter_Traits_Collect_IntoIterator_IntoIter
+  type self   
+  clone Core_Iter_Traits_Collect_IntoIterator_T_IntoIter as IntoIter0 with type self = self
+  val into_iter (self : self) : IntoIter0.intoIter
+    requires {false}
+    
+end
+module Core_Iter_Traits_Collect_IntoIterator_Item
+  type self   
+  type item   
+end
+module Core_Iter_Traits_Collect_Impl0
+  type i   
+  clone Core_Iter_Traits_Collect_Impl0_IntoIter_Interface as IntoIter2 with type i = i
+  clone Core_Iter_Traits_Collect_IntoIterator_IntoIter_Interface as IntoIter3 with type self = i,
+  val into_iter = IntoIter2.into_iter, type IntoIter0.intoIter = i
+  clone Core_Iter_Traits_Collect_Impl0_T_IntoIter as IntoIter0 with type i = i
+  clone Core_Iter_Traits_Collect_IntoIterator_IntoIter as IntoIter1 with type self = i,
+  type IntoIter0.intoIter = IntoIter0.intoIter
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item2 with type self = i
+  clone Core_Iter_Traits_Collect_Impl0_Item as Item0 with type i = i, type Item0.item = Item2.item
+  clone Core_Iter_Traits_Collect_IntoIterator_Item as Item1 with type self = i, type item = Item0.item
+end
+module Core_Iter_Range_Impl3_Item
+  type a   
+  type item  = 
+    a
+end
+module Core_Iter_Range_Impl3_Next_Interface
+  type a   
+  use prelude.Prelude
+  use Type
+  val next (self : borrowed (Type.core_ops_range_range a)) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Next
+  type a   
+  use prelude.Prelude
+  use Type
+  val next (self : borrowed (Type.core_ops_range_range a)) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_SizeHint_Interface
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val size_hint (self : Type.core_ops_range_range a) : (usize, Type.core_option_option usize)
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_SizeHint
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val size_hint (self : Type.core_ops_range_range a) : (usize, Type.core_option_option usize)
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Nth_Interface
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val nth (self : borrowed (Type.core_ops_range_range a)) (n : usize) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Nth
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val nth (self : borrowed (Type.core_ops_range_range a)) (n : usize) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Last_Interface
+  type a   
+  use Type
+  val last (self : Type.core_ops_range_range a) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Last
+  type a   
+  use Type
+  val last (self : Type.core_ops_range_range a) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Min_Interface
+  type a   
+  use Type
+  val min (self : Type.core_ops_range_range a) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Min
+  type a   
+  use Type
+  val min (self : Type.core_ops_range_range a) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Max_Interface
+  type a   
+  use Type
+  val max (self : Type.core_ops_range_range a) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_Max
+  type a   
+  use Type
+  val max (self : Type.core_ops_range_range a) : Type.core_option_option a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_IsSorted_Interface
+  type a   
+  use Type
+  val is_sorted (self : Type.core_ops_range_range a) : bool
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_IsSorted
+  type a   
+  use Type
+  val is_sorted (self : Type.core_ops_range_range a) : bool
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_AdvanceBy_Interface
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val advance_by (self : borrowed (Type.core_ops_range_range a)) (n : usize) : Type.core_result_result () usize
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_AdvanceBy
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val advance_by (self : borrowed (Type.core_ops_range_range a)) (n : usize) : Type.core_result_result () usize
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_IteratorGetUnchecked_Interface
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val __iterator_get_unchecked (self : borrowed (Type.core_ops_range_range a)) (idx : usize) : a
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3_IteratorGetUnchecked
+  type a   
+  use prelude.Prelude
+  use Type
+  use mach.int.Int
+  use mach.int.UInt64
+  val __iterator_get_unchecked (self : borrowed (Type.core_ops_range_range a)) (idx : usize) : a
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_IteratorGetUnchecked_Interface
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val __iterator_get_unchecked (self : borrowed self) (_idx : usize) : Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_IteratorGetUnchecked
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val __iterator_get_unchecked (self : borrowed self) (_idx : usize) : Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_AdvanceBy_Interface
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  use Type
+  val advance_by (self : borrowed self) (n : usize) : Type.core_result_result () usize
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_AdvanceBy
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  use Type
+  val advance_by (self : borrowed self) (n : usize) : Type.core_result_result () usize
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_IsSorted_Interface
+  type self   
+  val is_sorted (self : self) : bool
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_IsSorted
+  type self   
+  val is_sorted (self : self) : bool
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Max_Interface
+  type self   
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val max (self : self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Max
+  type self   
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val max (self : self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Min_Interface
+  type self   
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val min (self : self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Min
+  type self   
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val min (self : self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Last_Interface
+  type self   
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val last (self : self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Last
+  type self   
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val last (self : self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Nth_Interface
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val nth (self : borrowed self) (n : usize) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Nth
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val nth (self : borrowed self) (n : usize) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_SizeHint_Interface
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  use Type
+  val size_hint (self : self) : (usize, Type.core_option_option usize)
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_SizeHint
+  type self   
+  use prelude.Prelude
+  use mach.int.Int
+  use mach.int.UInt64
+  use Type
+  val size_hint (self : self) : (usize, Type.core_option_option usize)
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Next_Interface
+  type self   
+  use prelude.Prelude
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val next (self : borrowed self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Traits_Iterator_Iterator_Next
+  type self   
+  use prelude.Prelude
+  use Type
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item0 with type self = self
+  val next (self : borrowed self) : Type.core_option_option Item0.item
+    requires {false}
+    
+end
+module Core_Iter_Range_Impl3
+  type a   
+  use Type
+  clone Core_Iter_Range_Impl3_IteratorGetUnchecked_Interface as IteratorGetUnchecked0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_IteratorGetUnchecked_Interface as IteratorGetUnchecked1 with type self = Type.core_ops_range_range a, type Item0.item = a, val __iterator_get_unchecked = IteratorGetUnchecked0.__iterator_get_unchecked
+  clone Core_Iter_Range_Impl3_AdvanceBy_Interface as AdvanceBy0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_AdvanceBy_Interface as AdvanceBy1 with type self = Type.core_ops_range_range a,
+  val advance_by = AdvanceBy0.advance_by
+  clone Core_Iter_Range_Impl3_IsSorted_Interface as IsSorted0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_IsSorted_Interface as IsSorted1 with type self = Type.core_ops_range_range a,
+  val is_sorted = IsSorted0.is_sorted
+  clone Core_Iter_Range_Impl3_Max_Interface as Max0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_Max_Interface as Max1 with type self = Type.core_ops_range_range a,
+  val max = Max0.max, type Item0.item = a
+  clone Core_Iter_Range_Impl3_Min_Interface as Min0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_Min_Interface as Min1 with type self = Type.core_ops_range_range a,
+  val min = Min0.min, type Item0.item = a
+  clone Core_Iter_Range_Impl3_Last_Interface as Last0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_Last_Interface as Last1 with type self = Type.core_ops_range_range a,
+  val last = Last0.last, type Item0.item = a
+  clone Core_Iter_Range_Impl3_Nth_Interface as Nth0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_Nth_Interface as Nth1 with type self = Type.core_ops_range_range a,
+  val nth = Nth0.nth, type Item0.item = a
+  clone Core_Iter_Range_Impl3_SizeHint_Interface as SizeHint0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_SizeHint_Interface as SizeHint1 with type self = Type.core_ops_range_range a,
+  val size_hint = SizeHint0.size_hint
+  clone Core_Iter_Range_Impl3_Next_Interface as Next0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_Next_Interface as Next1 with type self = Type.core_ops_range_range a,
+  val next = Next0.next, type Item0.item = a
+  clone Core_Iter_Range_Impl3_Item as Item0 with type a = a
+  clone Core_Iter_Traits_Iterator_Iterator_Item as Item1 with type self = Type.core_ops_range_range a,
+  type item = Item0.item
+end
+module Iterator_Omg_Interface
+  val omg () : ()
+end
+module Iterator_Omg
+  use mach.int.Int
+  use mach.int.Int32
+  use Type
+  use prelude.Prelude
+  use mach.int.Int64
+  clone Core_Iter_Range_Impl3_Next_Interface as Next0 with type a = int32
+  clone Core_Iter_Traits_Collect_Impl0_IntoIter_Interface as IntoIter0 with type i = Type.core_ops_range_range int32
+  let rec cfg omg () : () = 
+  var _0 : ();
+  var _1 : Type.core_ops_range_range int32;
+  var _2 : Type.core_ops_range_range int32;
+  var iter_3 : Type.core_ops_range_range int32;
+  var _4 : ();
+  var __next_5 : int32;
+  var _6 : ();
+  var _7 : Type.core_option_option int32;
+  var _8 : borrowed (Type.core_ops_range_range int32);
+  var _9 : borrowed (Type.core_ops_range_range int32);
+  var _10 : isize;
+  var val_11 : int32;
+  var _12 : int32;
+  var _13 : ();
+  var x_14 : int32;
+  var _15 : ();
+  {
+    goto BB0
+  }
+  BB0 {
+    _2 <- Type.Core_Ops_Range_Range (0 : int32) (10 : int32);
+    _1 <- IntoIter0.into_iter _2;
+    goto BB1
+  }
+  BB1 {
+    assume { (fun x -> true) iter_3 };
+    iter_3 <- _1;
+    goto BB2
+  }
+  BB2 {
+    goto BB3
+  }
+  BB3 {
+    _9 <- borrow_mut iter_3;
+    iter_3 <-  ^ _9;
+    _8 <- borrow_mut ( * _9);
+    _9 <- { _9 with current = ( ^ _8) };
+    _7 <- Next0.next _8;
+    goto BB4
+  }
+  BB4 {
+    assume { (fun x -> true) _9 };
+    switch (_7)
+      | Type.Core_Option_Option_None -> goto BB5
+      | Type.Core_Option_Option_Some _ -> goto BB6
+      end
+  }
+  BB5 {
+    assume { (fun x -> true) iter_3 };
+    assume { (fun x -> true) _7 };
+    _0 <- ();
+    return _0
+  }
+  BB6 {
+    goto BB8
+  }
+  BB7 {
+    assume { (fun x -> true) iter_3 };
+    assume { (fun x -> true) _7 };
+    absurd
+  }
+  BB8 {
+    assume { (fun x -> true) val_11 };
+    val_11 <- Type.core_option_option_Some_0 _7;
+    assume { (fun x -> true) _7 };
+    assume { (fun x -> true) _12 };
+    _12 <- val_11;
+    assume { (fun x -> true) val_11 };
+    assume { (fun x -> true) __next_5 };
+    __next_5 <- _12;
+    _6 <- ();
+    assume { (fun x -> true) _6 };
+    assume { (fun x -> true) x_14 };
+    x_14 <- __next_5;
+    assume { (fun x -> true) __next_5 };
+    assume { (fun x -> true) x_14 };
+    _15 <- ();
+    assume { (fun x -> true) _15 };
+    _4 <- ();
+    assume { (fun x -> true) _4 };
+    goto BB2
+  }
+  
+end

@@ -30,9 +30,9 @@ impl<'tcx> TranslationCtx<'_, 'tcx> {
 
         let mut _has_axioms = false;
 
-        for item in associated_items(self.tcx, def_id) {
-            self.translate(item.def_id);
-        }
+        // for item in associated_items(self.tcx, def_id) {
+        //     self.translate(item.def_id);
+        // }
 
         self.add_trait(def_id, _has_axioms);
     }
