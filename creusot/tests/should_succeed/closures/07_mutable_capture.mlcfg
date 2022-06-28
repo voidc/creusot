@@ -122,43 +122,43 @@ module C07MutableCapture_TestFnmut
    =
   var _0 : ();
   var x_1 : uint32;
-  var c_2 : Closure20.c07mutablecapture_testfnmut_closure2;
-  var closure_3 : Closure20.c07mutablecapture_testfnmut_closure2;
-  var _4 : borrowed uint32;
-  var _5 : int32;
-  var _6 : borrowed Closure20.c07mutablecapture_testfnmut_closure2;
-  var _7 : ();
+  var c_3 : Closure20.c07mutablecapture_testfnmut_closure2;
+  var closure_5 : Closure20.c07mutablecapture_testfnmut_closure2;
+  var _6 : borrowed uint32;
   var _8 : int32;
   var _9 : borrowed Closure20.c07mutablecapture_testfnmut_closure2;
   var _10 : ();
-  var _11 : ();
+  var _11 : int32;
+  var _12 : borrowed Closure20.c07mutablecapture_testfnmut_closure2;
+  var _13 : ();
+  var _14 : ();
   {
     x_1 <- x;
     goto BB0
   }
   BB0 {
-    _4 <- borrow_mut x_1;
-    x_1 <-  ^ _4;
-    closure_3 <- Closure20.C07MutableCapture_TestFnmut_Closure2 _4;
-    assume { Closure20.resolve c_2 };
-    c_2 <- closure_3;
-    _6 <- borrow_mut c_2;
-    c_2 <-  ^ _6;
-    _7 <- ();
-    _5 <- ([#"../07_mutable_capture.rs" 14 4 14 7] Closure20.c07MutableCapture_TestFnmut_Closure2 _6 _7);
+    _6 <- borrow_mut x_1;
+    x_1 <-  ^ _6;
+    closure_5 <- Closure20.C07MutableCapture_TestFnmut_Closure2 _6;
+    assume { Closure20.resolve c_3 };
+    c_3 <- closure_5;
+    _9 <- borrow_mut c_3;
+    c_3 <-  ^ _9;
+    _10 <- ();
+    _8 <- ([#"../07_mutable_capture.rs" 14 4 14 7] Closure20.c07MutableCapture_TestFnmut_Closure2 _9 _10);
     goto BB1
   }
   BB1 {
-    _9 <- borrow_mut c_2;
-    c_2 <-  ^ _9;
-    assume { Closure20.resolve c_2 };
-    _10 <- ();
-    _8 <- ([#"../07_mutable_capture.rs" 15 4 15 7] Closure20.c07MutableCapture_TestFnmut_Closure2 _9 _10);
+    _12 <- borrow_mut c_3;
+    c_3 <-  ^ _12;
+    assume { Closure20.resolve c_3 };
+    _13 <- ();
+    _11 <- ([#"../07_mutable_capture.rs" 15 4 15 7] Closure20.c07MutableCapture_TestFnmut_Closure2 _12 _13);
     goto BB2
   }
   BB2 {
     assert { [#"../07_mutable_capture.rs" 17 20 17 33] UInt32.to_int x_1 = 100002 };
-    _11 <- ();
+    _14 <- ();
     _0 <- ();
     return _0
   }

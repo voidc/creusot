@@ -176,14 +176,14 @@ pub fn inv_subst<'tcx>(
     body: &Body<'tcx>,
     loc: Location,
 ) -> HashMap<why3::Ident, Exp> {
-    let local_map = real_locals(tcx, body);
+    // let local_map = real_locals(tcx, body);
     let info = body.source_info(loc);
     let mut args = HashMap::new();
 
     let tree = ScopeTree::build(body);
 
     for (k, v) in tree.visible_locals(info.scope) {
-        let loc = local_map[&v];
+        let loc = v;
         args.insert(k.to_string().into(), Exp::pure_var(LocalIdent::dbg_raw(loc, k).ident()));
     }
 
