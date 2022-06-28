@@ -6,6 +6,7 @@ mod logic;
 pub mod specification;
 pub mod traits;
 pub mod ty;
+#[allow(dead_code)]
 pub mod fmir;
 
 use crate::ctx;

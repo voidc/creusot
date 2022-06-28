@@ -127,7 +127,9 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
                 }
             },
             Rvalue::Discriminant(_) => return,
-            // Rvalue::BinaryOp(BinOp::BitAnd, box (l, r)) if l.ty(self.body, self.tcx).is_bool() => {
+            Rvalue::BinaryOp(BinOp::BitAnd, box (l, r)) if !l.ty(self.body, self.tcx).is_bool() => {
+                self.ctx.crash_and_error(si.span, "bitwise operations are currently unsupported")
+            }
             //     self.translate_operand(l).to_why(self.ctx, self.names, Some(self.body)).and(self.translate_operand(r).to_why(self.ctx, self.names, Some(self.body)))
             // }
             // Rvalue::BinaryOp(BinOp::Eq, box (l, r)) if l.ty(self.body, self.tcx).is_bool() => {
@@ -143,7 +145,7 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
                     box self.translate_operand(l),
                     box self.translate_operand(r),
                 );
-                exp
+                Expr::Span(si.span, box exp)
             }
             Rvalue::UnaryOp(op, v) => Expr::UnaryOp(*op, box self.translate_operand(v)),
             Rvalue::Aggregate(box kind, ops) => {
@@ -152,13 +154,10 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
 
                 match kind {
                     Tuple => Expr::Tuple(fields),
-                    Adt(adt, varix, _, _, _) => {
-                        let adt = self.tcx.adt_def(*adt);
-                        let variant_def = &adt.variants()[*varix];
-                        let qname = constructor_qname(self.tcx, variant_def);
+                    Adt(adt, varix, subst, _, _) => {
+                        let adt = self.tcx.adt_def(*adt).variant(*varix).def_id;
 
-                        todo!()
-                        // Constructor { ctor: qname, args: fields }
+                        Expr::Constructor(adt, subst, fields)
                     }
                     Closure(def_id, subst) => {
                         if util::is_invariant(self.tcx, *def_id) {
