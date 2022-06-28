@@ -6,6 +6,7 @@ mod logic;
 pub mod specification;
 pub mod traits;
 pub mod ty;
+pub mod fmir;
 
 use crate::ctx;
 use crate::ctx::load_extern_specs;
