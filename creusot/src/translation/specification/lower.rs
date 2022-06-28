@@ -93,7 +93,7 @@ impl<'tcx> Lower<'_, '_, 'tcx> {
                         constant,
                         self.param_env,
                         rustc_span::DUMMY_SP,
-                    )
+                    ).to_why(self.ctx, self.names, None)
                 })
             }
             TermKind::Var(v) => Exp::pure_var(util::ident_of(v)),
