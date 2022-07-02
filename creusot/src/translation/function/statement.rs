@@ -15,7 +15,7 @@ use why3::{
 
 use super::BodyTranslator;
 use crate::{
-    translation::fmir::Expr,
+    translation::fmir::{Expr, self},
     util::{self, is_ghost_closure, item_name},
 };
 
@@ -58,9 +58,9 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
             Rvalue::Use(rval) => match rval {
                 Move(pl) | Copy(pl) => {
                     // TODO: should this be done for *any* form of assignment?
-                    let ty = place.ty(self.body, self.tcx).ty;
-                    let pl_exp = self.translate_rplace(place);
-                    self.resolve_ty(ty).emit(pl_exp, self);
+                    // let ty = place.ty(self.body, self.tcx).ty;
+                    self.emit_statementf(fmir::Statement::Resolve(*place));
+                    // self.resolve_ty(ty).emit(*place, self);
                     Expr::Exp(self.translate_rplace(pl))
                 }
                 Constant(box c) => {

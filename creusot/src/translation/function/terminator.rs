@@ -1,5 +1,5 @@
 use super::BodyTranslator;
-use crate::translation::fmir::{Branches, Terminator};
+use crate::translation::fmir::{Branches, Terminator, self};
 use crate::{
     ctx::{CloneMap, TranslationCtx},
     translation::{fmir::Expr, traits},
@@ -140,10 +140,8 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
                 self.emit_terminator(mk_goto(*real_target));
             }
             DropAndReplace { target, place, value, .. } => {
-                // Drop
-                let ty = place.ty(self.body, self.tcx).ty;
-                let pl_exp = self.translate_rplace(place);
-                self.resolve_ty(ty).emit(pl_exp, self);
+                // Resolve
+                self.emit_statementf(fmir::Statement::Resolve(*place));
 
                 // Assign
                 let rhs = match value {
