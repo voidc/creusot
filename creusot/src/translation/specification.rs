@@ -1,6 +1,5 @@
 use std::collections::{HashMap, HashSet};
 
-use crate::translation::function::real_locals;
 use crate::util::closure_owner;
 use crate::{ctx::*, util};
 use rustc_macros::{TyDecodable, TyEncodable, TypeFoldable};

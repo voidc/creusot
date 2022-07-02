@@ -1,5 +1,3 @@
-use core::borrow;
-
 use rustc_borrowck::borrow_set::TwoPhaseActivation;
 use rustc_middle::{
     mir::{
@@ -17,9 +15,8 @@ use why3::{
 
 use super::BodyTranslator;
 use crate::{
-    clone_map::PreludeModule,
-    translation::{binop_to_binop, unop_to_unop, fmir::Expr},
-    util::{self, constructor_qname, is_ghost_closure, item_name},
+    translation::fmir::Expr,
+    util::{self, is_ghost_closure, item_name},
 };
 
 impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
@@ -57,7 +54,7 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
         rvalue: &'_ Rvalue<'tcx>,
         loc: Location,
     ) {
-        let rval : Expr<'tcx> = match rvalue {
+        let rval: Expr<'tcx> = match rvalue {
             Rvalue::Use(rval) => match rval {
                 Move(pl) | Copy(pl) => {
                     // TODO: should this be done for *any* form of assignment?
@@ -140,11 +137,8 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
             //     )
             // }
             Rvalue::BinaryOp(op, box (l, r)) | Rvalue::CheckedBinaryOp(op, box (l, r)) => {
-                let exp = Expr::BinOp(
-                    *op,
-                    box self.translate_operand(l),
-                    box self.translate_operand(r),
-                );
+                let exp =
+                    Expr::BinOp(*op, box self.translate_operand(l), box self.translate_operand(r));
                 Expr::Span(si.span, box exp)
             }
             Rvalue::UnaryOp(op, v) => Expr::UnaryOp(*op, box self.translate_operand(v)),
@@ -205,12 +199,20 @@ impl<'tcx> BodyTranslator<'_, '_, 'tcx> {
                         _ => unreachable!(),
                     };
                     match ty.kind() {
-                        TyKind::Int(ity) => {
-                            Expr::Exp(int_from_int(ity).app_to(op_to_int.app_to(self.translate_operand(op).to_why(self.ctx, self.names, Some(self.body)))))
-                        }
-                        TyKind::Uint(uty) => {
-                            Expr::Exp(uint_from_int(uty).app_to(op_to_int.app_to(self.translate_operand(op).to_why(self.ctx, self.names, Some(self.body)))))
-                        }
+                        TyKind::Int(ity) => Expr::Exp(int_from_int(ity).app_to(op_to_int.app_to(
+                            self.translate_operand(op).to_why(
+                                self.ctx,
+                                self.names,
+                                Some(self.body),
+                            ),
+                        ))),
+                        TyKind::Uint(uty) => Expr::Exp(uint_from_int(uty).app_to(
+                            op_to_int.app_to(self.translate_operand(op).to_why(
+                                self.ctx,
+                                self.names,
+                                Some(self.body),
+                            )),
+                        )),
                         _ => unreachable!(),
                     }
                 }

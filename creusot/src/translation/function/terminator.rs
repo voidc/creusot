@@ -1,10 +1,18 @@
+use super::BodyTranslator;
+use crate::translation::fmir::{Branches, Terminator};
+use crate::{
+    ctx::{CloneMap, TranslationCtx},
+    translation::{fmir::Expr, traits},
+    util::is_ghost_closure,
+};
 use itertools::Itertools;
-use rustc_errors::DiagnosticId;
 use rustc_hir::def_id::DefId;
 use rustc_infer::{
     infer::{InferCtxt, TyCtxtInferExt},
     traits::{FulfillmentError, Obligation, ObligationCause, TraitEngine},
 };
+use rustc_middle::mir::{BasicBlockData, Place, Rvalue, StatementKind, TerminatorKind};
+use rustc_middle::ty::Ty;
 use rustc_middle::{
     mir::{
         self, BasicBlock, Location, Operand, SourceInfo, SwitchTargets, TerminatorKind::*, UnOp,
@@ -12,26 +20,14 @@ use rustc_middle::{
     ty::{
         self,
         subst::{GenericArgKind, SubstsRef},
-        AdtDef, ParamEnv, Predicate,
+        ParamEnv, Predicate,
     },
 };
-use rustc_session::Session;
 use rustc_span::Span;
-use rustc_target::abi::VariantIdx;
 use rustc_trait_selection::traits::FulfillmentContext;
-
-use crate::translation::fmir::{Branches, Terminator};
 use std::collections::HashMap;
-use why3::mlcfg::{BlockId, Statement};
+use why3::mlcfg::Statement;
 use why3::QName;
-
-use crate::{
-    ctx::{CloneMap, TranslationCtx},
-    translation::{fmir::Expr, traits},
-    util::{constructor_qname, is_ghost_closure},
-};
-
-use super::BodyTranslator;
 
 // Translate the terminator of a basic block.
 // There isn't much that's special about this. The only subtlety is in how
@@ -244,9 +240,6 @@ fn evaluate_additional_predicates<'tcx>(
         return Ok(());
     }
 }
-
-use rustc_middle::mir::{BasicBlockData, Place, Rvalue, StatementKind, TerminatorKind};
-use rustc_middle::ty::{Ty, TyCtxt};
 
 // Find the place being discriminated, if there is one
 pub fn discriminator_for_switch<'tcx>(bbd: &BasicBlockData<'tcx>) -> Option<Place<'tcx>> {
