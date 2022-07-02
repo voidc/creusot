@@ -138,7 +138,7 @@ module IteNormalize_Impl6_From
     _2 <- b_1;
     switch (_2)
       | False -> goto BB2
-      | _ -> goto BB1
+      | True -> goto BB1
       end
   }
   BB1 {
@@ -1216,7 +1216,7 @@ module IteNormalize_Impl7_SimplifyHelper
     _19 <- b_18;
     switch (_19)
       | False -> goto BB12
-      | _ -> goto BB10
+      | True -> goto BB10
       end
   }
   BB10 {
@@ -1352,7 +1352,7 @@ module IteNormalize_Impl7_SimplifyHelper
     _55 <- b_54;
     switch (_55)
       | False -> goto BB42
-      | _ -> goto BB41
+      | True -> goto BB41
       end
   }
   BB41 {
