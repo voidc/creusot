@@ -368,9 +368,12 @@ impl<'body, 'sess, 'tcx> BodyTranslator<'body, 'sess, 'tcx> {
             // Otherwise, we emit the deaths and move them to a stand-alone block.
             self.past_blocks
                 .get_mut(&pred_id)
-                .unwrap()
+                .unwrap_or_else(|| panic!("{:?}", self.def_id))
                 .terminator
                 .retarget(BlockId(bb.index()), drop_block);
+            // self.past_blocks
+            //     .get_mut(&pred_id)
+            //     .map(|block| block.terminator.retarget(BlockId(bb.index()), drop_block));
             self.past_blocks.insert(
                 drop_block,
                 Block { statements: deaths, terminator: Terminator::Goto(BlockId(bb.into())) },

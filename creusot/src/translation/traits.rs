@@ -335,6 +335,7 @@ pub fn resolve_assoc_item_opt<'tcx>(
         }
         ImplSource::Param(_, _) => Some((def_id, substs)),
         ImplSource::Closure(impl_data) => Some((impl_data.closure_def_id, impl_data.substs)),
+        // Handle more cases here
         _ => unimplemented!(),
     }
 }
