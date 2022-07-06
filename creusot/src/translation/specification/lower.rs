@@ -169,7 +169,7 @@ impl<'tcx> Lower<'_, '_, 'tcx> {
                 })
             }
             TermKind::Forall { binder, box body } => {
-                let ty = translate_ty(self.ctx, self.names, rustc_span::DUMMY_SP, binder.1);
+                let ty = translate_ty(self.ctx, self.names, creusot_rustc::span::DUMMY_SP, binder.1);
                 let old = std::mem::replace(&mut self.pure, Purity::Logic);
                 let f = Exp::Forall(vec![(binder.0.into(), ty)], box self.lower_term(body));
                 let _ = std::mem::replace(&mut self.pure, old);
@@ -180,7 +180,7 @@ impl<'tcx> Lower<'_, '_, 'tcx> {
                 }
             }
             TermKind::Exists { binder, box body } => {
-                let ty = translate_ty(self.ctx, self.names, rustc_span::DUMMY_SP, binder.1);
+                let ty = translate_ty(self.ctx, self.names, creusot_rustc::span::DUMMY_SP, binder.1);
                 let old = std::mem::replace(&mut self.pure, Purity::Logic);
                 let f = Exp::Exists(vec![(binder.0.into(), ty)], box self.lower_term(body));
                 let _ = std::mem::replace(&mut self.pure, old);
