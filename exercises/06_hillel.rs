@@ -184,6 +184,7 @@ extern_spec! {
 #[logic]
 #[variant(to - from)]
 #[requires(0 <= from && from <= to && to <= seq.len())]
+#[ensures(result >= 0)]
 fn sum_range(seq: Seq<u32>, from: Int, to: Int) -> Int {
     if to - from > 0 {
         pearlite! { @(seq[from]) + sum_range(seq, from + 1, to) }
@@ -193,46 +194,55 @@ fn sum_range(seq: Seq<u32>, from: Int, to: Int) -> Int {
 }
 
 #[logic]
-#[requires(0 <= from && from <= to && to <= seq.len())]
-#[ensures(forall<i: Int> from <= i && i <= to ==> sum_range(seq, from, to) == sum_range(seq, from, i) + sum_range(seq, i, to))]
-fn sum_range_split(seq: Seq<u32>, from: Int, to: Int) {}
-
-#[logic]
-#[requires(0 <= i && i <= to && to <= seq.len())]
-#[ensures(0 <= result && result < sum_range(seq, 0 , to))]
-fn score_to(seq: Seq<u32>, i: Int, to: Int) -> Int {
-    abs_diff(sum_range(seq, 0, i), sum_range(seq, i, to))
+#[variant(i - from)]
+#[requires(0 <= from && from <= i && i <= to && to <= seq.len())]
+#[ensures(sum_range(seq, from, to) == sum_range(seq, from, i) + sum_range(seq, i, to))]
+fn sum_range_split(seq: Seq<u32>, from: Int, to: Int, i: Int) {
+	if i > from {
+		sum_range_split(seq, from + 1, to, i);
+	}
 }
 
 #[logic]
 #[requires(0 <= i && i <= seq.len())]
-#[ensures(0 <= result && result < sum_range(seq, 0 , seq.len()))]
+#[ensures(0 <= result && result <= sum_range(seq, 0 , seq.len()))]
+#[ensures(0 == i || i == seq.len() ==> result == sum_range(seq, 0, seq.len()))]
 fn score(seq: Seq<u32>, i: Int) -> Int {
-    score_to(seq, i, seq.len())
+    sum_range_split(seq, 0, seq.len(), i);
+    abs_diff(sum_range(seq, 0, i), sum_range(seq, i, seq.len()))
 }
 
 // Fulcrum. Given a sequence of integers, returns the index i that minimizes
 // |sum(seq[..i]) - sum(seq[i..])|. Does this in O(n) time and O(n) memory.
 // Hard
+#[requires(sum_range(@s, 0, (@s).len()) <= 1000)]
+#[requires((@s).len() > 0)]
 #[ensures(0 <= @result && @result < (@s).len())]
 #[ensures(forall<i: Int> 0 <= i && i < (@s).len() ==> score(@s, @result) <= score(@s, i))]
 fn fulcrum(s: &[u32]) -> usize {
     let mut total: u32 = 0;
     let mut i: usize = 0;
+    #[invariant(i_bound, @i <= (@s).len())]
     #[invariant(total, @total == sum_range(@s, 0, @i))]
+    #[invariant(total_bound, @total <= sum_range(@s, 0, (@s).len()))]
     while i < s.len() {
         total += s[i];
         i += 1;
     }
+
+    proof_assert! { @total == sum_range(@s, 0, (@s).len()) };
 
     let mut min_i: usize = 0;
     let mut min_dist: u32 = total;
 
     let mut sum: u32 = 0;
     let mut i: usize = 0;
+    #[invariant(i_bound, @i <= (@s).len())]
     #[invariant(sum, @sum == sum_range(@s, 0, @i))]
-    #[invariant(min_dist, @min_dist == score_to(@s, @min_i, @i))]
-    #[invariant(min_i, forall<j: Int> 0 <= j && j < @i ==> score_to(@s, @min_i, @i) <= score_to(@s, j, @i))]
+    #[invariant(sum_bound, @sum <= @total)]
+    #[invariant(min_i_bound, @min_i <= @i && @min_i < (@s).len())]
+    #[invariant(min_dist, @min_dist == score(@s, @min_i))]
+    #[invariant(min_i_min, forall<j: Int> 0 <= j && j < @i ==> score(@s, @min_i) <= score(@s, j))]
     while i < s.len() {
         let dist = sum.abs_diff(total - sum);
         if dist < min_dist {
