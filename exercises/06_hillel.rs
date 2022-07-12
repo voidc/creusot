@@ -198,9 +198,9 @@ fn sum_range(seq: Seq<u32>, from: Int, to: Int) -> Int {
 #[requires(0 <= from && from <= i && i <= to && to <= seq.len())]
 #[ensures(sum_range(seq, from, to) == sum_range(seq, from, i) + sum_range(seq, i, to))]
 fn sum_range_split(seq: Seq<u32>, from: Int, to: Int, i: Int) {
-	if i > from {
-		sum_range_split(seq, from + 1, to, i);
-	}
+    if i > from {
+        sum_range_split(seq, from + 1, to, i);
+    }
 }
 
 #[logic]
