@@ -67,21 +67,21 @@ fn left_pad<T: Copy>(str: &mut Vec<T>, len: usize, pad: T) {
 }
 
 #[predicate]
-fn is_unique<T: Eq>(s: Seq<T>) -> bool {
+fn is_unique<T: Eq + Model>(s: Seq<T>) -> bool {
     pearlite! {
-        forall<i: Int, j :Int> 0 <= i && i < s.len() && 0 <= j && j < s.len() ==> s[i] == s[j] ==> i == j
+        forall<i: Int, j :Int> 0 <= i && i < s.len() && 0 <= j && j < s.len() ==> @(s[i]) == @(s[j]) ==> i == j
     }
 }
 
 #[predicate]
-fn contains<T: Eq>(seq: Seq<T>, elem: T) -> bool {
+fn contains<T: Eq + Model>(seq: Seq<T>, elem: T) -> bool {
     pearlite! {
-        exists<i: Int> 0 <= i && i < seq.len() && seq[i] == elem
+        exists<i: Int> 0 <= i && i < seq.len() && @(seq[i]) == @elem
     }
 }
 
 #[predicate]
-fn is_subset<T: Eq>(sub: Seq<T>, sup: Seq<T>) -> bool {
+fn is_subset<T: Eq + Model>(sub: Seq<T>, sup: Seq<T>) -> bool {
     pearlite! {
         forall<i: Int> 0 <= i && i < sub.len() ==> contains(sup, sub[i])
     }
@@ -89,19 +89,19 @@ fn is_subset<T: Eq>(sub: Seq<T>, sup: Seq<T>) -> bool {
 
 #[logic]
 #[ensures(is_subset(s, s))]
-fn subset_refl<T: Eq>(s: Seq<T>) {}
+fn subset_refl<T: Eq + Model>(s: Seq<T>) {}
 
 #[logic]
 #[ensures(is_subset(s, s.push(elem)))]
-fn subset_push<T: Eq>(s: Seq<T>, elem: T) {}
+fn subset_push<T: Eq + Model>(s: Seq<T>, elem: T) {}
 
 #[logic]
 #[ensures(contains(s, elem) ==> is_subset(s.push(elem), s))]
-fn subset_push2<T: Eq>(s: Seq<T>, elem: T) {}
+fn subset_push2<T: Eq + Model>(s: Seq<T>, elem: T) {}
 
 #[logic]
 #[ensures(is_subset(sub, sup) && contains(sup, elem) ==> is_subset(sub.push(elem), sup))]
-fn subset_push3<T: Eq>(sub: Seq<T>, sup: Seq<T>, elem: T) {}
+fn subset_push3<T: Eq + Model>(sub: Seq<T>, sup: Seq<T>, elem: T) {}
 
 #[requires(is_unique(@vec))]
 #[ensures(is_unique(@^vec))]
@@ -109,12 +109,12 @@ fn subset_push3<T: Eq>(sub: Seq<T>, sup: Seq<T>, elem: T) {}
 #[ensures(is_subset(@^vec, (@vec).push(elem)))]
 #[ensures(contains(@^vec, elem))]
 fn insert_unique<T: Eq + Model>(vec: &mut Vec<T>, elem: T) {
-    // use subset_push(@vec, elem)
+    ghost! { pearlite! { subset_push(@vec, elem) } };
     proof_assert! { is_subset(@vec, (@vec).push(elem)) };
 
     let mut i = 0;
 
-    #[invariant(not_elem, forall<j: Int> 0 <= j && j < @i ==> (@vec)[j] != elem)]
+    #[invariant(not_elem, forall<j: Int> 0 <= j && j < @i ==> @((@vec)[j]) != @elem)]
     while i < vec.len() {
         if vec[i] == elem {
             proof_assert! { contains(@vec, elem) };
@@ -161,7 +161,7 @@ fn unique<T: Eq + Model + Copy>(str: &[T]) -> Vec<T> {
 }
 
 #[logic]
-#[ensures(result > 0)]
+#[ensures(result >= 0)]
 fn abs_diff(a: Int, b: Int) -> Int {
     if a < b {
         b - a
@@ -182,14 +182,33 @@ extern_spec! {
 }
 
 #[logic]
-#[variant(seq.len())]
-fn sum(seq: Seq<u32>) -> Int {
-    pearlite! { @(seq[0]) + sum(seq.tail()) }
+#[variant(to - from)]
+#[requires(0 <= from && from <= to && to <= seq.len())]
+fn sum_range(seq: Seq<u32>, from: Int, to: Int) -> Int {
+    if to - from > 0 {
+        pearlite! { @(seq[from]) + sum_range(seq, from + 1, to) }
+    } else {
+        0
+    }
 }
 
 #[logic]
+#[requires(0 <= from && from <= to && to <= seq.len())]
+#[ensures(forall<i: Int> from <= i && i <= to ==> sum_range(seq, from, to) == sum_range(seq, from, i) + sum_range(seq, i, to))]
+fn sum_range_split(seq: Seq<u32>, from: Int, to: Int) {}
+
+#[logic]
+#[requires(0 <= i && i <= to && to <= seq.len())]
+#[ensures(0 <= result && result < sum_range(seq, 0 , to))]
+fn score_to(seq: Seq<u32>, i: Int, to: Int) -> Int {
+    abs_diff(sum_range(seq, 0, i), sum_range(seq, i, to))
+}
+
+#[logic]
+#[requires(0 <= i && i <= seq.len())]
+#[ensures(0 <= result && result < sum_range(seq, 0 , seq.len()))]
 fn score(seq: Seq<u32>, i: Int) -> Int {
-    abs_diff(sum(seq.subsequence(0, i)), sum(seq.subsequence(i, seq.len())))
+    score_to(seq, i, seq.len())
 }
 
 // Fulcrum. Given a sequence of integers, returns the index i that minimizes
@@ -200,7 +219,7 @@ fn score(seq: Seq<u32>, i: Int) -> Int {
 fn fulcrum(s: &[u32]) -> usize {
     let mut total: u32 = 0;
     let mut i: usize = 0;
-    #[invariant(total, @total == sum((@s).subsequence(0, @i)))]
+    #[invariant(total, @total == sum_range(@s, 0, @i))]
     while i < s.len() {
         total += s[i];
         i += 1;
@@ -209,19 +228,19 @@ fn fulcrum(s: &[u32]) -> usize {
     let mut min_i: usize = 0;
     let mut min_dist: u32 = total;
 
-    let mut sumx: u32 = 0;
+    let mut sum: u32 = 0;
     let mut i: usize = 0;
-    #[invariant(sumx, @sumx == sum((@s).subsequence(0, @i)))]
-    #[invariant(min_dist, @min_dist == score((@s).subsequence(0, @i), @min_i))]
-    #[invariant(min_i, forall<j: Int> 0 <= j && j < @i ==> score((@s).subsequence(0, @i), @min_i) <= score((@s).subsequence(0, @i), j))]
+    #[invariant(sum, @sum == sum_range(@s, 0, @i))]
+    #[invariant(min_dist, @min_dist == score_to(@s, @min_i, @i))]
+    #[invariant(min_i, forall<j: Int> 0 <= j && j < @i ==> score_to(@s, @min_i, @i) <= score_to(@s, j, @i))]
     while i < s.len() {
-        let dist = sumx.abs_diff(total - sumx);
+        let dist = sum.abs_diff(total - sum);
         if dist < min_dist {
             min_i = i;
             min_dist = dist;
         }
 
-        sumx += s[i];
+        sum += s[i];
         i += 1;
     }
 
