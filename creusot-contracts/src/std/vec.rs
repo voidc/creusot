@@ -207,6 +207,14 @@ impl<T, A: Allocator> Invariant for std::vec::IntoIter<T, A> {
     fn invariant(self) -> bool {
         true
     }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<T, A: Allocator> Iterator for std::vec::IntoIter<T, A> {

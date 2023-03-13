@@ -43,10 +43,10 @@
   <proof prover="1"><result status="valid" time="0.02" steps="372"/></proof>
   </goal>
   <goal name="compute_sum_of_odd&#39;vc.8" expl="integer overflow" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="202"/></proof>
+  <proof prover="1"><result status="valid" time="0.01" steps="203"/></proof>
   </goal>
   <goal name="compute_sum_of_odd&#39;vc.9" expl="integer overflow" proved="true">
-  <proof prover="1"><result status="valid" time="0.03" steps="611"/></proof>
+  <proof prover="1"><result status="valid" time="0.03" steps="608"/></proof>
   </goal>
   <goal name="compute_sum_of_odd&#39;vc.10" expl="loop invariant preservation" proved="true">
   <proof prover="1"><result status="valid" time="0.01" steps="34"/></proof>
@@ -55,7 +55,7 @@
   <proof prover="1"><result status="valid" time="0.01" steps="87"/></proof>
   </goal>
   <goal name="compute_sum_of_odd&#39;vc.12" expl="loop invariant preservation" proved="true">
-  <proof prover="1"><result status="valid" time="0.03" steps="648"/></proof>
+  <proof prover="1"><result status="valid" time="0.03" steps="649"/></proof>
   </goal>
  </transf>
  </goal>

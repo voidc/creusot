@@ -20,66 +20,104 @@ module Quant_Impl0_Invariant
     ensures { result = invariant' self }
     
 end
+module Quant_Impl0_IsInhabited_Stub
+  use Quant_WithInvariant_Type as Quant_WithInvariant_Type
+  clone Quant_Impl0_Invariant_Stub as Invariant0
+  function is_inhabited [#"../quant.rs" 15 4 17 20] (_1' : ()) : ()
+end
+module Quant_Impl0_IsInhabited_Interface
+  use Quant_WithInvariant_Type as Quant_WithInvariant_Type
+  clone Quant_Impl0_Invariant_Stub as Invariant0
+  function is_inhabited [#"../quant.rs" 15 4 17 20] (_1' : ()) : ()
+  axiom is_inhabited_spec : forall _1' : () . [#"../quant.rs" 14 4 14 45] exists x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x
+end
+module Quant_Impl0_IsInhabited
+  use Quant_WithInvariant_Type as Quant_WithInvariant_Type
+  clone Quant_Impl0_Invariant_Stub as Invariant0
+  function is_inhabited [#"../quant.rs" 15 4 17 20] (_1' : ()) : () =
+    [#"../quant.rs" 13 4 13 10] ()
+  val is_inhabited [#"../quant.rs" 15 4 17 20] (_1' : ()) : ()
+    ensures { result = is_inhabited _1' }
+    
+  axiom is_inhabited_spec : forall _1' : () . [#"../quant.rs" 14 4 14 45] exists x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x
+end
+module Quant_Impl0_IsInhabited_Impl
+  use Quant_WithInvariant_Type as Quant_WithInvariant_Type
+  clone Quant_Impl0_Invariant as Invariant0
+  let rec ghost function is_inhabited [#"../quant.rs" 15 4 17 20] (_1' : ()) : ()
+    ensures { [#"../quant.rs" 14 4 14 45] exists x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"../quant.rs" 13 4 13 10] ()
+end
 module Quant_Forall_Stub
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant_Stub as Invariant0
-  function forall [#"../quant.rs" 16 0 16 15] (_1' : ()) : ()
+  function forall' [#"../quant.rs" 24 0 24 15] (_1' : ()) : ()
 end
 module Quant_Forall_Interface
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant_Stub as Invariant0
-  function forall [#"../quant.rs" 16 0 16 15] (_1' : ()) : ()
-  axiom forall_spec : forall _1' : () . [#"../quant.rs" 15 0 15 50] forall x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x -> Invariant0.invariant' x
+  function forall' [#"../quant.rs" 24 0 24 15] (_1' : ()) : ()
+  axiom forall'_spec : forall _1' : () . [#"../quant.rs" 23 0 23 50] forall x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x -> Invariant0.invariant' x
 end
 module Quant_Forall
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant_Stub as Invariant0
-  function forall [#"../quant.rs" 16 0 16 15] (_1' : ()) : () =
-    [#"../quant.rs" 14 0 14 6] ()
-  val forall [#"../quant.rs" 16 0 16 15] (_1' : ()) : ()
-    ensures { result = forall _1' }
+  function forall' [#"../quant.rs" 24 0 24 15] (_1' : ()) : () =
+    [#"../quant.rs" 22 0 22 6] ()
+  val forall' [#"../quant.rs" 24 0 24 15] (_1' : ()) : ()
+    ensures { result = forall' _1' }
     
-  axiom forall_spec : forall _1' : () . [#"../quant.rs" 15 0 15 50] forall x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x -> Invariant0.invariant' x
+  axiom forall'_spec : forall _1' : () . [#"../quant.rs" 23 0 23 50] forall x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x -> Invariant0.invariant' x
 end
 module Quant_Forall_Impl
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant as Invariant0
-  let rec ghost function forall [#"../quant.rs" 16 0 16 15] (_1' : ()) : ()
-    ensures { [#"../quant.rs" 15 0 15 50] forall x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x -> Invariant0.invariant' x }
+  clone Quant_Impl0_IsInhabited as IsInhabited0 with
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  let rec ghost function forall' [#"../quant.rs" 24 0 24 15] (_1' : ()) : ()
+    ensures { [#"../quant.rs" 23 0 23 50] forall x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x -> Invariant0.invariant' x }
     
    = [@vc:do_not_keep_trace] [@vc:sp]
-    [#"../quant.rs" 14 0 14 6] ()
+    [#"../quant.rs" 22 0 22 6] ()
 end
 module Quant_Exists_Stub
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant_Stub as Invariant0
-  function exists [#"../quant.rs" 20 0 20 15] (_1' : ()) : ()
+  function exists' [#"../quant.rs" 28 0 28 15] (_1' : ()) : ()
 end
 module Quant_Exists_Interface
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant_Stub as Invariant0
-  function exists [#"../quant.rs" 20 0 20 15] (_1' : ()) : ()
-  axiom exists_spec : forall _1' : () . [#"../quant.rs" 19 0 19 42] exists _x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' _x /\ true
+  function exists' [#"../quant.rs" 28 0 28 15] (_1' : ()) : ()
+  axiom exists'_spec : forall _1' : () . [#"../quant.rs" 27 0 27 42] exists _x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' _x /\ true
 end
 module Quant_Exists
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant_Stub as Invariant0
-  function exists [#"../quant.rs" 20 0 20 15] (_1' : ()) : () =
-    [#"../quant.rs" 18 0 18 6] ()
-  val exists [#"../quant.rs" 20 0 20 15] (_1' : ()) : ()
-    ensures { result = exists _1' }
+  function exists' [#"../quant.rs" 28 0 28 15] (_1' : ()) : () =
+    [#"../quant.rs" 26 0 26 6] ()
+  val exists' [#"../quant.rs" 28 0 28 15] (_1' : ()) : ()
+    ensures { result = exists' _1' }
     
-  axiom exists_spec : forall _1' : () . [#"../quant.rs" 19 0 19 42] exists _x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' _x /\ true
+  axiom exists'_spec : forall _1' : () . [#"../quant.rs" 27 0 27 42] exists _x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' _x /\ true
 end
 module Quant_Exists_Impl
   use Quant_WithInvariant_Type as Quant_WithInvariant_Type
   clone Quant_Impl0_Invariant as Invariant0
-  let rec ghost function exists [#"../quant.rs" 20 0 20 15] (_1' : ()) : ()
-    ensures { [#"../quant.rs" 19 0 19 42] exists _x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' _x /\ true }
+  clone Quant_Impl0_IsInhabited as IsInhabited0 with
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  let rec ghost function exists' [#"../quant.rs" 28 0 28 15] (_1' : ()) : ()
+    ensures { [#"../quant.rs" 27 0 27 42] exists _x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' _x /\ true }
     
    = [@vc:do_not_keep_trace] [@vc:sp]
-    [#"../quant.rs" 18 0 18 6] ()
+    [#"../quant.rs" 26 0 26 6] ()
 end
 module Quant_Impl0
-  
+  use Quant_WithInvariant_Type as Quant_WithInvariant_Type
+  clone Quant_Impl0_Invariant as Invariant0
+  goal is_inhabited_refn : [#"../quant.rs" 15 4 17 20] forall result : () . (exists x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x) -> (exists x : Quant_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x)
 end

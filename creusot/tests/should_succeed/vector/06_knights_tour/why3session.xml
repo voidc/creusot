@@ -2,10 +2,12 @@
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "http://why3.lri.fr/why3session.dtd">
 <why3session shape_version="6">
-<prover id="0" name="Z3" version="4.11.0" timelimit="1" steplimit="0" memlimit="1000"/>
 <prover id="1" name="Alt-Ergo" version="2.4.1" timelimit="1" steplimit="0" memlimit="1000"/>
-<prover id="2" name="CVC5" version="1.0.0" timelimit="1" steplimit="0" memlimit="1000"/>
-<file format="mlcfg" proved="true">
+<prover id="3" name="CVC4" version="1.8" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="4" name="Z3" version="4.12.1" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="5" name="CVC5" version="1.0.4" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="6" name="Alt-Ergo" version="2.4.2" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg">
 <path name=".."/><path name="06_knights_tour.mlcfg"/>
 <theory name="C06KnightsTour_Impl3_Clone" proved="true">
  <goal name="clone&#39;&#39;vc" expl="VC for clone&#39;" proved="true">
@@ -24,7 +26,7 @@
 </theory>
 <theory name="C06KnightsTour_Impl1_New" proved="true">
  <goal name="new&#39;vc" expl="VC for new" proved="true">
- <proof prover="0"><result status="valid" time="0.21" steps="752652"/></proof>
+ <proof prover="4"><result status="valid" time="0.21" steps="590768"/></proof>
  </goal>
 </theory>
 <theory name="C06KnightsTour_Impl1_Available" proved="true">
@@ -36,60 +38,60 @@
  <goal name="count_degree&#39;vc" expl="VC for count_degree" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="count_degree&#39;vc.0" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.00" steps="8"/></proof>
+  <proof prover="6"><result status="valid" time="0.00" steps="8"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.00" steps="10"/></proof>
+  <proof prover="6"><result status="valid" time="0.00" steps="10"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="15"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="15"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="16"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="16"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.4" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="18"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="18"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.5" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="76"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="71"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.6" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.02" steps="79"/></proof>
+  <proof prover="6"><result status="valid" time="0.02" steps="79"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.7" expl="precondition" proved="true">
   <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
    <goal name="count_degree&#39;vc.7.0" expl="precondition" proved="true">
-   <proof prover="1"><result status="valid" time="0.07" steps="1463"/></proof>
+   <proof prover="6"><result status="valid" time="0.07" steps="1465"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="count_degree&#39;vc.8" expl="precondition" proved="true">
   <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
    <goal name="count_degree&#39;vc.8.0" expl="precondition" proved="true">
-   <proof prover="1"><result status="valid" time="0.14" steps="1521"/></proof>
+   <proof prover="6"><result status="valid" time="0.14" steps="1521"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="count_degree&#39;vc.9" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.02" steps="39"/></proof>
+  <proof prover="6"><result status="valid" time="0.02" steps="39"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.10" expl="integer overflow" proved="true">
-  <proof prover="1"><result status="valid" time="0.06" steps="635"/></proof>
+  <proof prover="6"><result status="valid" time="0.06" steps="636"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.11" expl="loop invariant preservation" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="20"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="20"/></proof>
   </goal>
   <goal name="count_degree&#39;vc.12" expl="loop invariant preservation" proved="true">
   <transf name="split_vc" proved="true" >
    <goal name="count_degree&#39;vc.12.0" expl="loop invariant preservation" proved="true">
-   <proof prover="1"><result status="valid" time="0.02" steps="80"/></proof>
+   <proof prover="6"><result status="valid" time="0.02" steps="80"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="count_degree&#39;vc.13" expl="loop invariant preservation" proved="true">
   <transf name="split_vc" proved="true" >
    <goal name="count_degree&#39;vc.13.0" expl="loop invariant preservation" proved="true">
-   <proof prover="1"><result status="valid" time="0.01" steps="44"/></proof>
+   <proof prover="6"><result status="valid" time="0.01" steps="44"/></proof>
    </goal>
   </transf>
   </goal>
@@ -101,58 +103,81 @@
  <proof prover="1"><result status="valid" time="0.11" steps="2118"/></proof>
  </goal>
 </theory>
-<theory name="C06KnightsTour_Min" proved="true">
- <goal name="min&#39;vc" expl="VC for min" proved="true">
- <transf name="split_vc" proved="true" >
+<theory name="C06KnightsTour_Min">
+ <goal name="min&#39;vc" expl="VC for min">
+ <transf name="split_vc" >
   <goal name="min&#39;vc.0" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.00" steps="2"/></proof>
+  <proof prover="6"><result status="valid" time="0.00" steps="2"/></proof>
   </goal>
   <goal name="min&#39;vc.1" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.00" steps="4"/></proof>
+  <proof prover="6"><result status="valid" time="0.00" steps="4"/></proof>
   </goal>
   <goal name="min&#39;vc.2" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="7"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="7"/></proof>
   </goal>
   <goal name="min&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="13"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="13"/></proof>
   </goal>
   <goal name="min&#39;vc.4" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="10"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="10"/></proof>
   </goal>
   <goal name="min&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="47"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="47"/></proof>
   </goal>
   <goal name="min&#39;vc.6" expl="loop invariant preservation" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="6"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="6"/></proof>
   </goal>
   <goal name="min&#39;vc.7" expl="loop invariant preservation" proved="true">
   <transf name="split_vc" proved="true" >
    <goal name="min&#39;vc.7.0" expl="loop invariant preservation" proved="true">
    <transf name="split_vc" proved="true" >
     <goal name="min&#39;vc.7.0.0" expl="loop invariant preservation" proved="true">
-    <proof prover="1"><result status="valid" time="0.01" steps="33"/></proof>
+    <proof prover="6"><result status="valid" time="0.01" steps="33"/></proof>
     </goal>
    </transf>
    </goal>
    <goal name="min&#39;vc.7.1" expl="loop invariant preservation" proved="true">
    <transf name="split_vc" proved="true" >
     <goal name="min&#39;vc.7.1.0" expl="loop invariant preservation" proved="true">
-    <proof prover="1"><result status="valid" time="0.01" steps="35"/></proof>
+    <proof prover="6"><result status="valid" time="0.01" steps="35"/></proof>
     </goal>
    </transf>
    </goal>
   </transf>
   </goal>
-  <goal name="min&#39;vc.8" expl="loop invariant preservation" proved="true">
-  <transf name="split_vc" proved="true" >
-   <goal name="min&#39;vc.8.0" expl="loop invariant preservation" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="min&#39;vc.8.0.0" expl="loop invariant preservation" proved="true">
-    <transf name="split_vc" proved="true" >
-     <goal name="min&#39;vc.8.0.0.0" expl="loop invariant preservation" proved="true">
-     <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
-      <goal name="min&#39;vc.8.0.0.0.0" expl="loop invariant preservation" proved="true">
-      <proof prover="1"><result status="valid" time="0.18" steps="2026"/></proof>
+  <goal name="min&#39;vc.8" expl="loop invariant preservation">
+  <proof prover="3"><result status="timeout" time="1.00" steps="375618"/></proof>
+  <proof prover="4"><result status="timeout" time="1.00" steps="1607135"/></proof>
+  <proof prover="5"><result status="timeout" time="1.00" steps="132733"/></proof>
+  <proof prover="6"><result status="timeout" time="1.00"/></proof>
+  <transf name="split_vc" >
+   <goal name="min&#39;vc.8.0" expl="loop invariant preservation">
+   <proof prover="3"><result status="timeout" time="1.00" steps="220967"/></proof>
+   <proof prover="4"><result status="timeout" time="1.00" steps="1155933"/></proof>
+   <proof prover="5"><result status="timeout" time="1.00" steps="124430"/></proof>
+   <proof prover="6"><result status="timeout" time="1.00"/></proof>
+   <transf name="split_vc" >
+    <goal name="min&#39;vc.8.0.0" expl="loop invariant preservation">
+    <proof prover="3"><result status="timeout" time="1.00" steps="389676"/></proof>
+    <proof prover="4"><result status="timeout" time="1.00" steps="1282667"/></proof>
+    <proof prover="5"><result status="timeout" time="1.00" steps="124379"/></proof>
+    <proof prover="6"><result status="timeout" time="1.00"/></proof>
+    <transf name="split_vc" >
+     <goal name="min&#39;vc.8.0.0.0" expl="loop invariant preservation">
+     <proof prover="3" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2076224"/></proof>
+     <proof prover="4" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2655818"/></proof>
+     <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="518643"/></proof>
+     <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00"/></proof>
+     <transf name="inline_goal" >
+      <goal name="min&#39;vc.8.0.0.0.0" expl="loop invariant preservation">
+      <transf name="split_all_full" >
+       <goal name="min&#39;vc.8.0.0.0.0.0" expl="loop invariant preservation">
+       <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="10493216"/></proof>
+       <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="5579287"/></proof>
+       <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="2180036"/></proof>
+       <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
+       </goal>
+      </transf>
       </goal>
      </transf>
      </goal>
@@ -160,19 +185,42 @@
     </goal>
    </transf>
    </goal>
-   <goal name="min&#39;vc.8.1" expl="loop invariant preservation" proved="true">
-   <transf name="split_vc" proved="true" >
-    <goal name="min&#39;vc.8.1.0" expl="loop invariant preservation" proved="true">
-    <transf name="split_vc" proved="true" >
-     <goal name="min&#39;vc.8.1.0.0" expl="loop invariant preservation" proved="true">
-     <transf name="split_vc" proved="true" >
+   <goal name="min&#39;vc.8.1" expl="loop invariant preservation">
+   <proof prover="3"><result status="timeout" time="1.00" steps="259242"/></proof>
+   <proof prover="4"><result status="timeout" time="1.00" steps="1432682"/></proof>
+   <proof prover="5"><result status="timeout" time="1.00" steps="125897"/></proof>
+   <proof prover="6"><result status="timeout" time="1.00"/></proof>
+   <transf name="split_vc" >
+    <goal name="min&#39;vc.8.1.0" expl="loop invariant preservation">
+    <proof prover="3"><result status="timeout" time="1.00" steps="221968"/></proof>
+    <proof prover="4"><result status="timeout" time="1.00" steps="1595831"/></proof>
+    <proof prover="5"><result status="timeout" time="1.00" steps="126321"/></proof>
+    <proof prover="6"><result status="timeout" time="1.00"/></proof>
+    <transf name="split_vc" >
+     <goal name="min&#39;vc.8.1.0.0" expl="loop invariant preservation">
+     <proof prover="3"><result status="timeout" time="1.00" steps="261235"/></proof>
+     <proof prover="4"><result status="timeout" time="1.00" steps="1570152"/></proof>
+     <proof prover="5"><result status="timeout" time="1.00" steps="130774"/></proof>
+     <proof prover="6"><result status="timeout" time="1.00"/></proof>
+     <transf name="split_vc" >
       <goal name="min&#39;vc.8.1.0.0.0" expl="loop invariant preservation" proved="true">
-      <proof prover="1"><result status="valid" time="0.02" steps="143"/></proof>
+      <proof prover="6"><result status="valid" time="0.02" steps="144"/></proof>
       </goal>
-      <goal name="min&#39;vc.8.1.0.0.1" expl="loop invariant preservation" proved="true">
-      <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
-       <goal name="min&#39;vc.8.1.0.0.1.0" expl="loop invariant preservation" proved="true">
-       <proof prover="1"><result status="valid" time="0.20" steps="3763"/></proof>
+      <goal name="min&#39;vc.8.1.0.0.1" expl="loop invariant preservation">
+      <proof prover="3" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="1184996"/></proof>
+      <proof prover="4" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="2915252"/></proof>
+      <proof prover="5" timelimit="5" memlimit="2000"><result status="timeout" time="5.00" steps="473634"/></proof>
+      <proof prover="6" timelimit="5" memlimit="2000"><result status="timeout" time="5.00"/></proof>
+      <transf name="inline_goal" >
+       <goal name="min&#39;vc.8.1.0.0.1.0" expl="loop invariant preservation">
+       <transf name="split_all_full" >
+        <goal name="min&#39;vc.8.1.0.0.1.0.0" expl="loop invariant preservation">
+        <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="9588231"/></proof>
+        <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="5650246"/></proof>
+        <proof prover="5" timelimit="30" memlimit="4000"><result status="timeout" time="30.00" steps="2387961"/></proof>
+        <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.00"/></proof>
+        </goal>
+       </transf>
        </goal>
       </transf>
       </goal>
@@ -196,124 +244,124 @@
  <goal name="knights_tour&#39;vc" expl="VC for knights_tour" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="knights_tour&#39;vc.0" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="10"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="10"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.1" expl="integer overflow" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="32"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="32"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.2" expl="integer overflow" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="37"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="37"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.3" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="19"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="19"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.4" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.07" steps="388"/></proof>
+  <proof prover="6"><result status="valid" time="0.07" steps="387"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.5" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.00" steps="23"/></proof>
+  <proof prover="6"><result status="valid" time="0.00" steps="23"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.6" expl="integer overflow" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="48"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="48"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.7" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="29"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="29"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.8" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.04" steps="45"/></proof>
+  <proof prover="6"><result status="valid" time="0.03" steps="45"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.9" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="171"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="171"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.10" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="49"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="49"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.11" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="49"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="49"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.12" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.08" steps="2163"/></proof>
+  <proof prover="6"><result status="valid" time="0.08" steps="2005"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.13" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="81"/></proof>
+  <proof prover="6" timelimit="5"><result status="valid" time="0.01" steps="81"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.14" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="123"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="123"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.15" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.03" steps="128"/></proof>
+  <proof prover="6"><result status="valid" time="0.04" steps="128"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.16" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.03" steps="325"/></proof>
+  <proof prover="6"><result status="valid" time="0.03" steps="325"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.17" expl="loop invariant init" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="135"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="135"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.18" expl="precondition" proved="true">
-  <proof prover="1" timelimit="5"><result status="valid" time="0.01" steps="151"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="151"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.19" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="175"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="175"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.20" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.10" steps="1733"/></proof>
+  <proof prover="6"><result status="valid" time="0.10" steps="1762"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.21" expl="loop invariant preservation" proved="true">
-  <proof prover="1"><result status="valid" time="0.04" steps="186"/></proof>
+  <proof prover="6"><result status="valid" time="0.01" steps="186"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.22" expl="loop invariant preservation" proved="true">
-  <proof prover="1" timelimit="5"><result status="valid" time="0.04" steps="516"/></proof>
+  <proof prover="6" timelimit="5"><result status="valid" time="0.04" steps="517"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.23" expl="loop invariant preservation" proved="true">
-  <proof prover="1"><result status="valid" time="0.02" steps="191"/></proof>
+  <proof prover="6"><result status="valid" time="0.02" steps="191"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.24" expl="loop invariant preservation" proved="true">
-  <proof prover="1"><result status="valid" time="0.02" steps="191"/></proof>
+  <proof prover="6"><result status="valid" time="0.02" steps="191"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.25" expl="loop invariant preservation" proved="true">
-  <proof prover="2"><result status="valid" time="0.19" steps="36589"/></proof>
+  <proof prover="5"><result status="valid" time="0.19" steps="36746"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.26" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.03" steps="684"/></proof>
+  <proof prover="6"><result status="valid" time="0.03" steps="684"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.27" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.04" steps="714"/></proof>
+  <proof prover="6"><result status="valid" time="0.04" steps="713"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.28" expl="precondition" proved="true">
   <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
    <goal name="knights_tour&#39;vc.28.0" expl="precondition" proved="true">
-   <proof prover="1"><result status="valid" time="0.30" steps="7964"/></proof>
+   <proof prover="6"><result status="valid" time="0.50" steps="7963"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="knights_tour&#39;vc.29" expl="precondition" proved="true">
   <transf name="use_th" proved="true" arg1="seq.FreeMonoid">
    <goal name="knights_tour&#39;vc.29.0" expl="precondition" proved="true">
-   <proof prover="1"><result status="valid" time="0.29" steps="8196"/></proof>
+   <proof prover="6"><result status="valid" time="0.54" steps="8132"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="knights_tour&#39;vc.30" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.02" steps="222"/></proof>
+  <proof prover="6"><result status="valid" time="0.02" steps="222"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.31" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.02" steps="227"/></proof>
+  <proof prover="6"><result status="valid" time="0.02" steps="227"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.32" expl="precondition" proved="true">
-  <proof prover="1"><result status="valid" time="0.02" steps="227"/></proof>
+  <proof prover="6"><result status="valid" time="0.02" steps="227"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.33" expl="loop invariant preservation" proved="true">
-  <proof prover="1"><result status="valid" time="0.01" steps="156"/></proof>
+  <proof prover="6"><result status="valid" time="0.04" steps="156"/></proof>
   </goal>
   <goal name="knights_tour&#39;vc.34" expl="loop invariant preservation" proved="true">
   <transf name="split_vc" proved="true" >
    <goal name="knights_tour&#39;vc.34.0" expl="loop invariant preservation" proved="true">
-   <proof prover="1"><result status="valid" time="0.11" steps="827"/></proof>
+   <proof prover="6"><result status="valid" time="0.11" steps="826"/></proof>
    </goal>
   </transf>
   </goal>
   <goal name="knights_tour&#39;vc.35" expl="loop invariant preservation" proved="true">
-  <proof prover="2"><result status="valid" time="0.37" steps="66769"/></proof>
+  <proof prover="5"><result status="valid" time="0.37" steps="66679"/></proof>
   </goal>
  </transf>
  </goal>

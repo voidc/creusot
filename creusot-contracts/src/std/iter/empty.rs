@@ -5,6 +5,14 @@ impl<T> Invariant for Empty<T> {
     fn invariant(self) -> bool {
         pearlite! { true }
     }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<T> Iterator for Empty<T> {

@@ -398,6 +398,29 @@ module CreusotContracts_Resolve_Impl1_Resolve
     ensures { result = resolve self }
     
 end
+module CreusotContracts_Invariant_Invariant_IsInhabited_Stub
+  type self
+  clone CreusotContracts_Invariant_Invariant_Invariant_Stub as Invariant0 with
+    type self = self
+  function is_inhabited (_1' : ()) : ()
+end
+module CreusotContracts_Invariant_Invariant_IsInhabited_Interface
+  type self
+  clone CreusotContracts_Invariant_Invariant_Invariant_Stub as Invariant0 with
+    type self = self
+  function is_inhabited (_1' : ()) : ()
+  axiom is_inhabited_spec : forall _1' : () . exists x : self . Invariant0.invariant' x
+end
+module CreusotContracts_Invariant_Invariant_IsInhabited
+  type self
+  clone CreusotContracts_Invariant_Invariant_Invariant_Stub as Invariant0 with
+    type self = self
+  function is_inhabited (_1' : ()) : ()
+  val is_inhabited (_1' : ()) : ()
+    ensures { result = is_inhabited _1' }
+    
+  axiom is_inhabited_spec : forall _1' : () . exists x : self . Invariant0.invariant' x
+end
 module CreusotContracts_Std1_Iter_Iterator_ProducesRefl_Stub
   type self
   use seq.Seq
@@ -596,6 +619,10 @@ module C08CollectExtend_Extend
     predicate Invariant0.invariant' = Invariant0.invariant',
     predicate Produces0.produces = Produces0.produces,
     type Item0.item = t,
+    axiom .
+  clone CreusotContracts_Invariant_Invariant_IsInhabited_Interface as IsInhabited0 with
+    type self = i,
+    predicate Invariant0.invariant' = Invariant0.invariant',
     axiom .
   clone Alloc_Vec_Impl1_Push_Interface as Push0 with
     type t = t,
@@ -901,6 +928,10 @@ module C08CollectExtend_Collect
     predicate Invariant0.invariant' = Invariant0.invariant',
     predicate Produces0.produces = Produces0.produces,
     type Item0.item = Item0.item,
+    axiom .
+  clone CreusotContracts_Invariant_Invariant_IsInhabited_Interface as IsInhabited0 with
+    type self = i,
+    predicate Invariant0.invariant' = Invariant0.invariant',
     axiom .
   clone Alloc_Vec_Impl1_Push_Interface as Push0 with
     type t = Item0.item,
@@ -1368,6 +1399,39 @@ module CreusotContracts_Std1_Slice_Impl0_ShallowModel
     
   axiom shallow_model_spec : forall self : seq t . shallow_model self = Slice.id self && Seq.length (shallow_model self) <= UIntSize.to_int Max0.mAX'
 end
+module CreusotContracts_Std1_Vec_Impl7_IsInhabited_Stub
+  type t
+  type a
+  use Alloc_Vec_IntoIter_IntoIter_Type as Alloc_Vec_IntoIter_IntoIter_Type
+  clone CreusotContracts_Std1_Vec_Impl7_Invariant_Stub as Invariant0 with
+    type t = t,
+    type a = a
+  function is_inhabited (_1' : ()) : ()
+end
+module CreusotContracts_Std1_Vec_Impl7_IsInhabited_Interface
+  type t
+  type a
+  use Alloc_Vec_IntoIter_IntoIter_Type as Alloc_Vec_IntoIter_IntoIter_Type
+  clone CreusotContracts_Std1_Vec_Impl7_Invariant_Stub as Invariant0 with
+    type t = t,
+    type a = a
+  function is_inhabited (_1' : ()) : ()
+  axiom is_inhabited_spec : forall _1' : () . exists x : Alloc_Vec_IntoIter_IntoIter_Type.t_intoiter t a . Invariant0.invariant' x
+end
+module CreusotContracts_Std1_Vec_Impl7_IsInhabited
+  type t
+  type a
+  use Alloc_Vec_IntoIter_IntoIter_Type as Alloc_Vec_IntoIter_IntoIter_Type
+  clone CreusotContracts_Std1_Vec_Impl7_Invariant_Stub as Invariant0 with
+    type t = t,
+    type a = a
+  function is_inhabited (_1' : ()) : () =
+    ()
+  val is_inhabited (_1' : ()) : ()
+    ensures { result = is_inhabited _1' }
+    
+  axiom is_inhabited_spec : forall _1' : () . exists x : Alloc_Vec_IntoIter_IntoIter_Type.t_intoiter t a . Invariant0.invariant' x
+end
 module CreusotContracts_Std1_Vec_Impl8_ProducesRefl_Stub
   type t
   type a
@@ -1488,6 +1552,14 @@ module C08CollectExtend_ExtendIndex
     type a = Alloc_Alloc_Global_Type.t_global,
     predicate Produces0.produces = Produces0.produces,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl7_Invariant as Invariant0 with
+    type t = uint32,
+    type a = Alloc_Alloc_Global_Type.t_global
+  clone CreusotContracts_Std1_Vec_Impl7_IsInhabited as IsInhabited0 with
+    type t = uint32,
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
   clone Core_Num_Impl12_Max as Max0
   clone CreusotContracts_Std1_Slice_Impl0_ShallowModel as ShallowModel5 with
     type t = uint32,
@@ -1508,9 +1580,6 @@ module C08CollectExtend_ExtendIndex
     type a = Alloc_Alloc_Global_Type.t_global,
     predicate Resolve0.resolve = Resolve3.resolve,
     function ShallowModel0.shallow_model = ShallowModel7.shallow_model
-  clone CreusotContracts_Std1_Vec_Impl7_Invariant as Invariant0 with
-    type t = uint32,
-    type a = Alloc_Alloc_Global_Type.t_global
   clone CreusotContracts_Std1_Vec_Impl3_IntoIterPost as IntoIterPost0 with
     type t = uint32,
     type a = Alloc_Alloc_Global_Type.t_global,
@@ -1665,6 +1734,10 @@ module C08CollectExtend_CollectExample
     predicate Invariant0.invariant' = Invariant0.invariant',
     predicate Produces0.produces = Produces0.produces,
     type Item0.item = uint32,
+    axiom .
+  clone CreusotContracts_Invariant_Invariant_IsInhabited_Interface as IsInhabited0 with
+    type self = i,
+    predicate Invariant0.invariant' = Invariant0.invariant',
     axiom .
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type

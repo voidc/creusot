@@ -71,6 +71,14 @@ impl<I: Iterator, B, F: FnMut(I::Item, Ghost<Seq<I::Item>>) -> B> Invariant
             self.next_precondition()
         }
     }
+
+    #[logic]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<I: Iterator, B, F: FnMut(I::Item, Ghost<Seq<I::Item>>) -> B> ::std::iter::Iterator

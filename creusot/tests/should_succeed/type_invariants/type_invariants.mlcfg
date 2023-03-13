@@ -20,20 +20,53 @@ module TypeInvariants_Impl0_Invariant
     ensures { result = invariant' self }
     
 end
+module TypeInvariants_Impl0_IsInhabited_Stub
+  use TypeInvariants_WithInvariant_Type as TypeInvariants_WithInvariant_Type
+  clone TypeInvariants_Impl0_Invariant_Stub as Invariant0
+  function is_inhabited [#"../type_invariants.rs" 15 4 17 20] (_1' : ()) : ()
+end
+module TypeInvariants_Impl0_IsInhabited_Interface
+  use TypeInvariants_WithInvariant_Type as TypeInvariants_WithInvariant_Type
+  clone TypeInvariants_Impl0_Invariant_Stub as Invariant0
+  function is_inhabited [#"../type_invariants.rs" 15 4 17 20] (_1' : ()) : ()
+  axiom is_inhabited_spec : forall _1' : () . [#"../type_invariants.rs" 14 4 14 45] exists x : TypeInvariants_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x
+end
+module TypeInvariants_Impl0_IsInhabited
+  use TypeInvariants_WithInvariant_Type as TypeInvariants_WithInvariant_Type
+  clone TypeInvariants_Impl0_Invariant_Stub as Invariant0
+  function is_inhabited [#"../type_invariants.rs" 15 4 17 20] (_1' : ()) : () =
+    [#"../type_invariants.rs" 13 4 13 10] ()
+  val is_inhabited [#"../type_invariants.rs" 15 4 17 20] (_1' : ()) : ()
+    ensures { result = is_inhabited _1' }
+    
+  axiom is_inhabited_spec : forall _1' : () . [#"../type_invariants.rs" 14 4 14 45] exists x : TypeInvariants_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x
+end
+module TypeInvariants_Impl0_IsInhabited_Impl
+  use TypeInvariants_WithInvariant_Type as TypeInvariants_WithInvariant_Type
+  clone TypeInvariants_Impl0_Invariant as Invariant0
+  let rec ghost function is_inhabited [#"../type_invariants.rs" 15 4 17 20] (_1' : ()) : ()
+    ensures { [#"../type_invariants.rs" 14 4 14 45] exists x : TypeInvariants_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"../type_invariants.rs" 13 4 13 10] ()
+end
 module TypeInvariants_Id_Interface
   use TypeInvariants_WithInvariant_Type as TypeInvariants_WithInvariant_Type
   clone TypeInvariants_Impl0_Invariant_Stub as Invariant0
-  val id [#"../type_invariants.rs" 14 0 14 44] (x : TypeInvariants_WithInvariant_Type.t_withinvariant) : TypeInvariants_WithInvariant_Type.t_withinvariant
-    requires {[#"../type_invariants.rs" 14 10 14 11] Invariant0.invariant' x}
-    ensures { [#"../type_invariants.rs" 14 0 14 44] Invariant0.invariant' result }
+  val id [#"../type_invariants.rs" 22 0 22 44] (x : TypeInvariants_WithInvariant_Type.t_withinvariant) : TypeInvariants_WithInvariant_Type.t_withinvariant
+    requires {[#"../type_invariants.rs" 22 10 22 11] Invariant0.invariant' x}
+    ensures { [#"../type_invariants.rs" 22 0 22 44] Invariant0.invariant' result }
     
 end
 module TypeInvariants_Id
   use TypeInvariants_WithInvariant_Type as TypeInvariants_WithInvariant_Type
   clone TypeInvariants_Impl0_Invariant as Invariant0
-  let rec cfg id [#"../type_invariants.rs" 14 0 14 44] [@cfg:stackify] [@cfg:subregion_analysis] (x : TypeInvariants_WithInvariant_Type.t_withinvariant) : TypeInvariants_WithInvariant_Type.t_withinvariant
-    requires {[#"../type_invariants.rs" 14 10 14 11] Invariant0.invariant' x}
-    ensures { [#"../type_invariants.rs" 14 0 14 44] Invariant0.invariant' result }
+  clone TypeInvariants_Impl0_IsInhabited as IsInhabited0 with
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  let rec cfg id [#"../type_invariants.rs" 22 0 22 44] [@cfg:stackify] [@cfg:subregion_analysis] (x : TypeInvariants_WithInvariant_Type.t_withinvariant) : TypeInvariants_WithInvariant_Type.t_withinvariant
+    requires {[#"../type_invariants.rs" 22 10 22 11] Invariant0.invariant' x}
+    ensures { [#"../type_invariants.rs" 22 0 22 44] Invariant0.invariant' result }
     
    = [@vc:do_not_keep_trace] [@vc:sp]
   var _0 : TypeInvariants_WithInvariant_Type.t_withinvariant;
@@ -50,5 +83,7 @@ module TypeInvariants_Id
   
 end
 module TypeInvariants_Impl0
-  
+  use TypeInvariants_WithInvariant_Type as TypeInvariants_WithInvariant_Type
+  clone TypeInvariants_Impl0_Invariant as Invariant0
+  goal is_inhabited_refn : [#"../type_invariants.rs" 15 4 17 20] forall result : () . (exists x : TypeInvariants_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x /\ Invariant0.invariant' x) -> (exists x : TypeInvariants_WithInvariant_Type.t_withinvariant . Invariant0.invariant' x)
 end

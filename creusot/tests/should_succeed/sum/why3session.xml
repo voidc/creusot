@@ -18,16 +18,16 @@
   <proof prover="2"><result status="valid" time="0.00" steps="22"/></proof>
   </goal>
   <goal name="sum_first_n&#39;vc.3" expl="loop invariant init" proved="true">
-  <proof prover="2"><result status="valid" time="0.01" steps="145"/></proof>
+  <proof prover="2"><result status="valid" time="0.01" steps="144"/></proof>
   </goal>
   <goal name="sum_first_n&#39;vc.4" expl="precondition" proved="true">
   <proof prover="2"><result status="valid" time="0.00" steps="20"/></proof>
   </goal>
   <goal name="sum_first_n&#39;vc.5" expl="postcondition" proved="true">
-  <proof prover="2"><result status="valid" time="0.04" steps="1115"/></proof>
+  <proof prover="2"><result status="valid" time="0.04" steps="1116"/></proof>
   </goal>
   <goal name="sum_first_n&#39;vc.6" expl="integer overflow" proved="true">
-  <proof prover="2"><result status="valid" time="0.06" steps="1849"/></proof>
+  <proof prover="2"><result status="valid" time="0.06" steps="1850"/></proof>
   </goal>
   <goal name="sum_first_n&#39;vc.7" expl="loop invariant preservation" proved="true">
   <proof prover="2"><result status="valid" time="0.01" steps="31"/></proof>
@@ -36,7 +36,7 @@
   <proof prover="2"><result status="valid" time="0.01" steps="150"/></proof>
   </goal>
   <goal name="sum_first_n&#39;vc.9" expl="loop invariant preservation" proved="true">
-  <proof prover="2"><result status="valid" time="0.41" steps="8407"/></proof>
+  <proof prover="2"><result status="valid" time="0.59" steps="8372"/></proof>
   </goal>
  </transf>
  </goal>

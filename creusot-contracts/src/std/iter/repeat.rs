@@ -15,6 +15,14 @@ impl<T> Invariant for Repeat<T> {
     fn invariant(self) -> bool {
         pearlite! { true }
     }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<T: Clone> Iterator for Repeat<T> {

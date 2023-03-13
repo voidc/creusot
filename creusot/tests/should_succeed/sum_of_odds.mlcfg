@@ -399,6 +399,33 @@ module CreusotContracts_Std1_Iter_Impl0_IntoIterPost
     ensures { result = into_iter_post self res }
     
 end
+module CreusotContracts_Std1_Ops_Impl3_IsInhabited_Stub
+  type idx
+  use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Std1_Ops_Impl3_Invariant_Stub as Invariant0 with
+    type idx = idx
+  function is_inhabited (_1' : ()) : ()
+end
+module CreusotContracts_Std1_Ops_Impl3_IsInhabited_Interface
+  type idx
+  use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Std1_Ops_Impl3_Invariant_Stub as Invariant0 with
+    type idx = idx
+  function is_inhabited (_1' : ()) : ()
+  axiom is_inhabited_spec : forall _1' : () . exists x : Core_Ops_Range_Range_Type.t_range idx . Invariant0.invariant' x
+end
+module CreusotContracts_Std1_Ops_Impl3_IsInhabited
+  type idx
+  use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Std1_Ops_Impl3_Invariant_Stub as Invariant0 with
+    type idx = idx
+  function is_inhabited (_1' : ()) : () =
+    ()
+  val is_inhabited (_1' : ()) : ()
+    ensures { result = is_inhabited _1' }
+    
+  axiom is_inhabited_spec : forall _1' : () . exists x : Core_Ops_Range_Range_Type.t_range idx . Invariant0.invariant' x
+end
 module CreusotContracts_Std1_Iter_Range_Impl0_ProducesRefl_Stub
   type idx
   use seq.Seq
@@ -570,6 +597,10 @@ module SumOfOdds_ComputeSumOfOdd
     type idx = uint32,
     predicate Invariant0.invariant' = Invariant0.invariant',
     predicate Produces0.produces = Produces0.produces,
+    axiom .
+  clone CreusotContracts_Std1_Ops_Impl3_IsInhabited as IsInhabited0 with
+    type idx = uint32,
+    predicate Invariant0.invariant' = Invariant0.invariant',
     axiom .
   clone CreusotContracts_Std1_Iter_Impl0_IntoIterPost as IntoIterPost0 with
     type i = Core_Ops_Range_Range_Type.t_range uint32

@@ -334,6 +334,14 @@ impl<'a, T> Invariant for Iter<'a, T> {
     fn invariant(self) -> bool {
         true
     }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<'a, T> Iterator for Iter<'a, T> {
@@ -384,6 +392,14 @@ impl<'a, T> Invariant for IterMut<'a, T> {
     fn invariant(self) -> bool {
         // Property that is always true but we must carry around..
         pearlite! { (@^@self).len() == (@*@self).len() }
+    }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
     }
 }
 

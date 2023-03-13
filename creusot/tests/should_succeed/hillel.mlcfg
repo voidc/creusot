@@ -1281,6 +1281,33 @@ module CreusotContracts_Std1_Iter_Impl0_IntoIterPost
     ensures { result = into_iter_post self res }
     
 end
+module CreusotContracts_Std1_Slice_Impl14_IsInhabited_Stub
+  type t
+  use Core_Slice_Iter_Iter_Type as Core_Slice_Iter_Iter_Type
+  clone CreusotContracts_Std1_Slice_Impl14_Invariant_Stub as Invariant0 with
+    type t = t
+  function is_inhabited (_1' : ()) : ()
+end
+module CreusotContracts_Std1_Slice_Impl14_IsInhabited_Interface
+  type t
+  use Core_Slice_Iter_Iter_Type as Core_Slice_Iter_Iter_Type
+  clone CreusotContracts_Std1_Slice_Impl14_Invariant_Stub as Invariant0 with
+    type t = t
+  function is_inhabited (_1' : ()) : ()
+  axiom is_inhabited_spec : forall _1' : () . exists x : Core_Slice_Iter_Iter_Type.t_iter t . Invariant0.invariant' x
+end
+module CreusotContracts_Std1_Slice_Impl14_IsInhabited
+  type t
+  use Core_Slice_Iter_Iter_Type as Core_Slice_Iter_Iter_Type
+  clone CreusotContracts_Std1_Slice_Impl14_Invariant_Stub as Invariant0 with
+    type t = t
+  function is_inhabited (_1' : ()) : () =
+    ()
+  val is_inhabited (_1' : ()) : ()
+    ensures { result = is_inhabited _1' }
+    
+  axiom is_inhabited_spec : forall _1' : () . exists x : Core_Slice_Iter_Iter_Type.t_iter t . Invariant0.invariant' x
+end
 module CreusotContracts_Std1_Slice_Impl15_ProducesRefl_Stub
   type t
   use seq.Seq
@@ -1469,10 +1496,14 @@ module Hillel_InsertUnique
     type t = t,
     predicate Produces0.produces = Produces0.produces,
     axiom .
-  clone CreusotContracts_Std1_Iter_Impl0_IntoIterPost as IntoIterPost0 with
-    type i = Core_Slice_Iter_Iter_Type.t_iter t
   clone CreusotContracts_Std1_Slice_Impl14_Invariant as Invariant0 with
     type t = t
+  clone CreusotContracts_Std1_Slice_Impl14_IsInhabited as IsInhabited0 with
+    type t = t,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  clone CreusotContracts_Std1_Iter_Impl0_IntoIterPost as IntoIterPost0 with
+    type i = Core_Slice_Iter_Iter_Type.t_iter t
   clone CreusotContracts_Std1_Iter_Impl0_IntoIterPre as IntoIterPre0 with
     type i = Core_Slice_Iter_Iter_Type.t_iter t,
     predicate Invariant0.invariant' = Invariant0.invariant'
@@ -2016,6 +2047,33 @@ module CreusotContracts_Std1_Slice_Impl1_DeepModel
     
   axiom deep_model_spec : forall self : seq t . (forall i : int . 0 <= i /\ i < Seq.length (deep_model self) -> Seq.get (deep_model self) i = DeepModel0.deep_model (Seq.get (ShallowModel0.shallow_model self) i)) && Seq.length (ShallowModel0.shallow_model self) = Seq.length (deep_model self)
 end
+module CreusotContracts_Std1_Ops_Impl3_IsInhabited_Stub
+  type idx
+  use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Std1_Ops_Impl3_Invariant_Stub as Invariant0 with
+    type idx = idx
+  function is_inhabited (_1' : ()) : ()
+end
+module CreusotContracts_Std1_Ops_Impl3_IsInhabited_Interface
+  type idx
+  use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Std1_Ops_Impl3_Invariant_Stub as Invariant0 with
+    type idx = idx
+  function is_inhabited (_1' : ()) : ()
+  axiom is_inhabited_spec : forall _1' : () . exists x : Core_Ops_Range_Range_Type.t_range idx . Invariant0.invariant' x
+end
+module CreusotContracts_Std1_Ops_Impl3_IsInhabited
+  type idx
+  use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Std1_Ops_Impl3_Invariant_Stub as Invariant0 with
+    type idx = idx
+  function is_inhabited (_1' : ()) : () =
+    ()
+  val is_inhabited (_1' : ()) : ()
+    ensures { result = is_inhabited _1' }
+    
+  axiom is_inhabited_spec : forall _1' : () . exists x : Core_Ops_Range_Range_Type.t_range idx . Invariant0.invariant' x
+end
 module CreusotContracts_Std1_Iter_Range_Impl0_ProducesRefl_Stub
   type idx
   use seq.Seq
@@ -2252,6 +2310,10 @@ module Hillel_Unique
     type idx = usize,
     predicate Invariant0.invariant' = Invariant0.invariant',
     predicate Produces0.produces = Produces0.produces,
+    axiom .
+  clone CreusotContracts_Std1_Ops_Impl3_IsInhabited as IsInhabited0 with
+    type idx = usize,
+    predicate Invariant0.invariant' = Invariant0.invariant',
     axiom .
   clone CreusotContracts_Std1_Iter_Impl0_IntoIterPost as IntoIterPost0 with
     type i = Core_Ops_Range_Range_Type.t_range usize
@@ -2809,6 +2871,10 @@ module Hillel_Fulcrum
     predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Produces0.produces = Produces1.produces,
     axiom .
+  clone CreusotContracts_Std1_Ops_Impl3_IsInhabited as IsInhabited1 with
+    type idx = usize,
+    predicate Invariant0.invariant' = Invariant1.invariant',
+    axiom .
   clone CreusotContracts_Std1_Iter_Impl0_IntoIterPost as IntoIterPost1 with
     type i = Core_Ops_Range_Range_Type.t_range usize
   clone CreusotContracts_Std1_Iter_Impl0_IntoIterPre as IntoIterPre1 with
@@ -2848,6 +2914,12 @@ module Hillel_Fulcrum
     type t = uint32,
     predicate Produces0.produces = Produces0.produces,
     axiom .
+  clone CreusotContracts_Std1_Slice_Impl14_Invariant as Invariant0 with
+    type t = uint32
+  clone CreusotContracts_Std1_Slice_Impl14_IsInhabited as IsInhabited0 with
+    type t = uint32,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
   clone CreusotContracts_Std1_Slice_Impl11_IntoIterPost as IntoIterPost0 with
     type t = uint32,
     function ShallowModel0.shallow_model = ShallowModel2.shallow_model
@@ -2876,8 +2948,6 @@ module Hillel_Fulcrum
   clone Core_Slice_Impl0_Len_Interface as Len0 with
     type t = uint32,
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model
-  clone CreusotContracts_Std1_Slice_Impl14_Invariant as Invariant0 with
-    type t = uint32
   clone Core_Slice_Iter_Impl181_Next_Interface as Next0 with
     type t = uint32,
     predicate Invariant0.invariant' = Invariant0.invariant',

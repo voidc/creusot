@@ -48,6 +48,14 @@ impl<I: Invariant> Invariant for Take<I> {
     fn invariant(self) -> bool {
         self.iter().invariant()
     }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<I: Iterator> Iterator for Take<I> {

@@ -122,6 +122,14 @@ impl<T> Invariant for IntoIter<T> {
     fn invariant(self) -> bool {
         pearlite! { true }
     }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<T> Iterator for IntoIter<T> {
@@ -179,6 +187,14 @@ impl<'a, T> Invariant for Iter<'a, T> {
     #[predicate]
     fn invariant(self) -> bool {
         pearlite! { true }
+    }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
     }
 }
 
@@ -240,6 +256,14 @@ impl<'a, T> Invariant for IterMut<'a, T> {
     #[predicate]
     fn invariant(self) -> bool {
         pearlite! { true }
+    }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
     }
 }
 

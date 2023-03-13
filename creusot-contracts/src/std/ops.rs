@@ -165,12 +165,28 @@ impl<Idx> Invariant for Range<Idx> {
     fn invariant(self) -> bool {
         pearlite! { true }
     }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
+    }
 }
 
 impl<Idx> Invariant for RangeInclusive<Idx> {
     #[predicate]
     fn invariant(self) -> bool {
         pearlite! { true }
+    }
+
+    #[law]
+    #[ensures(exists<x: Self> x.invariant())]
+    fn is_inhabited()
+    where
+        Self: Sized,
+    {
     }
 }
 
