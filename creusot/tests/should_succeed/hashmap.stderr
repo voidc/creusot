@@ -1,0 +1,8 @@
+error[creusot]: Use of borrowed variable self
+   --> hashmap.rs:114:21
+    |
+114 |         #[invariant(^old_self.inner() == ^self)]
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error: aborting due to previous error
+
