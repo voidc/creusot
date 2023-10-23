@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 SCRIPTPATH=$(dirname "$BASH_SOURCE")
-why3 --warn-off=unused_variable --warn-off=clone_not_abstract --warn-off=axiom_abstract ide -L $SCRIPTPATH/prelude $@
+XDG_CURRENT_DESKTOP=GNOME QT_QPA_PLATFORMTHEME=lxqt GTK_THEME=Default why3 --warn-off=unused_variable --warn-off=clone_not_abstract --warn-off=axiom_abstract ide -L $SCRIPTPATH/prelude $@
