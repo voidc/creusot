@@ -1,0 +1,1033 @@
+
+module CreusotContracts_Logic_Seq_Impl0_Tail_Stub
+  type t
+  use seq.Seq
+  function tail (self : Seq.seq t) : Seq.seq t
+end
+module CreusotContracts_Logic_Seq_Impl0_Tail_Interface
+  type t
+  use seq.Seq
+  function tail (self : Seq.seq t) : Seq.seq t
+  val tail (self : Seq.seq t) : Seq.seq t
+    ensures { result = tail self }
+    
+end
+module CreusotContracts_Logic_Seq_Impl0_Tail
+  type t
+  use seq.Seq
+  use seq_ext.SeqExt
+  function tail (self : Seq.seq t) : Seq.seq t =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/logic/seq.rs" 52 8 52 39] SeqExt.subsequence self 1 (Seq.length self)
+  val tail (self : Seq.seq t) : Seq.seq t
+    ensures { result = tail self }
+    
+end
+module ElimExist_Sum_Stub
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  function sum [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 10 0 10 30] (s : Seq.seq int32) : int
+end
+module ElimExist_Sum_Interface
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  function sum [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 10 0 10 30] (s : Seq.seq int32) : int
+  val sum [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 10 0 10 30] (s : Seq.seq int32) : int
+    ensures { result = sum s }
+    
+end
+module ElimExist_Sum
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  clone CreusotContracts_Logic_Seq_Impl0_Tail_Stub as Tail0 with
+    type t = int32
+  function sum [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 10 0 10 30] (s : Seq.seq int32) : int
+  val sum [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 10 0 10 30] (s : Seq.seq int32) : int
+    ensures { result = sum s }
+    
+  axiom def : forall s : Seq.seq int32 . sum s = ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 11 4 17 5] if Seq.length s = 0 then
+    0
+  else
+    Int32.to_int (Seq.get s 0) + sum (Tail0.tail s)
+  )
+end
+module ElimExist_Sum_Impl
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  clone CreusotContracts_Logic_Seq_Impl0_Tail as Tail0 with
+    type t = int32
+  let rec ghost function sum [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 10 0 10 30] (s : Seq.seq int32) : int
+    variant {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 9 10 9 17] Seq.length s}
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 11 4 17 5] if pure {Seq.length s = 0} then
+      0
+    else
+      Int32.to_int (Seq.get s 0) + (let a' = Tail0.tail s in sum a')
+    
+end
+module CreusotContracts_Invariant_Inv_Stub
+  type t
+  predicate inv (_x : t)
+end
+module CreusotContracts_Invariant_Inv_Interface
+  type t
+  predicate inv (_x : t)
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module CreusotContracts_Invariant_Inv
+  type t
+  predicate inv (_x : t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/invariant.rs" 16 4 16 8] true
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module Core_Num_Impl2_Max_Stub
+  use prelude.Int
+  use prelude.Int32
+  val constant mAX'  : int32
+end
+module Core_Num_Impl2_Max
+  use prelude.Int
+  use prelude.Int32
+  let constant mAX'  : int32 = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/home/dominik/.rustup/toolchains/nightly-2023-06-29-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/num/int_macros.rs" 51 8 51 27] (2147483647 : int32)
+end
+module ElimExist_Gen_Produces_Stub
+  type self
+  use prelude.Int32
+  use prelude.Int
+  use seq.Seq
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  predicate produces [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 4 23 59] (self : self) (visited : Seq.seq int32) (_o : self)
+    
+end
+module ElimExist_Gen_Produces_Interface
+  type self
+  use prelude.Int32
+  use prelude.Int
+  use seq.Seq
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  predicate produces [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 4 23 59] (self : self) (visited : Seq.seq int32) (_o : self)
+    
+  val produces [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 4 23 59] (self : self) (visited : Seq.seq int32) (_o : self) : bool
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 16 23 20] Inv0.inv self}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 41 23 43] Inv0.inv _o}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 22 4 22 51] result -> Sum0.sum visited < Int32.to_int Max0.mAX' }
+    ensures { result = produces self visited _o }
+    
+  axiom produces_spec : forall self : self, visited : Seq.seq int32, _o : self . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 16 23 20] Inv0.inv self) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 41 23 43] Inv0.inv _o) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 22 4 22 51] produces self visited _o -> Sum0.sum visited < Int32.to_int Max0.mAX')
+end
+module ElimExist_Gen_Produces
+  type self
+  use prelude.Int32
+  use prelude.Int
+  use seq.Seq
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  predicate produces [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 4 23 59] (self : self) (visited : Seq.seq int32) (_o : self)
+    
+  val produces [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 4 23 59] (self : self) (visited : Seq.seq int32) (_o : self) : bool
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 16 23 20] Inv0.inv self}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 41 23 43] Inv0.inv _o}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 22 4 22 51] result -> Sum0.sum visited < Int32.to_int Max0.mAX' }
+    ensures { result = produces self visited _o }
+    
+  axiom produces_spec : forall self : self, visited : Seq.seq int32, _o : self . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 16 23 20] Inv0.inv self) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 23 41 23 43] Inv0.inv _o) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 22 4 22 51] produces self visited _o -> Sum0.sum visited < Int32.to_int Max0.mAX')
+end
+module CreusotContracts_Resolve_Resolve_Resolve_Stub
+  type self
+  predicate resolve (self : self)
+end
+module CreusotContracts_Resolve_Resolve_Resolve_Interface
+  type self
+  predicate resolve (self : self)
+  val resolve (self : self) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Resolve_Resolve
+  type self
+  predicate resolve (self : self)
+  val resolve (self : self) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Impl1_Resolve_Stub
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t)
+end
+module CreusotContracts_Resolve_Impl1_Resolve_Interface
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t)
+  val resolve (self : borrowed t) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Impl1_Resolve
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/resolve.rs" 25 20 25 34]  ^ self =  * self
+  val resolve (self : borrowed t) : bool
+    ensures { result = resolve self }
+    
+end
+module TyInv_Trivial
+  type t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = t
+  axiom inv_trivial : forall self : t . Inv0.inv self = true
+end
+module ElimExist_Gen_Next_Interface
+  type self
+  use prelude.Borrow
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = self
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = self,
+    predicate Inv0.inv = Inv1.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed self
+  val next [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 36 4 36 30] (self : borrowed self) : int32
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 36 17 36 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 35 14 35 61] Produces0.produces ( * self) (Seq.singleton result) ( ^ self) }
+    
+end
+module ElimExist_Gen_ProducesRefl_Stub
+  type self
+  use seq.Seq
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = self,
+    predicate Inv0.inv = Inv0.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  function produces_refl [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 4 27 30] (a : self) : ()
+end
+module ElimExist_Gen_ProducesRefl_Interface
+  type self
+  use seq.Seq
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = self,
+    predicate Inv0.inv = Inv0.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  function produces_refl [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 4 27 30] (a : self) : ()
+  val produces_refl [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 4 27 30] (a : self) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 21 27 22] Inv0.inv a}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 26 14 26 39] Produces0.produces a (Seq.empty ) a }
+    ensures { result = produces_refl a }
+    
+  axiom produces_refl_spec : forall a : self . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 21 27 22] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 26 14 26 39] Produces0.produces a (Seq.empty ) a)
+end
+module ElimExist_Gen_ProducesRefl
+  type self
+  use seq.Seq
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = self,
+    predicate Inv0.inv = Inv0.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  function produces_refl [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 4 27 30] (a : self) : ()
+  val produces_refl [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 4 27 30] (a : self) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 21 27 22] Inv0.inv a}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 26 14 26 39] Produces0.produces a (Seq.empty ) a }
+    ensures { result = produces_refl a }
+    
+  axiom produces_refl_spec : forall a : self . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 27 21 27 22] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 26 14 26 39] Produces0.produces a (Seq.empty ) a)
+end
+module ElimExist_Gen_ProducesTrans_Stub
+  type self
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = self,
+    predicate Inv0.inv = Inv0.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  function produces_trans [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 4 33 77] (a : self) (ab : Seq.seq int32) (b : self) (bc : Seq.seq int32) (c : self) : ()
+    
+end
+module ElimExist_Gen_ProducesTrans_Interface
+  type self
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = self,
+    predicate Inv0.inv = Inv0.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  function produces_trans [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 4 33 77] (a : self) (ab : Seq.seq int32) (b : self) (bc : Seq.seq int32) (c : self) : ()
+    
+  val produces_trans [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 4 33 77] (a : self) (ab : Seq.seq int32) (b : self) (bc : Seq.seq int32) (c : self) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 30 15 30 32] Produces0.produces a ab b}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 31 15 31 32] Produces0.produces b bc c}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 22 33 23] Inv0.inv a}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 45 33 46] Inv0.inv b}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 68 33 69] Inv0.inv c}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 32 14 32 42] Produces0.produces a (Seq.(++) ab bc) c }
+    ensures { result = produces_trans a ab b bc c }
+    
+  axiom produces_trans_spec : forall a : self, ab : Seq.seq int32, b : self, bc : Seq.seq int32, c : self . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 30 15 30 32] Produces0.produces a ab b) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 31 15 31 32] Produces0.produces b bc c) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 22 33 23] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 45 33 46] Inv0.inv b) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 68 33 69] Inv0.inv c) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 32 14 32 42] Produces0.produces a (Seq.(++) ab bc) c)
+end
+module ElimExist_Gen_ProducesTrans
+  type self
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = self,
+    predicate Inv0.inv = Inv0.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  function produces_trans [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 4 33 77] (a : self) (ab : Seq.seq int32) (b : self) (bc : Seq.seq int32) (c : self) : ()
+    
+  val produces_trans [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 4 33 77] (a : self) (ab : Seq.seq int32) (b : self) (bc : Seq.seq int32) (c : self) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 30 15 30 32] Produces0.produces a ab b}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 31 15 31 32] Produces0.produces b bc c}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 22 33 23] Inv0.inv a}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 45 33 46] Inv0.inv b}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 68 33 69] Inv0.inv c}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 32 14 32 42] Produces0.produces a (Seq.(++) ab bc) c }
+    ensures { result = produces_trans a ab b bc c }
+    
+  axiom produces_trans_spec : forall a : self, ab : Seq.seq int32, b : self, bc : Seq.seq int32, c : self . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 30 15 30 32] Produces0.produces a ab b) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 31 15 31 32] Produces0.produces b bc c) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 22 33 23] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 45 33 46] Inv0.inv b) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 33 68 33 69] Inv0.inv c) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 32 14 32 42] Produces0.produces a (Seq.(++) ab bc) c)
+end
+module ElimExist_SumN_Interface
+  type g
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  use prelude.UIntSize
+  use prelude.Borrow
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = g
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = g,
+    predicate Inv0.inv = Inv1.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed g
+  val sum_n [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 40 0 40 48] (g : borrowed g) (n : usize) : int32
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 40 21 40 22] Inv0.inv g}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 39 0 39 87] exists s : Seq.seq int32 . Seq.length s = UIntSize.to_int n /\ Produces0.produces ( * g) s ( ^ g) /\ Int32.to_int result = Sum0.sum s }
+    
+end
+module ElimExist_SumN
+  type g
+  use prelude.Ghost
+  use prelude.Int
+  use prelude.Int32
+  use prelude.UIntSize
+  use seq.Seq
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = g
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = g,
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = borrowed g
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = borrowed g,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Logic_Seq_Impl0_Tail as Tail0 with
+    type t = int32
+  clone Core_Num_Impl2_Max as Max0
+  clone ElimExist_Sum as Sum0 with
+    function Tail0.tail = Tail0.tail,
+    axiom .
+  clone ElimExist_Gen_Produces_Interface as Produces0 with
+    type self = g,
+    predicate Inv0.inv = Inv2.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  clone ElimExist_Gen_ProducesTrans_Interface as ProducesTrans0 with
+    type self = g,
+    predicate Produces0.produces = Produces0.produces,
+    predicate Inv0.inv = Inv2.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  clone ElimExist_Gen_ProducesRefl_Interface as ProducesRefl0 with
+    type self = g,
+    predicate Inv0.inv = Inv2.inv,
+    predicate Produces0.produces = Produces0.produces,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  use prelude.Ghost
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = Ghost.ghost_ty (borrowed g)
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = Ghost.ghost_ty (borrowed g),
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone ElimExist_Gen_Next_Interface as Next0 with
+    type self = g,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Produces0.produces = Produces0.produces,
+    predicate Inv1.inv = Inv2.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX'
+  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve1 with
+    type t = g
+  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve0 with
+    type self = Ghost.ghost_ty (borrowed g)
+  let rec cfg sum_n [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 40 0 40 48] [@cfg:stackify] [@cfg:subregion_analysis] (g : borrowed g) (n : usize) : int32
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 40 21 40 22] Inv1.inv g}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 39 0 39 87] exists s : Seq.seq int32 . Seq.length s = UIntSize.to_int n /\ Produces0.produces ( * g) s ( ^ g) /\ Int32.to_int result = Sum0.sum s }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : int32;
+  var g : borrowed g = g;
+  var n : usize = n;
+  var old_g : Ghost.ghost_ty (borrowed g);
+  var r : int32;
+  var i : usize;
+  var _14 : int32;
+  var _15 : borrowed g;
+  {
+    goto BB0
+  }
+  BB0 {
+    old_g <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 41 16 41 25] Ghost.new g);
+    goto BB1
+  }
+  BB1 {
+    assert { [@expl:type invariant] Inv0.inv old_g };
+    assume { Resolve0.resolve old_g };
+    r <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 42 16 42 17] (0 : int32));
+    i <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 43 16 43 17] (0 : usize));
+    goto BB2
+  }
+  BB2 {
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 44 4 44 92] exists s : Seq.seq int32 . Seq.length s = UIntSize.to_int i /\ Produces0.produces ( * Ghost.inner old_g) s ( * g) /\ Int32.to_int r = Sum0.sum s };
+    goto BB3
+  }
+  BB3 {
+    switch ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 45 10 45 15] i < n)
+      | False -> goto BB6
+      | True -> goto BB4
+      end
+  }
+  BB4 {
+    _15 <- Borrow.borrow_mut ( * g);
+    g <- { g with current = ( ^ _15) };
+    assume { Inv2.inv ( ^ _15) };
+    _14 <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 46 13 46 21] Next0.next _15);
+    _15 <- any borrowed g;
+    goto BB5
+  }
+  BB5 {
+    r <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 46 8 46 21] r + _14);
+    _14 <- any int32;
+    i <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 47 8 47 14] i + ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 47 13 47 14] (1 : usize)));
+    goto BB2
+  }
+  BB6 {
+    assert { [@expl:type invariant] Inv1.inv g };
+    assume { Resolve1.resolve g };
+    _0 <- r;
+    return _0
+  }
+  
+end
+module ElimExist_SumNElim_Interface
+  type g
+  use seq.Seq
+  use prelude.Int
+  use prelude.Int32
+  use prelude.UIntSize
+  use prelude.Borrow
+  clone Core_Num_Impl2_Max_Stub as Max0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = g
+  clone ElimExist_Sum_Stub as Sum0 with
+    axiom .
+  clone ElimExist_Gen_Produces_Stub as Produces0 with
+    type self = g,
+    predicate Inv0.inv = Inv1.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed g
+  val sum_n_elim [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 53 0 53 53] (g : borrowed g) (n : usize) : int32
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 53 26 53 27] Inv0.inv g}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 52 0 52 87] exists s : Seq.seq int32 . Seq.length s = UIntSize.to_int n /\ Produces0.produces ( * g) s ( ^ g) /\ Int32.to_int result = Sum0.sum s }
+    
+end
+module ElimExist_SumNElim
+  type g
+  use prelude.Ghost
+  use prelude.Int
+  use prelude.Int32
+  use prelude.UIntSize
+  use seq.Seq
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = g
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = g,
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = borrowed g
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = borrowed g,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Logic_Seq_Impl0_Tail as Tail0 with
+    type t = int32
+  clone Core_Num_Impl2_Max as Max0
+  clone ElimExist_Sum as Sum0 with
+    function Tail0.tail = Tail0.tail,
+    axiom .
+  clone ElimExist_Gen_Produces_Interface as Produces0 with
+    type self = g,
+    predicate Inv0.inv = Inv2.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  clone ElimExist_Gen_ProducesTrans_Interface as ProducesTrans0 with
+    type self = g,
+    predicate Produces0.produces = Produces0.produces,
+    predicate Inv0.inv = Inv2.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  clone ElimExist_Gen_ProducesRefl_Interface as ProducesRefl0 with
+    type self = g,
+    predicate Inv0.inv = Inv2.inv,
+    predicate Produces0.produces = Produces0.produces,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX',
+    axiom .
+  use prelude.Ghost
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = Ghost.ghost_ty (borrowed g)
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = Ghost.ghost_ty (borrowed g),
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone ElimExist_Gen_Next_Interface as Next0 with
+    type self = g,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Produces0.produces = Produces0.produces,
+    predicate Inv1.inv = Inv2.inv,
+    function Sum0.sum = Sum0.sum,
+    val Max0.mAX' = Max0.mAX'
+  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve1 with
+    type t = g
+  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve0 with
+    type self = Ghost.ghost_ty (borrowed g)
+  let rec cfg sum_n_elim [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 53 0 53 53] [@cfg:stackify] [@cfg:subregion_analysis] (g : borrowed g) (n : usize) : int32
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 53 26 53 27] Inv1.inv g}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 52 0 52 87] exists s : Seq.seq int32 . Seq.length s = UIntSize.to_int n /\ Produces0.produces ( * g) s ( ^ g) /\ Int32.to_int result = Sum0.sum s }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : int32;
+  var g : borrowed g = g;
+  var n : usize = n;
+  var old_g : Ghost.ghost_ty (borrowed g);
+  var r : int32;
+  var i : usize;
+  var s : Ghost.ghost_ty (Seq.seq int32);
+  var x : int32;
+  var _17 : borrowed g;
+  var _18 : Ghost.ghost_ty (Seq.seq int32);
+  {
+    goto BB0
+  }
+  BB0 {
+    old_g <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 54 16 54 25] Ghost.new g);
+    goto BB1
+  }
+  BB1 {
+    assert { [@expl:type invariant] Inv0.inv old_g };
+    assume { Resolve0.resolve old_g };
+    r <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 55 16 55 17] (0 : int32));
+    i <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 56 16 56 17] (0 : usize));
+    s <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 57 16 57 34] Ghost.new (Seq.empty ));
+    goto BB2
+  }
+  BB2 {
+    goto BB3
+  }
+  BB3 {
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 58 16 58 72] Seq.length (Ghost.inner s) = UIntSize.to_int i /\ Produces0.produces ( * Ghost.inner old_g) (Ghost.inner s) ( * g) /\ Int32.to_int r = Sum0.sum (Ghost.inner s) };
+    goto BB4
+  }
+  BB4 {
+    switch ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 59 10 59 15] i < n)
+      | False -> goto BB8
+      | True -> goto BB5
+      end
+  }
+  BB5 {
+    _17 <- Borrow.borrow_mut ( * g);
+    g <- { g with current = ( ^ _17) };
+    assume { Inv2.inv ( ^ _17) };
+    x <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 60 16 60 24] Next0.next _17);
+    _17 <- any borrowed g;
+    goto BB6
+  }
+  BB6 {
+    _18 <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 61 12 61 29] Ghost.new (Seq.snoc (Ghost.inner s) x));
+    goto BB7
+  }
+  BB7 {
+    s <- _18;
+    _18 <- any Ghost.ghost_ty (Seq.seq int32);
+    r <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 62 8 62 14] r + x);
+    i <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 63 8 63 14] i + ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 63 13 63 14] (1 : usize)));
+    goto BB3
+  }
+  BB8 {
+    assert { [@expl:type invariant] Inv1.inv g };
+    assume { Resolve1.resolve g };
+    _0 <- r;
+    return _0
+  }
+  
+end
+module ElimExist_Func_Has_Stub
+  type self
+  use prelude.Int
+  use prelude.Int32
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  predicate has [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 4 71 42] (self : self) (x : int32) (y : int32)
+end
+module ElimExist_Func_Has_Interface
+  type self
+  use prelude.Int
+  use prelude.Int32
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  predicate has [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 4 71 42] (self : self) (x : int32) (y : int32)
+  val has [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 4 71 42] (self : self) (x : int32) (y : int32) : bool
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 12 71 16] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 70 4 70 77] forall y2 : int32 . has self x y /\ has self x y2 -> y = y2 }
+    ensures { result = has self x y }
+    
+  axiom has_spec : forall self : self, x : int32, y : int32 . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 12 71 16] Inv0.inv self) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 70 4 70 77] forall y2 : int32 . has self x y /\ has self x y2 -> y = y2)
+end
+module ElimExist_Func_Has
+  type self
+  use prelude.Int
+  use prelude.Int32
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  predicate has [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 4 71 42] (self : self) (x : int32) (y : int32)
+  val has [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 4 71 42] (self : self) (x : int32) (y : int32) : bool
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 12 71 16] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 70 4 70 77] forall y2 : int32 . has self x y /\ has self x y2 -> y = y2 }
+    ensures { result = has self x y }
+    
+  axiom has_spec : forall self : self, x : int32, y : int32 . ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 71 12 71 16] Inv0.inv self) -> ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 70 4 70 77] forall y2 : int32 . has self x y /\ has self x y2 -> y = y2)
+end
+module CreusotContracts_Logic_Seq_Impl0_Contains_Stub
+  type t
+  use seq.Seq
+  predicate contains (self : Seq.seq t) (e : t)
+end
+module CreusotContracts_Logic_Seq_Impl0_Contains_Interface
+  type t
+  use seq.Seq
+  predicate contains (self : Seq.seq t) (e : t)
+  val contains (self : Seq.seq t) (e : t) : bool
+    ensures { result = contains self e }
+    
+end
+module CreusotContracts_Logic_Seq_Impl0_Contains
+  type t
+  use seq.Seq
+  use prelude.Int
+  predicate contains (self : Seq.seq t) (e : t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/logic/seq.rs" 128 8 128 78] exists i : int . 0 <= i /\ i < Seq.length self /\ Seq.get self i = e
+  val contains (self : Seq.seq t) (e : t) : bool
+    ensures { result = contains self e }
+    
+end
+module CreusotContracts_Logic_Ops_Impl6_IndexLogic_Stub
+  type t
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  function index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+end
+module CreusotContracts_Logic_Ops_Impl6_IndexLogic_Interface
+  type t
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  function index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+  val index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+    ensures { result = index_logic self ix }
+    
+end
+module CreusotContracts_Logic_Ops_Impl6_IndexLogic
+  type t
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  function index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/logic/ops.rs" 85 8 85 33] Seq.get (Ghost.inner self) ix
+  val index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+    ensures { result = index_logic self ix }
+    
+end
+module ElimExist_Func_F_Interface
+  type self
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.Int32
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone ElimExist_Func_Has_Stub as Has0 with
+    type self = self,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  val f [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 74 4 74 31] (self : self) (x : int32) : int32
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 74 10 74 14] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 73 14 73 33] Has0.has self x result }
+    
+end
+module ElimExist_CountZero_Interface
+  type f
+  use prelude.Int
+  use seq.Seq
+  use prelude.Int32
+  use prelude.UIntSize
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = f
+  clone CreusotContracts_Logic_Seq_Impl0_Contains_Stub as Contains0 with
+    type t = int32
+  clone ElimExist_Func_Has_Stub as Has0 with
+    type self = f,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = f
+  val count_zero [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 83 0 83 65] (f : f) (x_min : int32) (x_max : int32) : usize
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 77 11 77 25] x_min <= x_max}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 83 27 83 28] Inv0.inv f}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 78 0 82 2] exists xs : Seq.seq int32 . UIntSize.to_int result = Seq.length xs /\ (forall j : int . forall i : int . 0 <= i /\ i < j /\ j < Seq.length xs -> Seq.get xs i < Seq.get xs j) /\ (forall x : int32 . (x_min <= x /\ x < x_max /\ Has0.has f x (0 : int32)) = Contains0.contains xs x) }
+    
+end
+module ElimExist_CountZero
+  type f
+  use prelude.Int
+  use prelude.UIntSize
+  use seq.Seq
+  use prelude.Ghost
+  use prelude.Int32
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = f
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = f,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = f
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = f,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone ElimExist_Func_Has_Interface as Has0 with
+    type self = f,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone ElimExist_Func_F_Interface as F0 with
+    type self = f,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Has0.has = Has0.has
+  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve0 with
+    type self = f
+  clone CreusotContracts_Logic_Seq_Impl0_Contains as Contains0 with
+    type t = int32
+  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
+    type t = int32
+  let rec cfg count_zero [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 83 0 83 65] [@cfg:stackify] [@cfg:subregion_analysis] (f : f) (x_min : int32) (x_max : int32) : usize
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 77 11 77 25] x_min <= x_max}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 83 27 83 28] Inv0.inv f}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 78 0 82 2] exists xs : Seq.seq int32 . UIntSize.to_int result = Seq.length xs /\ (forall j : int . forall i : int . 0 <= i /\ i < j /\ j < Seq.length xs -> Seq.get xs i < Seq.get xs j) /\ (forall x : int32 . (x_min <= x /\ x < x_max /\ Has0.has f x (0 : int32)) = Contains0.contains xs x) }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : usize;
+  var f : f = f;
+  var x_min : int32 = x_min;
+  var x_max : int32 = x_max;
+  var count : usize;
+  var zeros : Ghost.ghost_ty (Seq.seq int32);
+  var x : int32;
+  var _19 : ();
+  var _21 : int32;
+  var _24 : Ghost.ghost_ty (Seq.seq int32);
+  {
+    goto BB0
+  }
+  BB0 {
+    count <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 84 20 84 21] (0 : usize));
+    zeros <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 85 20 85 38] Ghost.new (Seq.empty ));
+    goto BB1
+  }
+  BB1 {
+    x <- x_min;
+    goto BB2
+  }
+  BB2 {
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 88 16 88 37] UIntSize.to_int count = Seq.length (Ghost.inner zeros) };
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 88 4 88 39] forall j : int . forall i : int . 0 <= i /\ i < j /\ j < Seq.length (Ghost.inner zeros) -> IndexLogic0.index_logic zeros i < IndexLogic0.index_logic zeros j };
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 88 4 88 39] forall x2 : int32 . (x_min <= x2 /\ x2 < x /\ Has0.has f x2 (0 : int32)) = Contains0.contains (Ghost.inner zeros) x2 };
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 91 16 91 63] UIntSize.to_int count <= Int32.to_int x - Int32.to_int x_min /\ x_min <= x /\ x <= x_max };
+    goto BB3
+  }
+  BB3 {
+    switch ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 92 10 92 19] x < x_max)
+      | False -> goto BB10
+      | True -> goto BB4
+      end
+  }
+  BB4 {
+    _21 <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 93 11 93 17] F0.f f x);
+    goto BB5
+  }
+  BB5 {
+    switch ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 93 11 93 22] _21 = ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 93 21 93 22] (0 : int32)))
+      | False -> goto BB8
+      | True -> goto BB6
+      end
+  }
+  BB6 {
+    count <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 94 12 94 22] count + ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 94 21 94 22] (1 : usize)));
+    _24 <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 95 20 95 41] Ghost.new (Seq.snoc (Ghost.inner zeros) x));
+    goto BB7
+  }
+  BB7 {
+    zeros <- _24;
+    _24 <- any Ghost.ghost_ty (Seq.seq int32);
+    _19 <- ();
+    goto BB9
+  }
+  BB8 {
+    _19 <- ();
+    goto BB9
+  }
+  BB9 {
+    x <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 97 8 97 14] x + ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 97 13 97 14] (1 : int32)));
+    goto BB2
+  }
+  BB10 {
+    assert { [@expl:type invariant] Inv0.inv f };
+    assume { Resolve0.resolve f };
+    _0 <- count;
+    goto BB11
+  }
+  BB11 {
+    return _0
+  }
+  
+end
+module ElimExist_CountZero2_Interface
+  type f
+  use prelude.Int
+  use seq.Seq
+  use prelude.Int32
+  use prelude.UIntSize
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = f
+  clone CreusotContracts_Logic_Seq_Impl0_Contains_Stub as Contains0 with
+    type t = int32
+  clone ElimExist_Func_Has_Stub as Has0 with
+    type self = f,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = f
+  val count_zero2 [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 109 0 109 66] (f : f) (x_min : int32) (x_max : int32) : usize
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 103 11 103 25] x_min <= x_max}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 109 28 109 29] Inv0.inv f}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 104 0 108 2] exists xs : Seq.seq int32 . UIntSize.to_int result = Seq.length xs /\ (forall j : int . forall i : int . 0 <= i /\ i < j /\ j < Seq.length xs -> Seq.get xs i < Seq.get xs j) /\ (forall x : int32 . (x_min <= x /\ x < x_max /\ Has0.has f x (0 : int32)) = Contains0.contains xs x) }
+    
+end
+module ElimExist_CountZero2
+  type f
+  use prelude.Int
+  use prelude.UIntSize
+  use seq.Seq
+  use prelude.Int32
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = f
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = f,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = f
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = f,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone ElimExist_Func_Has_Interface as Has0 with
+    type self = f,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone ElimExist_Func_F_Interface as F0 with
+    type self = f,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Has0.has = Has0.has
+  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve0 with
+    type self = f
+  clone CreusotContracts_Logic_Seq_Impl0_Contains as Contains0 with
+    type t = int32
+  let rec cfg count_zero2 [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 109 0 109 66] [@cfg:stackify] [@cfg:subregion_analysis] (f : f) (x_min : int32) (x_max : int32) : usize
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 103 11 103 25] x_min <= x_max}
+    requires {[#"/mnt/data/projects/creusot/examples/elim_exist.rs" 109 28 109 29] Inv0.inv f}
+    ensures { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 104 0 108 2] exists xs : Seq.seq int32 . UIntSize.to_int result = Seq.length xs /\ (forall j : int . forall i : int . 0 <= i /\ i < j /\ j < Seq.length xs -> Seq.get xs i < Seq.get xs j) /\ (forall x : int32 . (x_min <= x /\ x < x_max /\ Has0.has f x (0 : int32)) = Contains0.contains xs x) }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : usize;
+  var f : f = f;
+  var x_min : int32 = x_min;
+  var x_max : int32 = x_max;
+  var count : usize;
+  var x : int32;
+  var _15 : ();
+  var _17 : int32;
+  {
+    goto BB0
+  }
+  BB0 {
+    count <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 110 20 110 21] (0 : usize));
+    x <- x_min;
+    goto BB1
+  }
+  BB1 {
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 113 4 117 6] exists xs : Seq.seq int32 . UIntSize.to_int count = Seq.length xs /\ (forall j : int . forall i : int . 0 <= i /\ i < j /\ j < Seq.length xs -> Seq.get xs i < Seq.get xs j) /\ (forall x2 : int32 . (x_min <= x2 /\ x2 < x /\ Has0.has f x2 (0 : int32)) = Contains0.contains xs x2) };
+    invariant { [#"/mnt/data/projects/creusot/examples/elim_exist.rs" 118 16 118 63] UIntSize.to_int count <= Int32.to_int x - Int32.to_int x_min /\ x_min <= x /\ x <= x_max };
+    goto BB2
+  }
+  BB2 {
+    switch ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 119 10 119 19] x < x_max)
+      | False -> goto BB8
+      | True -> goto BB3
+      end
+  }
+  BB3 {
+    _17 <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 120 11 120 17] F0.f f x);
+    goto BB4
+  }
+  BB4 {
+    switch ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 120 11 120 22] _17 = ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 120 21 120 22] (0 : int32)))
+      | False -> goto BB6
+      | True -> goto BB5
+      end
+  }
+  BB5 {
+    count <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 121 12 121 22] count + ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 121 21 121 22] (1 : usize)));
+    _15 <- ();
+    goto BB7
+  }
+  BB6 {
+    _15 <- ();
+    goto BB7
+  }
+  BB7 {
+    x <- ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 123 8 123 14] x + ([#"/mnt/data/projects/creusot/examples/elim_exist.rs" 123 13 123 14] (1 : int32)));
+    goto BB1
+  }
+  BB8 {
+    assert { [@expl:type invariant] Inv0.inv f };
+    assume { Resolve0.resolve f };
+    _0 <- count;
+    goto BB9
+  }
+  BB9 {
+    return _0
+  }
+  
+end

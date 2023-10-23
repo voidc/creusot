@@ -1,0 +1,780 @@
+
+module StateMachine_Fib_Type
+  use prelude.Int
+  use prelude.UInt32
+  use prelude.Ghost
+  type t_fib  =
+    | C_Fib uint32 uint32 (Ghost.ghost_ty uint32)
+    
+  let function fib_x (self : t_fib) : Ghost.ghost_ty uint32 = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_Fib _ _ a -> a
+      end
+  let function fib_a (self : t_fib) : uint32 = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_Fib a _ _ -> a
+      end
+  let function fib_b (self : t_fib) : uint32 = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_Fib _ a _ -> a
+      end
+end
+module StateMachine_Impl0_Invariant_Stub
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 25 4 25 30] (self : StateMachine_Fib_Type.t_fib)
+    
+end
+module StateMachine_Impl0_Invariant_Interface
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 25 4 25 30] (self : StateMachine_Fib_Type.t_fib)
+    
+  val invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 25 4 25 30] (self : StateMachine_Fib_Type.t_fib) : bool
+    ensures { result = invariant' self }
+    
+end
+module StateMachine_Impl0_Invariant
+  use prelude.Ghost
+  use prelude.UInt32
+  use prelude.Int
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 25 4 25 30] (self : StateMachine_Fib_Type.t_fib)
+    
+   =
+    [#"/mnt/data/projects/creusot/examples/state_machine.rs" 26 20 26 56] UInt32.to_int (Ghost.inner (StateMachine_Fib_Type.fib_x self)) + UInt32.to_int (StateMachine_Fib_Type.fib_a self) = UInt32.to_int (StateMachine_Fib_Type.fib_b self)
+  val invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 25 4 25 30] (self : StateMachine_Fib_Type.t_fib) : bool
+    ensures { result = invariant' self }
+    
+end
+module StateMachine_Impl1_Trans_Stub
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 33 4 33 47] (self : StateMachine_Fib_Type.t_fib) (x : uint32) (other : StateMachine_Fib_Type.t_fib)
+    
+end
+module StateMachine_Impl1_Trans_Interface
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 33 4 33 47] (self : StateMachine_Fib_Type.t_fib) (x : uint32) (other : StateMachine_Fib_Type.t_fib)
+    
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 33 4 33 47] (self : StateMachine_Fib_Type.t_fib) (x : uint32) (other : StateMachine_Fib_Type.t_fib) : bool
+    ensures { result = trans self x other }
+    
+end
+module StateMachine_Impl1_Trans
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 33 4 33 47] (self : StateMachine_Fib_Type.t_fib) (x : uint32) (other : StateMachine_Fib_Type.t_fib)
+    
+   =
+    [#"/mnt/data/projects/creusot/examples/state_machine.rs" 34 8 34 70] x = StateMachine_Fib_Type.fib_b self /\ StateMachine_Fib_Type.fib_a other = StateMachine_Fib_Type.fib_b self /\ StateMachine_Fib_Type.fib_b other = StateMachine_Fib_Type.fib_a self + StateMachine_Fib_Type.fib_b self
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 33 4 33 47] (self : StateMachine_Fib_Type.t_fib) (x : uint32) (other : StateMachine_Fib_Type.t_fib) : bool
+    ensures { result = trans self x other }
+    
+end
+module CreusotContracts_Invariant_Inv_Stub
+  type t
+  predicate inv (_x : t)
+end
+module CreusotContracts_Invariant_Inv_Interface
+  type t
+  predicate inv (_x : t)
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module CreusotContracts_Invariant_Inv
+  type t
+  predicate inv (_x : t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/invariant.rs" 16 4 16 8] true
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module CreusotContracts_Resolve_Impl1_Resolve_Stub
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t)
+end
+module CreusotContracts_Resolve_Impl1_Resolve_Interface
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t)
+  val resolve (self : borrowed t) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Impl1_Resolve
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/resolve.rs" 25 20 25 34]  ^ self =  * self
+  val resolve (self : borrowed t) : bool
+    ensures { result = resolve self }
+    
+end
+module TyInv_Borrow
+  type t
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed t
+  axiom inv_borrow [@rewrite] : forall self : borrowed t . Inv0.inv self = (Inv1.inv ( * self) /\ Inv1.inv ( ^ self))
+end
+module StateMachine_Fib_Type_Inv
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  clone StateMachine_Impl0_Invariant_Stub as Invariant0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = StateMachine_Fib_Type.t_fib
+  axiom inv_t_fib [@rewrite] : forall self : StateMachine_Fib_Type.t_fib . Inv0.inv self = Invariant0.invariant' self
+end
+module StateMachine_Impl1_Step_Interface
+  use prelude.Borrow
+  use prelude.UInt32
+  use prelude.Int
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = StateMachine_Fib_Type.t_fib
+  clone StateMachine_Impl1_Trans_Stub as Trans0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed (StateMachine_Fib_Type.t_fib)
+  val step [#"/mnt/data/projects/creusot/examples/state_machine.rs" 39 4 39 29] (self : borrowed (StateMachine_Fib_Type.t_fib)) : uint32
+    requires {[#"/mnt/data/projects/creusot/examples/state_machine.rs" 39 17 39 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 37 14 37 39] Trans0.trans ( * self) result ( ^ self) }
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 38 4 38 131] UInt32.to_int result > 1 -> (exists f2 : StateMachine_Fib_Type.t_fib . exists x : uint32 . exists f1 : StateMachine_Fib_Type.t_fib . Inv1.inv f2 /\ Inv1.inv f1 /\ Trans0.trans f1 x f2 /\ Trans0.trans f2 (StateMachine_Fib_Type.fib_a ( * self)) ( * self) /\ x + StateMachine_Fib_Type.fib_a ( * self) = result) }
+    
+end
+module StateMachine_Impl1_Step
+  use prelude.Borrow
+  use prelude.Ghost
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  clone StateMachine_Impl0_Invariant as Invariant0
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = StateMachine_Fib_Type.t_fib
+  clone StateMachine_Fib_Type_Inv as StateMachine_Fib_Type_Inv0 with
+    predicate Inv0.inv = Inv1.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = borrowed (StateMachine_Fib_Type.t_fib)
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = StateMachine_Fib_Type.t_fib,
+    predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv1.inv,
+    axiom .
+  clone StateMachine_Impl1_Trans as Trans0
+  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve0 with
+    type t = StateMachine_Fib_Type.t_fib
+  let rec cfg step [#"/mnt/data/projects/creusot/examples/state_machine.rs" 39 4 39 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (StateMachine_Fib_Type.t_fib)) : uint32
+    requires {[#"/mnt/data/projects/creusot/examples/state_machine.rs" 39 17 39 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 37 14 37 39] Trans0.trans ( * self) result ( ^ self) }
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 38 4 38 131] UInt32.to_int result > 1 -> (exists f2 : StateMachine_Fib_Type.t_fib . exists x : uint32 . exists f1 : StateMachine_Fib_Type.t_fib . Inv1.inv f2 /\ Inv1.inv f1 /\ Trans0.trans f1 x f2 /\ Trans0.trans f2 (StateMachine_Fib_Type.fib_a ( * self)) ( * self) /\ x + StateMachine_Fib_Type.fib_a ( * self) = result) }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : uint32;
+  var self : borrowed (StateMachine_Fib_Type.t_fib) = self;
+  var _4 : Ghost.ghost_ty uint32;
+  var next : uint32;
+  {
+    goto BB0
+  }
+  BB0 {
+    _4 <- ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 40 17 40 31] Ghost.new (StateMachine_Fib_Type.fib_a ( * self)));
+    goto BB1
+  }
+  BB1 {
+    self <- { self with current = (let StateMachine_Fib_Type.C_Fib a b c =  * self in StateMachine_Fib_Type.C_Fib a b _4) };
+    _4 <- any Ghost.ghost_ty uint32;
+    next <- ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 41 19 41 34] StateMachine_Fib_Type.fib_a ( * self) + StateMachine_Fib_Type.fib_b ( * self));
+    self <- { self with current = (let StateMachine_Fib_Type.C_Fib a b c =  * self in StateMachine_Fib_Type.C_Fib (StateMachine_Fib_Type.fib_b ( * self)) b c) };
+    self <- { self with current = (let StateMachine_Fib_Type.C_Fib a b c =  * self in StateMachine_Fib_Type.C_Fib a next c) };
+    _0 <- StateMachine_Fib_Type.fib_a ( * self);
+    assert { [@expl:type invariant] Inv0.inv self };
+    assume { Resolve0.resolve self };
+    return _0
+  }
+  
+end
+module StateMachine_SkipZeros_Type
+  type t_skipzeros 'g =
+    | C_SkipZeros 'g
+    
+  let function skipzeros_inner (self : t_skipzeros 'g) : 'g = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_SkipZeros a -> a
+      end
+end
+module StateMachine_Gen_Trans_Stub
+  type self
+  use prelude.Int
+  use prelude.UInt32
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 10 4 10 48] (self : self) (x : uint32) (other : self)
+    
+end
+module StateMachine_Gen_Trans_Interface
+  type self
+  use prelude.Int
+  use prelude.UInt32
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 10 4 10 48] (self : self) (x : uint32) (other : self)
+    
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 10 4 10 48] (self : self) (x : uint32) (other : self) : bool
+    ensures { result = trans self x other }
+    
+end
+module StateMachine_Gen_Trans
+  type self
+  use prelude.Int
+  use prelude.UInt32
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 10 4 10 48] (self : self) (x : uint32) (other : self)
+    
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 10 4 10 48] (self : self) (x : uint32) (other : self) : bool
+    ensures { result = trans self x other }
+    
+end
+module StateMachine_Impl2_Trans_Stub
+  type g
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_SkipZeros_Type as StateMachine_SkipZeros_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 55 4 55 47] (self : StateMachine_SkipZeros_Type.t_skipzeros g) (x : uint32) (other : StateMachine_SkipZeros_Type.t_skipzeros g)
+    
+end
+module StateMachine_Impl2_Trans_Interface
+  type g
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_SkipZeros_Type as StateMachine_SkipZeros_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 55 4 55 47] (self : StateMachine_SkipZeros_Type.t_skipzeros g) (x : uint32) (other : StateMachine_SkipZeros_Type.t_skipzeros g)
+    
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 55 4 55 47] (self : StateMachine_SkipZeros_Type.t_skipzeros g) (x : uint32) (other : StateMachine_SkipZeros_Type.t_skipzeros g) : bool
+    ensures { result = trans self x other }
+    
+end
+module StateMachine_Impl2_Trans
+  type g
+  use prelude.Int
+  use prelude.UInt32
+  use seq.Seq
+  use seq.Seq
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Seq.seq g
+  clone StateMachine_Gen_Trans_Stub as Trans0 with
+    type self = g
+  use StateMachine_SkipZeros_Type as StateMachine_SkipZeros_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 55 4 55 47] (self : StateMachine_SkipZeros_Type.t_skipzeros g) (x : uint32) (other : StateMachine_SkipZeros_Type.t_skipzeros g)
+    
+   =
+    [#"/mnt/data/projects/creusot/examples/state_machine.rs" 57 12 60 51] UInt32.to_int x <> 0 /\ (Trans0.trans (StateMachine_SkipZeros_Type.skipzeros_inner self) x (StateMachine_SkipZeros_Type.skipzeros_inner other) \/ (exists s : Seq.seq g . Inv0.inv s /\ Seq.length s > 0 /\ Trans0.trans (StateMachine_SkipZeros_Type.skipzeros_inner self) (0 : uint32) (Seq.get s 0) /\ (forall i : int . 0 < i /\ i < Seq.length s -> Trans0.trans (Seq.get s (i - 1)) (0 : uint32) (Seq.get s i)) /\ Trans0.trans (Seq.get s (Seq.length s - 1)) x (StateMachine_SkipZeros_Type.skipzeros_inner other)))
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 55 4 55 47] (self : StateMachine_SkipZeros_Type.t_skipzeros g) (x : uint32) (other : StateMachine_SkipZeros_Type.t_skipzeros g) : bool
+    ensures { result = trans self x other }
+    
+end
+module TyInv_Trivial
+  type t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = t
+  axiom inv_trivial : forall self : t . Inv0.inv self = true
+end
+module StateMachine_Gen_Step_Interface
+  type self
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  clone StateMachine_Gen_Trans_Stub as Trans0 with
+    type self = self
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed self
+  val step [#"/mnt/data/projects/creusot/examples/state_machine.rs" 13 4 13 30] (self : borrowed self) : uint32
+    requires {[#"/mnt/data/projects/creusot/examples/state_machine.rs" 13 17 13 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 12 14 12 39] Trans0.trans ( * self) result ( ^ self) }
+    
+end
+module StateMachine_Impl2_Step_Interface
+  type g
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_SkipZeros_Type as StateMachine_SkipZeros_Type
+  clone StateMachine_Impl2_Trans_Stub as Trans0 with
+    type g = g
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed (StateMachine_SkipZeros_Type.t_skipzeros g)
+  val step [#"/mnt/data/projects/creusot/examples/state_machine.rs" 65 4 65 29] (self : borrowed (StateMachine_SkipZeros_Type.t_skipzeros g)) : uint32
+    requires {[#"/mnt/data/projects/creusot/examples/state_machine.rs" 65 17 65 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 64 14 64 39] Trans0.trans ( * self) result ( ^ self) }
+    
+end
+module StateMachine_Impl2_Step
+  type g
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  use seq.Seq
+  use seq.Seq
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = Seq.seq g
+  clone TyInv_Trivial as TyInv_Trivial3 with
+    type t = Seq.seq g,
+    predicate Inv0.inv = Inv3.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = borrowed g
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = borrowed g,
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
+  use StateMachine_SkipZeros_Type as StateMachine_SkipZeros_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = borrowed (StateMachine_SkipZeros_Type.t_skipzeros g)
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = borrowed (StateMachine_SkipZeros_Type.t_skipzeros g),
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone StateMachine_Gen_Trans_Interface as Trans1 with
+    type self = g
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = g
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = g,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone StateMachine_Impl2_Trans as Trans0 with
+    type g = g,
+    predicate Trans0.trans = Trans1.trans,
+    predicate Inv0.inv = Inv3.inv
+  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve0 with
+    type t = StateMachine_SkipZeros_Type.t_skipzeros g
+  clone StateMachine_Gen_Step_Interface as Step0 with
+    type self = g,
+    predicate Inv0.inv = Inv2.inv,
+    predicate Trans0.trans = Trans1.trans
+  let rec cfg step [#"/mnt/data/projects/creusot/examples/state_machine.rs" 65 4 65 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (StateMachine_SkipZeros_Type.t_skipzeros g)) : uint32
+    requires {[#"/mnt/data/projects/creusot/examples/state_machine.rs" 65 17 65 21] Inv1.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 64 14 64 39] Trans0.trans ( * self) result ( ^ self) }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : uint32;
+  var self : borrowed (StateMachine_SkipZeros_Type.t_skipzeros g) = self;
+  var next : uint32;
+  var _4 : borrowed g;
+  var _9 : uint32;
+  var _10 : borrowed g;
+  {
+    goto BB0
+  }
+  BB0 {
+    _4 <- Borrow.borrow_mut (StateMachine_SkipZeros_Type.skipzeros_inner ( * self));
+    self <- { self with current = (let StateMachine_SkipZeros_Type.C_SkipZeros a =  * self in StateMachine_SkipZeros_Type.C_SkipZeros ( ^ _4)) };
+    assume { Inv0.inv ( ^ _4) };
+    next <- ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 66 23 66 40] Step0.step _4);
+    _4 <- any borrowed g;
+    goto BB1
+  }
+  BB1 {
+    goto BB2
+  }
+  BB2 {
+    goto BB3
+  }
+  BB3 {
+    switch ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 67 14 67 23] next = ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 67 22 67 23] (0 : uint32)))
+      | False -> goto BB6
+      | True -> goto BB4
+      end
+  }
+  BB4 {
+    _10 <- Borrow.borrow_mut (StateMachine_SkipZeros_Type.skipzeros_inner ( * self));
+    self <- { self with current = (let StateMachine_SkipZeros_Type.C_SkipZeros a =  * self in StateMachine_SkipZeros_Type.C_SkipZeros ( ^ _10)) };
+    assume { Inv0.inv ( ^ _10) };
+    _9 <- ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 68 19 68 36] Step0.step _10);
+    _10 <- any borrowed g;
+    goto BB5
+  }
+  BB5 {
+    next <- _9;
+    _9 <- any uint32;
+    goto BB2
+  }
+  BB6 {
+    assert { [@expl:type invariant] Inv1.inv self };
+    assume { Resolve0.resolve self };
+    _0 <- next;
+    return _0
+  }
+  
+end
+module StateMachine_Hist_Type
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  use prelude.UInt32
+  type t_hist 'g =
+    | C_Hist 'g (Ghost.ghost_ty (Seq.seq ('g, uint32)))
+    
+  let function hist_inner (self : t_hist 'g) : 'g = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_Hist a _ -> a
+      end
+  let function hist_hist (self : t_hist 'g) : Ghost.ghost_ty (Seq.seq ('g, uint32)) = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_Hist _ a -> a
+      end
+end
+module StateMachine_Impl3_Trans_Stub
+  type g
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 82 4 82 47] (self : StateMachine_Hist_Type.t_hist g) (x : uint32) (other : StateMachine_Hist_Type.t_hist g)
+    
+end
+module StateMachine_Impl3_Trans_Interface
+  type g
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 82 4 82 47] (self : StateMachine_Hist_Type.t_hist g) (x : uint32) (other : StateMachine_Hist_Type.t_hist g)
+    
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 82 4 82 47] (self : StateMachine_Hist_Type.t_hist g) (x : uint32) (other : StateMachine_Hist_Type.t_hist g) : bool
+    ensures { result = trans self x other }
+    
+end
+module StateMachine_Impl3_Trans
+  type g
+  use prelude.Int
+  use prelude.UInt32
+  clone StateMachine_Gen_Trans_Stub as Trans0 with
+    type self = g
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  predicate trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 82 4 82 47] (self : StateMachine_Hist_Type.t_hist g) (x : uint32) (other : StateMachine_Hist_Type.t_hist g)
+    
+   =
+    [#"/mnt/data/projects/creusot/examples/state_machine.rs" 80 4 80 16] Trans0.trans (StateMachine_Hist_Type.hist_inner self) x (StateMachine_Hist_Type.hist_inner other)
+  val trans [#"/mnt/data/projects/creusot/examples/state_machine.rs" 82 4 82 47] (self : StateMachine_Hist_Type.t_hist g) (x : uint32) (other : StateMachine_Hist_Type.t_hist g) : bool
+    ensures { result = trans self x other }
+    
+end
+module CreusotContracts_Resolve_Resolve_Resolve_Stub
+  type self
+  predicate resolve (self : self)
+end
+module CreusotContracts_Resolve_Resolve_Resolve_Interface
+  type self
+  predicate resolve (self : self)
+  val resolve (self : self) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Resolve_Resolve
+  type self
+  predicate resolve (self : self)
+  val resolve (self : self) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Logic_Ops_Impl6_IndexLogic_Stub
+  type t
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  function index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+end
+module CreusotContracts_Logic_Ops_Impl6_IndexLogic_Interface
+  type t
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  function index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+  val index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+    ensures { result = index_logic self ix }
+    
+end
+module CreusotContracts_Logic_Ops_Impl6_IndexLogic
+  type t
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  function index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/logic/ops.rs" 85 8 85 33] Seq.get (Ghost.inner self) ix
+  val index_logic [@inline:trivial] (self : Ghost.ghost_ty (Seq.seq t)) (ix : int) : t
+    ensures { result = index_logic self ix }
+    
+end
+module StateMachine_Impl4_Invariant_Stub
+  type g
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 98 4 98 30] (self : StateMachine_Hist_Type.t_hist g)
+    
+end
+module StateMachine_Impl4_Invariant_Interface
+  type g
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 98 4 98 30] (self : StateMachine_Hist_Type.t_hist g)
+    
+  val invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 98 4 98 30] (self : StateMachine_Hist_Type.t_hist g) : bool
+    ensures { result = invariant' self }
+    
+end
+module StateMachine_Impl4_Invariant
+  type g
+  use prelude.Int
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.UInt32
+  clone StateMachine_Gen_Trans_Stub as Trans0 with
+    type self = g
+  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic_Stub as IndexLogic0 with
+    type t = (g, uint32)
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 98 4 98 30] (self : StateMachine_Hist_Type.t_hist g)
+    
+   =
+    [#"/mnt/data/projects/creusot/examples/state_machine.rs" 99 8 102 9] (forall i : int . 0 < i /\ i < Seq.length (Ghost.inner (StateMachine_Hist_Type.hist_hist self)) -> Trans0.trans (let (a, _) = IndexLogic0.index_logic (StateMachine_Hist_Type.hist_hist self) (i - 1) in a) (let (_, a) = IndexLogic0.index_logic (StateMachine_Hist_Type.hist_hist self) (i - 1) in a) (let (a, _) = IndexLogic0.index_logic (StateMachine_Hist_Type.hist_hist self) i in a)) /\ Trans0.trans (let (a, _) = IndexLogic0.index_logic (StateMachine_Hist_Type.hist_hist self) (Seq.length (Ghost.inner (StateMachine_Hist_Type.hist_hist self)) - 1) in a) (let (_, a) = IndexLogic0.index_logic (StateMachine_Hist_Type.hist_hist self) (Seq.length (Ghost.inner (StateMachine_Hist_Type.hist_hist self)) - 1) in a) (StateMachine_Hist_Type.hist_inner self)
+  val invariant' [#"/mnt/data/projects/creusot/examples/state_machine.rs" 98 4 98 30] (self : StateMachine_Hist_Type.t_hist g) : bool
+    ensures { result = invariant' self }
+    
+end
+module StateMachine_Hist_Type_Inv
+  type g
+  use prelude.Ghost
+  use prelude.Seq
+  use prelude.Int
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = g
+  clone StateMachine_Impl4_Invariant_Stub as Invariant0 with
+    type g = g
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = StateMachine_Hist_Type.t_hist g
+  axiom inv_t_hist [@rewrite] : forall self : StateMachine_Hist_Type.t_hist g . Inv0.inv self = (Invariant0.invariant' self /\ Inv1.inv (StateMachine_Hist_Type.hist_inner self) /\ (forall i : int . 0 <= i /\ i < Seq.length (Ghost.inner (StateMachine_Hist_Type.hist_hist self)) -> (let (a_0, a_1) = Seq.get (Ghost.inner (StateMachine_Hist_Type.hist_hist self)) i in Inv1.inv a_0)))
+end
+module StateMachine_Impl3_Step_Interface
+  type g
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  clone StateMachine_Impl3_Trans_Stub as Trans0 with
+    type g = g
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed (StateMachine_Hist_Type.t_hist g)
+  val step [#"/mnt/data/projects/creusot/examples/state_machine.rs" 87 4 87 29] (self : borrowed (StateMachine_Hist_Type.t_hist g)) : uint32
+    requires {[#"/mnt/data/projects/creusot/examples/state_machine.rs" 87 17 87 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 86 14 86 39] Trans0.trans ( * self) result ( ^ self) }
+    
+end
+module StateMachine_Impl3_Step
+  type g
+  use prelude.Borrow
+  use prelude.Ghost
+  use seq.Seq
+  use prelude.Int
+  use prelude.UInt32
+  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
+    type t = (g, uint32)
+  clone StateMachine_Gen_Trans_Interface as Trans1 with
+    type self = g
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  clone StateMachine_Impl4_Invariant as Invariant0 with
+    type g = g,
+    function IndexLogic0.index_logic = IndexLogic0.index_logic,
+    predicate Trans0.trans = Trans1.trans
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = g
+  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
+    type t = StateMachine_Hist_Type.t_hist g
+  clone StateMachine_Hist_Type_Inv as StateMachine_Hist_Type_Inv0 with
+    type g = g,
+    predicate Inv0.inv = Inv5.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+    type t = borrowed g
+  clone TyInv_Trivial as TyInv_Trivial3 with
+    type t = borrowed g,
+    predicate Inv0.inv = Inv4.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = borrowed (StateMachine_Hist_Type.t_hist g)
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = StateMachine_Hist_Type.t_hist g,
+    predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv5.inv,
+    axiom .
+  use seq.Seq
+  use prelude.Ghost
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = Ghost.ghost_ty (Seq.seq (g, uint32))
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = Ghost.ghost_ty (Seq.seq (g, uint32)),
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = g,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = Ghost.ghost_ty g
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = Ghost.ghost_ty g,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone StateMachine_Impl3_Trans as Trans0 with
+    type g = g,
+    predicate Trans0.trans = Trans1.trans
+  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve2 with
+    type t = StateMachine_Hist_Type.t_hist g
+  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve1 with
+    type self = Ghost.ghost_ty (Seq.seq (g, uint32))
+  clone StateMachine_Gen_Step_Interface as Step0 with
+    type self = g,
+    predicate Inv0.inv = Inv4.inv,
+    predicate Trans0.trans = Trans1.trans
+  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve0 with
+    type self = Ghost.ghost_ty g
+  let rec cfg step [#"/mnt/data/projects/creusot/examples/state_machine.rs" 87 4 87 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (StateMachine_Hist_Type.t_hist g)) : uint32
+    requires {[#"/mnt/data/projects/creusot/examples/state_machine.rs" 87 17 87 21] Inv3.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/state_machine.rs" 86 14 86 39] Trans0.trans ( * self) result ( ^ self) }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : uint32;
+  var self : borrowed (StateMachine_Hist_Type.t_hist g) = self;
+  var old' : Ghost.ghost_ty g;
+  var x : uint32;
+  var _6 : borrowed g;
+  var _7 : Ghost.ghost_ty (Seq.seq (g, uint32));
+  {
+    goto BB0
+  }
+  BB0 {
+    old' <- ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 88 18 88 36] Ghost.new (StateMachine_Hist_Type.hist_inner ( * self)));
+    goto BB1
+  }
+  BB1 {
+    assert { [@expl:type invariant] Inv0.inv old' };
+    assume { Resolve0.resolve old' };
+    _6 <- Borrow.borrow_mut (StateMachine_Hist_Type.hist_inner ( * self));
+    self <- { self with current = (let StateMachine_Hist_Type.C_Hist a b =  * self in StateMachine_Hist_Type.C_Hist ( ^ _6) b) };
+    assume { Inv1.inv ( ^ _6) };
+    x <- ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 89 16 89 33] Step0.step _6);
+    _6 <- any borrowed g;
+    goto BB2
+  }
+  BB2 {
+    _7 <- ([#"/mnt/data/projects/creusot/examples/state_machine.rs" 90 20 90 53] Ghost.new (Seq.snoc (Ghost.inner (StateMachine_Hist_Type.hist_hist ( * self))) (Ghost.inner old', x)));
+    goto BB3
+  }
+  BB3 {
+    self <- { self with current = (let StateMachine_Hist_Type.C_Hist a b =  * self in StateMachine_Hist_Type.C_Hist a _7) };
+    _7 <- any Ghost.ghost_ty (Seq.seq (g, uint32));
+    assert { [@expl:type invariant] Inv2.inv (StateMachine_Hist_Type.hist_hist ( * self)) };
+    assume { Resolve1.resolve (StateMachine_Hist_Type.hist_hist ( * self)) };
+    assert { [@expl:type invariant] Inv3.inv self };
+    assume { Resolve2.resolve self };
+    _0 <- x;
+    return _0
+  }
+  
+end
+module StateMachine_Impl0
+  
+end
+module StateMachine_Impl4
+  type g
+end
+module StateMachine_Impl1
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  use StateMachine_Fib_Type as StateMachine_Fib_Type
+  clone StateMachine_Impl0_Invariant as Invariant0
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = StateMachine_Fib_Type.t_fib
+  clone StateMachine_Fib_Type_Inv as StateMachine_Fib_Type_Inv0 with
+    predicate Inv0.inv = Inv1.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = borrowed (StateMachine_Fib_Type.t_fib)
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = StateMachine_Fib_Type.t_fib,
+    predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv1.inv,
+    axiom .
+  clone StateMachine_Impl1_Trans as Trans0
+  goal step_refn : [#"/mnt/data/projects/creusot/examples/state_machine.rs" 39 4 39 29] forall self : borrowed (StateMachine_Fib_Type.t_fib) . Inv0.inv self -> Inv0.inv self /\ (forall result : uint32 . (UInt32.to_int result > 1 -> (exists f2 : StateMachine_Fib_Type.t_fib . exists x : uint32 . exists f1 : StateMachine_Fib_Type.t_fib . Inv1.inv f2 /\ Inv1.inv f1 /\ Trans0.trans f1 x f2 /\ Trans0.trans f2 (StateMachine_Fib_Type.fib_a ( * self)) ( * self) /\ x + StateMachine_Fib_Type.fib_a ( * self) = result)) /\ Trans0.trans ( * self) result ( ^ self) -> Trans0.trans ( * self) result ( ^ self))
+end
+module StateMachine_Impl2
+  type g
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  use seq.Seq
+  use seq.Seq
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = Seq.seq g
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = Seq.seq g,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone StateMachine_Gen_Trans_Interface as Trans1 with
+    type self = g
+  use StateMachine_SkipZeros_Type as StateMachine_SkipZeros_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = borrowed (StateMachine_SkipZeros_Type.t_skipzeros g)
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = borrowed (StateMachine_SkipZeros_Type.t_skipzeros g),
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone StateMachine_Impl2_Trans as Trans0 with
+    type g = g,
+    predicate Trans0.trans = Trans1.trans,
+    predicate Inv0.inv = Inv1.inv
+  goal step_refn : [#"/mnt/data/projects/creusot/examples/state_machine.rs" 65 4 65 29] forall self : borrowed (StateMachine_SkipZeros_Type.t_skipzeros g) . Inv0.inv self -> Inv0.inv self /\ (forall result : uint32 . Trans0.trans ( * self) result ( ^ self) -> Trans0.trans ( * self) result ( ^ self))
+end
+module StateMachine_Impl3
+  type g
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = g
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = g,
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
+  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
+    type t = (g, uint32)
+  clone StateMachine_Gen_Trans_Interface as Trans1 with
+    type self = g
+  use StateMachine_Hist_Type as StateMachine_Hist_Type
+  clone StateMachine_Impl4_Invariant as Invariant0 with
+    type g = g,
+    function IndexLogic0.index_logic = IndexLogic0.index_logic,
+    predicate Trans0.trans = Trans1.trans
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = StateMachine_Hist_Type.t_hist g
+  clone StateMachine_Hist_Type_Inv as StateMachine_Hist_Type_Inv0 with
+    type g = g,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv2.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = borrowed (StateMachine_Hist_Type.t_hist g)
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = StateMachine_Hist_Type.t_hist g,
+    predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv1.inv,
+    axiom .
+  clone StateMachine_Impl3_Trans as Trans0 with
+    type g = g,
+    predicate Trans0.trans = Trans1.trans
+  goal step_refn : [#"/mnt/data/projects/creusot/examples/state_machine.rs" 87 4 87 29] forall self : borrowed (StateMachine_Hist_Type.t_hist g) . Inv0.inv self -> Inv0.inv self /\ (forall result : uint32 . Trans0.trans ( * self) result ( ^ self) -> Trans0.trans ( * self) result ( ^ self))
+end
