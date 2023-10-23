@@ -205,7 +205,10 @@ fn build_inv_exp<'tcx>(
 ) -> Option<Exp> {
     let ty = ctx.tcx.normalize_erasing_regions(param_env, ty);
 
-    if mode == Mode::Field && is_tyinv_trivial(ctx.tcx, param_env, ty, false) {
+    if mode == Mode::Field
+        && is_tyinv_trivial(ctx.tcx, param_env, ty, false)
+        && ctx.opts.tiopt_elide
+    {
         return None;
     }
 

@@ -20,6 +20,9 @@ pub struct Options {
     pub in_cargo: bool,
     pub span_mode: SpanMode,
     pub match_str: Option<String>,
+    pub tiopt_elide: bool,
+    pub tiopt_clone: bool,
+    pub tiopt_para: bool,
 }
 
 #[derive(Debug, Clone)]
