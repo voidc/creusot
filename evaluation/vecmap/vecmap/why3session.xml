@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Z3" version="4.12.2" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.5.1" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="CVC4" version="1.8" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="3" name="CVC5" version="1.0.5" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg">
+<path name=".."/><path name="vecmap.mlcfg"/>
+<theory name="Vecmap_Impl2_New" proved="true">
+ <goal name="new&#39;vc" expl="VC for new" proved="true">
+ <proof prover="1"><result status="valid" time="0.022520" steps="22"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_FindK">
+ <goal name="find_k&#39;vc" expl="VC for find_k">
+ <proof prover="0"><result status="timeout" time="1.000000" steps="1112499"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="4342"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="124341"/></proof>
+ <proof prover="3"><result status="timeout" time="1.000000" steps="88899"/></proof>
+ <transf name="split_vc" >
+  <goal name="find_k&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.029915" steps="8"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.1" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.039051" steps="19"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.2" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.015544" steps="17"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.3" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.031713" steps="19"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.042936" steps="86"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.5" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.029183" steps="26"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.6" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.029370" steps="25"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.7" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.027087" steps="23"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.8" expl="division by zero" proved="true">
+  <proof prover="1"><result status="valid" time="0.034217" steps="35"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.9" expl="division by zero" proved="true">
+  <proof prover="1"><result status="valid" time="0.031727" steps="39"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.10" expl="integer overflow" proved="true">
+  <proof prover="1"><result status="valid" time="0.053559" steps="91"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.11" expl="integer overflow" proved="true">
+  <proof prover="1"><result status="valid" time="0.123427" steps="459"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.022840" steps="43"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.060048" steps="103"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.14" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.034757" steps="104"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.15" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.010030" steps="47"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.034319" steps="109"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.17" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.026451" steps="51"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.18" expl="integer overflow" proved="true">
+  <proof prover="1"><result status="valid" time="0.137254" steps="753"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.19" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.028717" steps="28"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.20" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.016548" steps="30"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.21" expl="integer overflow" proved="true">
+  <proof prover="1"><result status="valid" time="0.176468" steps="978"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.22" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.077870" steps="245"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.23" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.073970" steps="256"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.24" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.027225" steps="67"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.25" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.082080" steps="247"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.26" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.063292" steps="251"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.27" expl="loop invariant preservation">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="988995"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="6715"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="117922"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="78524"/></proof>
+  <transf name="split_vc" >
+   <goal name="find_k&#39;vc.27.0" expl="loop invariant preservation" proved="true">
+   <proof prover="1"><result status="valid" time="0.086681" steps="168"/></proof>
+   </goal>
+   <goal name="find_k&#39;vc.27.1" expl="loop invariant preservation">
+   <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="20.256768" steps="1853255"/></proof>
+   <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="102282"/></proof>
+   <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1107787"/></proof>
+   <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="23.704578" steps="1057320"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="find_k&#39;vc.28" expl="loop invariant preservation">
+  <proof prover="0"><result status="timeout" time="0.766661" steps="906618"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="4376"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="92399"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="76303"/></proof>
+  <transf name="split_vc" >
+   <goal name="find_k&#39;vc.28.0" expl="loop invariant preservation">
+   <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="19.965153" steps="1924482"/></proof>
+   <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="121799"/></proof>
+   <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1189217"/></proof>
+   <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="22.775097" steps="974044"/></proof>
+   </goal>
+   <goal name="find_k&#39;vc.28.1" expl="loop invariant preservation" proved="true">
+   <proof prover="1"><result status="valid" time="0.078810" steps="165"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="find_k&#39;vc.29" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.140395" steps="173882"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.269324" steps="1007"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.31" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.088301" steps="220"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.32" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.078857" steps="214"/></proof>
+  </goal>
+  <goal name="find_k&#39;vc.33" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.184306" steps="654"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_Entry" proved="true">
+ <goal name="entry&#39;vc" expl="VC for entry" proved="true">
+ <proof prover="0"><result status="valid" time="0.114352" steps="226036"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl13_AsRef" proved="true">
+ <goal name="as_ref&#39;vc" expl="VC for as_ref" proved="true">
+ <proof prover="1"><result status="valid" time="0.022693" steps="17"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl14_ToOwned_Impl" proved="true">
+ <goal name="to_owned&#39;vc" expl="VC for to_owned" proved="true">
+ <proof prover="1"><result status="valid" time="0.020418" steps="26"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_IsValidKeyref">
+ <goal name="is_valid_keyref&#39;vc" expl="VC for is_valid_keyref">
+ <proof prover="0"><result status="timeout" time="1.000000" steps="1146143"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="5775"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="156206"/></proof>
+ <proof prover="3"><result status="timeout" time="1.000000" steps="73615"/></proof>
+ <transf name="split_vc" >
+  <goal name="is_valid_keyref&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.025401" steps="6"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.030747" steps="10"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.023783" steps="12"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.023513" steps="14"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.032933" steps="16"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.032477" steps="20"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.027081" steps="24"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.038791" steps="31"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.037387" steps="33"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.9" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.038243" steps="33"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.10" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.039039" steps="37"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.11" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.017989" steps="18"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.12" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.018500" steps="20"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.13" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.198779" steps="250044"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.14" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.021557" steps="28"/></proof>
+  </goal>
+  <goal name="is_valid_keyref&#39;vc.15" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1128648"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="7688"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="127215"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="104621"/></proof>
+  <transf name="split_vc" >
+   <goal name="is_valid_keyref&#39;vc.15.0" expl="postcondition">
+   <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="22.248282" steps="18396827"/></proof>
+   <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="303621"/></proof>
+   <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="7420774"/></proof>
+   <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="24.404586" steps="1447065"/></proof>
+   </goal>
+   <goal name="is_valid_keyref&#39;vc.15.1" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.028942" steps="26"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_EntryFromRef" proved="true">
+ <goal name="entry_from_ref&#39;vc" expl="VC for entry_from_ref" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="entry_from_ref&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.043959" steps="14"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.049056" steps="20"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.036436" steps="24"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.047310" steps="24"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.024467" steps="22"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.029900" steps="28"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.029990" steps="30"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.7" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.033613" steps="32"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.8" expl="unreachable point" proved="true">
+  <proof prover="1"><result status="valid" time="0.068027" steps="270"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.9" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026601" steps="34"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.030190" steps="38"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.026224" steps="38"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.032332" steps="44"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.13" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.026478" steps="46"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.14" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.031936" steps="58"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.15" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.032867" steps="48"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.036318" steps="61"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.17" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.036679" steps="68"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.18" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.151552" steps="783"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.19" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.034480" steps="85"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.20" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.043374" steps="87"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.21" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.036546" steps="80"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.22" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.039027" steps="90"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.23" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.034798" steps="93"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.026094" steps="90"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.25" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.035334" steps="94"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.26" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.039988" steps="96"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.27" expl="unreachable point" proved="true">
+  <proof prover="1"><result status="valid" time="1.005837" steps="7111"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.28" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.046747" steps="102"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.29" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.784193" steps="4094"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.30" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.034677" steps="96"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.31" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.455126" steps="45927"/></proof>
+  </goal>
+  <goal name="entry_from_ref&#39;vc.32" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.621234" steps="58135"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_FindRandomMappingAfter">
+ <goal name="find_random_mapping_after&#39;vc" expl="VC for find_random_mapping_after">
+ <proof prover="0"><result status="timeout" time="0.701005" steps="792807"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="4128"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="103833"/></proof>
+ <proof prover="3"><result status="timeout" time="0.783011" steps="76111"/></proof>
+ <transf name="split_vc" >
+  <goal name="find_random_mapping_after&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.029788" steps="10"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.022970" steps="12"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.026834" steps="12"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.021312" steps="14"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.019495" steps="18"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.027096" steps="25"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.021455" steps="24"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.026405" steps="26"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.8" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.024063" steps="28"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.9" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.020059" steps="34"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.10" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026754" steps="38"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.11" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.017600" steps="42"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.12" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.023259" steps="16"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.021502" steps="20"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.14" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.020383" steps="22"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.15" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.023638" steps="24"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.019895" steps="26"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.17" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.023163" steps="28"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.18" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.024704" steps="30"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.19" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.020541" steps="32"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.20" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.020245" steps="38"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.21" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.028104" steps="46"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.22" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.024440" steps="47"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.23" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026878" steps="40"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.24" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.024439" steps="42"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.25" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.029293" steps="54"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.26" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.032300" steps="57"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.27" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.028860" steps="53"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.28" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.038107" steps="57"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.29" expl="unreachable point" proved="true">
+  <proof prover="1"><result status="valid" time="0.071402" steps="397"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.258042" steps="24159"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.31" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1370664"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="6234"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="172351"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="90063"/></proof>
+  <transf name="split_vc" >
+   <goal name="find_random_mapping_after&#39;vc.31.0" expl="postcondition">
+   <proof prover="0"><result status="timeout" time="1.000000" steps="1153937"/></proof>
+   <proof prover="1"><result status="timeout" time="1.000000" steps="5517"/></proof>
+   <proof prover="2"><result status="timeout" time="1.000000" steps="140611"/></proof>
+   <proof prover="3"><result status="timeout" time="1.000000" steps="78706"/></proof>
+   <transf name="split_vc" >
+    <goal name="find_random_mapping_after&#39;vc.31.0.0" expl="postcondition">
+    <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="20.835327" steps="5855077"/></proof>
+    <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="198524"/></proof>
+    <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="3287107"/></proof>
+    <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="21.137619" steps="845569"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="find_random_mapping_after&#39;vc.31.1" expl="postcondition" proved="true">
+   <proof prover="0"><result status="valid" time="0.065340" steps="131811"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.32" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1168567"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="7552"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="119996"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="94344"/></proof>
+  <transf name="split_vc" >
+   <goal name="find_random_mapping_after&#39;vc.32.0" expl="postcondition">
+   <proof prover="0"><result status="timeout" time="0.678772" steps="932927"/></proof>
+   <proof prover="1"><result status="timeout" time="1.000000" steps="6474"/></proof>
+   <proof prover="2"><result status="timeout" time="1.000000" steps="100281"/></proof>
+   <proof prover="3"><result status="timeout" time="1.000000" steps="77493"/></proof>
+   <transf name="split_vc" >
+    <goal name="find_random_mapping_after&#39;vc.32.0.0" expl="postcondition">
+    <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="24.773088" steps="9922178"/></proof>
+    <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="73190"/></proof>
+    <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="8837279"/></proof>
+    <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="21.899153" steps="830475"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="find_random_mapping_after&#39;vc.32.1" expl="postcondition" proved="true">
+   <proof prover="3"><result status="valid" time="0.265838" steps="20048"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.33" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.162575" steps="260040"/></proof>
+  </goal>
+  <goal name="find_random_mapping_after&#39;vc.34" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.043895" steps="14"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_InsertInternal" proved="true">
+ <goal name="insert_internal&#39;vc" expl="VC for insert_internal" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="insert_internal&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.033020" steps="19"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.033187" steps="22"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.042071" steps="28"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.3" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.029968" steps="33"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.041449" steps="75"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.033385" steps="35"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.049480" steps="80"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.068799" steps="263"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.973369" steps="5223"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.422403" steps="1577"/></proof>
+  </goal>
+  <goal name="insert_internal&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.518248" steps="2574"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_Insert" proved="true">
+ <goal name="insert&#39;vc" expl="VC for insert" proved="true">
+ <proof prover="0"><result status="valid" time="0.466390" steps="571976"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_Remove" proved="true">
+ <goal name="remove&#39;vc" expl="VC for remove" proved="true">
+ <proof prover="3"><result status="valid" time="0.171649" steps="29031"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_Get" proved="true">
+ <goal name="get&#39;vc" expl="VC for get" proved="true">
+ <proof prover="1"><result status="valid" time="0.175596" steps="736"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_ContainsKey" proved="true">
+ <goal name="contains_key&#39;vc" expl="VC for contains_key" proved="true">
+ <proof prover="1"><result status="valid" time="0.069419" steps="196"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_NextMapping" proved="true">
+ <goal name="next_mapping&#39;vc" expl="VC for next_mapping" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="next_mapping&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.021202" steps="10"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.031846" steps="12"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.026228" steps="12"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.038972" steps="26"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.037847" steps="16"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.044031" steps="33"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.6" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.030195" steps="24"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.7" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.037348" steps="44"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.8" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.036558" steps="115"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.033077" steps="50"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.10" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.024582" steps="42"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.11" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.017681" steps="44"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.089566" steps="542"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.036063" steps="74"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.14" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.030077" steps="75"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.15" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.023706" steps="58"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.033335" steps="78"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.17" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.037245" steps="82"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.18" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.033823" steps="85"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.19" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.410505" steps="3327"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.20" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.210607" steps="1579"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.21" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026069" steps="64"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.22" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.020226" steps="66"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.23" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.107643" steps="698"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.031447" steps="86"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.25" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.031797" steps="87"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.26" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.027091" steps="75"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.27" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026248" steps="80"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.28" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026625" steps="99"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.29" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.037871" steps="102"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.30" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.085777" steps="169307"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.31" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.109520" steps="20664"/></proof>
+  </goal>
+  <goal name="next_mapping&#39;vc.32" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.031394" steps="55"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_MinEntry">
+ <goal name="min_entry&#39;vc" expl="VC for min_entry">
+ <proof prover="0"><result status="timeout" time="1.000000" steps="1111098"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="4756"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="108442"/></proof>
+ <proof prover="3"><result status="timeout" time="1.000000" steps="74448"/></proof>
+ <transf name="split_vc" >
+  <goal name="min_entry&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026999" steps="4"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.022993" steps="8"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.027903" steps="10"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.020676" steps="12"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.010162" steps="18"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.016869" steps="20"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.024878" steps="26"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.7" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.016519" steps="29"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.083665" steps="11412"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.034256" steps="94012"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.089219" steps="13814"/></proof>
+  </goal>
+  <goal name="min_entry&#39;vc.11" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1183965"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="5836"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="122390"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="97247"/></proof>
+  <transf name="split_vc" >
+   <goal name="min_entry&#39;vc.11.0" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.023158" steps="29"/></proof>
+   </goal>
+   <goal name="min_entry&#39;vc.11.1" expl="postcondition">
+   <proof prover="0"><result status="timeout" time="1.000000" steps="1179579"/></proof>
+   <proof prover="1"><result status="timeout" time="1.000000" steps="6139"/></proof>
+   <proof prover="2"><result status="timeout" time="1.000000" steps="127331"/></proof>
+   <proof prover="3"><result status="timeout" time="1.000000" steps="83788"/></proof>
+   <transf name="split_vc" >
+    <goal name="min_entry&#39;vc.11.1.0" expl="postcondition">
+    <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="9564954"/></proof>
+    <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="165616"/></proof>
+    <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="7387872"/></proof>
+    <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1265022"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="min_entry&#39;vc.12" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.031013" steps="22"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl2_MaxKey">
+ <goal name="max_key&#39;vc" expl="VC for max_key">
+ <proof prover="0"><result status="timeout" time="1.000000" steps="1061935"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="6411"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="138616"/></proof>
+ <proof prover="3"><result status="timeout" time="0.678477" steps="53513"/></proof>
+ <transf name="split_vc" >
+  <goal name="max_key&#39;vc.0" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.027626" steps="4"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.020725" steps="8"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.021833" steps="10"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.016992" steps="12"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.022620" steps="18"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.022088" steps="18"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.029245" steps="25"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.7" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.013740" steps="29"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.069644" steps="84766"/></proof>
+  </goal>
+  <goal name="max_key&#39;vc.9" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1038599"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="6158"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="114379"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="74286"/></proof>
+  <transf name="split_vc" >
+   <goal name="max_key&#39;vc.9.0" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.024614" steps="29"/></proof>
+   </goal>
+   <goal name="max_key&#39;vc.9.1" expl="postcondition">
+   <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="23.352028" steps="5948752"/></proof>
+   <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="135922"/></proof>
+   <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5719274"/></proof>
+   <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="24.352439" steps="1133916"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="max_key&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.023563" steps="20"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl3_Clone" proved="true">
+ <goal name="clone&#39;&#39;vc" expl="VC for clone&#39;" proved="true">
+ <proof prover="1"><result status="valid" time="0.030326" steps="9"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl4_Default" proved="true">
+ <goal name="default&#39;vc" expl="VC for default" proved="true">
+ <proof prover="1"><result status="valid" time="0.017034" steps="32"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl6_Keyref" proved="true">
+ <goal name="keyref&#39;vc" expl="VC for keyref" proved="true">
+ <proof prover="1"><result status="valid" time="0.041196" steps="49"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl8_Insert">
+ <goal name="insert&#39;vc" expl="VC for insert">
+ <proof prover="0"><result status="timeout" time="1.000000" steps="1102113"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="5337"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="81610"/></proof>
+ <proof prover="3"><result status="timeout" time="1.000000" steps="57055"/></proof>
+ <transf name="split_vc" >
+  <goal name="insert&#39;vc.0" expl="precondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1109032"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="5022"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="117033"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="70044"/></proof>
+  <transf name="inline_goal" >
+   <goal name="insert&#39;vc.0.0" expl="precondition">
+   <transf name="split_all_full" >
+    <goal name="insert&#39;vc.0.0.0" expl="precondition">
+    <proof prover="0"><result status="timeout" time="1.000000" steps="1130928"/></proof>
+    <proof prover="1"><result status="timeout" time="1.000000" steps="7275"/></proof>
+    <proof prover="2"><result status="timeout" time="1.000000" steps="86200"/></proof>
+    <proof prover="3"><result status="timeout" time="1.000000" steps="93392"/></proof>
+    <transf name="inline_goal" >
+     <goal name="insert&#39;vc.0.0.0.0" expl="precondition">
+     <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="26.888780" steps="9506255"/></proof>
+     <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="318452"/></proof>
+     <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1078520"/></proof>
+     <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="26.840826" steps="898363"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="insert&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.036142" steps="38"/></proof>
+  </goal>
+  <goal name="insert&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.042762" steps="39"/></proof>
+  </goal>
+  <goal name="insert&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.039076" steps="34"/></proof>
+  </goal>
+  <goal name="insert&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.051648" steps="66"/></proof>
+  </goal>
+  <goal name="insert&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="3"><result status="valid" time="0.276999" steps="20763"/></proof>
+  </goal>
+  <goal name="insert&#39;vc.6" expl="assertion">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1221334"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="7510"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="89189"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="75998"/></proof>
+  <transf name="inline_goal" >
+   <goal name="insert&#39;vc.6.0" expl="assertion">
+   <transf name="split_all_full" >
+    <goal name="insert&#39;vc.6.0.0" expl="assertion">
+    <proof prover="0"><result status="timeout" time="1.000000" steps="913473"/></proof>
+    <proof prover="1"><result status="timeout" time="1.000000" steps="7331"/></proof>
+    <proof prover="2"><result status="timeout" time="1.000000" steps="84009"/></proof>
+    <proof prover="3"><result status="timeout" time="1.000000" steps="73567"/></proof>
+    <transf name="inline_goal" >
+     <goal name="insert&#39;vc.6.0.0.0" expl="assertion">
+     <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="25.956198" steps="61446615"/></proof>
+     <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="280095"/></proof>
+     <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1283398"/></proof>
+     <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="25.834322" steps="1030248"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl10_Replace">
+ <goal name="replace&#39;vc" expl="VC for replace">
+ <proof prover="0"><result status="timeout" time="1.000000" steps="908944"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="4756"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="103416"/></proof>
+ <proof prover="3"><result status="timeout" time="1.000000" steps="62583"/></proof>
+ <transf name="split_vc" >
+  <goal name="replace&#39;vc.0" expl="precondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1177644"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="5792"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="95930"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="79205"/></proof>
+  <transf name="inline_goal" >
+   <goal name="replace&#39;vc.0.0" expl="precondition">
+   <transf name="split_all_full" >
+    <goal name="replace&#39;vc.0.0.0" expl="precondition">
+    <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="22.498329" steps="1796524"/></proof>
+    <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="179463"/></proof>
+    <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1762912"/></proof>
+    <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="25.309755" steps="931746"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="replace&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.041994" steps="36"/></proof>
+  </goal>
+  <goal name="replace&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.047564" steps="37"/></proof>
+  </goal>
+  <goal name="replace&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.035772" steps="47"/></proof>
+  </goal>
+  <goal name="replace&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.059860" steps="55"/></proof>
+  </goal>
+  <goal name="replace&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.080229" steps="87972"/></proof>
+  </goal>
+  <goal name="replace&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.085559" steps="66"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl10_GetMut">
+ <goal name="get_mut&#39;vc" expl="VC for get_mut">
+ <proof prover="0"><result status="timeout" time="1.000000" steps="940999"/></proof>
+ <proof prover="1"><result status="timeout" time="1.000000" steps="4546"/></proof>
+ <proof prover="2"><result status="timeout" time="1.000000" steps="101266"/></proof>
+ <proof prover="3"><result status="timeout" time="1.000000" steps="69806"/></proof>
+ <transf name="split_vc" >
+  <goal name="get_mut&#39;vc.0" expl="precondition">
+  <proof prover="0"><result status="timeout" time="1.000000" steps="1177735"/></proof>
+  <proof prover="1"><result status="timeout" time="1.000000" steps="4336"/></proof>
+  <proof prover="2"><result status="timeout" time="1.000000" steps="108173"/></proof>
+  <proof prover="3"><result status="timeout" time="1.000000" steps="81617"/></proof>
+  <transf name="inline_goal" >
+   <goal name="get_mut&#39;vc.0.0" expl="precondition">
+   <transf name="split_all_full" >
+    <goal name="get_mut&#39;vc.0.0.0" expl="precondition">
+    <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="24.805226" steps="1816419"/></proof>
+    <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="211615"/></proof>
+    <proof prover="2" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="3333748"/></proof>
+    <proof prover="3" timelimit="30" memlimit="4000"><result status="timeout" time="24.247419" steps="891834"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="get_mut&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.056472" steps="35"/></proof>
+  </goal>
+  <goal name="get_mut&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.063191" steps="36"/></proof>
+  </goal>
+  <goal name="get_mut&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.039942" steps="73"/></proof>
+  </goal>
+  <goal name="get_mut&#39;vc.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.048705" steps="76"/></proof>
+  </goal>
+  <goal name="get_mut&#39;vc.5" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.058007" steps="78"/></proof>
+  </goal>
+  <goal name="get_mut&#39;vc.6" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.081410" steps="89655"/></proof>
+  </goal>
+  <goal name="get_mut&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.071147" steps="83"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl18_Clone" proved="true">
+ <goal name="clone&#39;&#39;vc" expl="VC for clone&#39;" proved="true">
+ <proof prover="1"><result status="valid" time="0.019076" steps="15"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl12_Cloned" proved="true">
+ <goal name="cloned&#39;vc" expl="VC for cloned" proved="true">
+ <proof prover="1"><result status="valid" time="0.018091" steps="23"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl15_From" proved="true">
+ <goal name="from&#39;vc" expl="VC for from" proved="true">
+ <proof prover="1"><result status="valid" time="0.021766" steps="12"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl3" proved="true">
+ <goal name="clone&#39;_refn" proved="true">
+ <proof prover="1"><result status="valid" time="0.016580" steps="3"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl18" proved="true">
+ <goal name="clone&#39;_refn" proved="true">
+ <proof prover="1"><result status="valid" time="0.009674" steps="3"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl4" proved="true">
+ <goal name="default_refn" proved="true">
+ <proof prover="1"><result status="valid" time="0.010919" steps="3"/></proof>
+ </goal>
+</theory>
+<theory name="Vecmap_Impl15" proved="true">
+ <goal name="from_refn" proved="true">
+ <proof prover="1"><result status="valid" time="0.013683" steps="3"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>
