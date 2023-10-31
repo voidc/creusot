@@ -1,0 +1,1346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="CVC4" version="1.8" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.5.1" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="4" name="Z3" version="4.12.2" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="6" name="CVC5" version="1.0.5" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg">
+<path name=".."/><path name="bdd.noopt.mlcfg"/>
+<theory name="Bdd_Hashmap_Impl2_Hash" proved="true">
+ <goal name="hash&#39;vc" expl="VC for hash" proved="true">
+ <proof prover="6" timelimit="5"><result status="valid" time="0.359696" steps="28047"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl7_Eq" proved="true">
+ <goal name="eq&#39;vc" expl="VC for eq" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="808"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl14_Eq" proved="true">
+ <goal name="eq&#39;vc" expl="VC for eq" proved="true">
+ <proof prover="1"><result status="valid" time="0.127345" steps="1311"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl0_Clone" proved="true">
+ <goal name="clone&#39;&#39;vc" expl="VC for clone&#39;" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="641"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl15_Clone" proved="true">
+ <goal name="clone&#39;&#39;vc" expl="VC for clone&#39;" proved="true">
+ <proof prover="1"><result status="valid" time="0.009700" steps="29"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl1_Hash" proved="true">
+ <goal name="hash&#39;vc" expl="VC for hash" proved="true">
+ <proof prover="6" timelimit="5"><result status="valid" time="2.655328" steps="105261"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl2_Hash" proved="true">
+ <goal name="hash&#39;vc" expl="VC for hash" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.020000" steps="761"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl8_Size_Impl" proved="true">
+ <goal name="size&#39;vc" expl="VC for size" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.020000" steps="1203"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl10_GrowsIsValidBdd_Impl" proved="true">
+ <goal name="grows_is_valid_bdd&#39;vc" expl="VC for grows_is_valid_bdd" proved="true">
+ <proof prover="1"><result status="valid" time="0.019187" steps="34"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl10_GrowsTrans_Impl" proved="true">
+ <goal name="grows_trans&#39;vc" expl="VC for grows_trans" proved="true">
+ <proof prover="1"><result status="valid" time="0.018313" steps="26"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl10_SetIrreleventVar_Impl" proved="true">
+ <goal name="set_irrelevent_var&#39;vc" expl="VC for set_irrelevent_var" proved="true">
+ <proof prover="4"><result status="valid" time="0.058851" steps="91806"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl10_DiscrValuation_Impl" proved="true">
+ <goal name="discr_valuation&#39;vc" expl="VC for discr_valuation" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="discr_valuation&#39;vc.0" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.037308" steps="99"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.189062" steps="601"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.035483" steps="26"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.030356" steps="26"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.028853" steps="26"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.5" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.034610" steps="60"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.146583" steps="684"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.030320" steps="26"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.117302" steps="738"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.026191" steps="28"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.10" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.025812" steps="101"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.012964" steps="26"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.078481" steps="605"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.016162" steps="28"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.14" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.011262" steps="28"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.15" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.019378" steps="62"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.015638" steps="26"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.17" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.114471" steps="687"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.18" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.131765" steps="742"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.19" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.020664" steps="30"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.20" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.048032" steps="173"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.21" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.089751" steps="599"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.22" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.096612" steps="799"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.23" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.013918" steps="32"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.016204" steps="32"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.25" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.030290" steps="160"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.26" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.089908" steps="639"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.27" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.146201" steps="836"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.28" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.032639" steps="188"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.29" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.017166" steps="34"/></proof>
+  </goal>
+  <goal name="discr_valuation&#39;vc.30" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="discr_valuation&#39;vc.30.0" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.280321" steps="1732"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.1" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.433022" steps="1927"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.2" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.094083" steps="415"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.3" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.448742" steps="1918"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.4" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.442415" steps="2033"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.5" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.126515" steps="701"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.6" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.295931" steps="1502"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.7" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.277380" steps="1623"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.8" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.055906" steps="207"/></proof>
+   </goal>
+   <goal name="discr_valuation&#39;vc.30.9" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.185969" steps="1109"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Bdd_Impl10_BddCanonical_Impl" proved="true">
+ <goal name="bdd_canonical&#39;vc" expl="VC for bdd_canonical" proved="true">
+ <proof prover="6"><result status="valid" time="0.232769" steps="17551"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_New" proved="true">
+ <goal name="new&#39;vc" expl="VC for new" proved="true">
+ <proof prover="1"><result status="valid" time="0.028607" steps="192"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_Hashcons" proved="true">
+ <goal name="hashcons&#39;vc" expl="VC for hashcons" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="hashcons&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.009814" steps="28"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.014359" steps="22"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.2" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.093413" steps="746"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.016357" steps="24"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.020498" steps="50"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.015976" steps="51"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.6" expl="integer overflow" proved="true">
+  <proof prover="1"><result status="valid" time="0.030636" steps="79"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.7" expl="integer overflow" proved="true">
+  <proof prover="1"><result status="valid" time="0.036734" steps="103"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.8" expl="type invariant" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="hashcons&#39;vc.8.0" expl="type invariant" proved="true">
+   <transf name="compute_specified" proved="true" >
+    <goal name="hashcons&#39;vc.8.0.0" expl="type invariant" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="hashcons&#39;vc.8.0.0.0" expl="type invariant" proved="true">
+     <transf name="inline_goal" proved="true" >
+      <goal name="hashcons&#39;vc.8.0.0.0.0" expl="type invariant" proved="true">
+      <transf name="split_vc" proved="true" >
+       <goal name="hashcons&#39;vc.8.0.0.0.0.0" expl="type invariant" proved="true">
+       <proof prover="6"><result status="valid" time="0.188711" steps="19690"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.1" expl="type invariant" proved="true">
+       <proof prover="6"><result status="valid" time="0.795204" steps="53483"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.2" expl="type invariant" proved="true">
+       <proof prover="6"><result status="valid" time="0.179927" steps="20232"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.3" expl="type invariant" proved="true">
+       <proof prover="6"><result status="valid" time="0.273260" steps="23782"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.4" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.112923" steps="99785"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.5" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.110180" steps="144118"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.6" expl="type invariant" proved="true">
+       <proof prover="6"><result status="valid" time="0.725400" steps="45141"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.7" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.231335" steps="251696"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.8" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.075666" steps="73720"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.9" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.094957" steps="103555"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.10" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.113959" steps="151670"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.11" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.101029" steps="151314"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.12" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.235060" steps="268199"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.13" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.166853" steps="184051"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.14" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.195348" steps="269254"/></proof>
+       </goal>
+       <goal name="hashcons&#39;vc.8.0.0.0.0.15" expl="type invariant" proved="true">
+       <proof prover="4"><result status="valid" time="0.137037" steps="185716"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+     <goal name="hashcons&#39;vc.8.0.0.1" expl="type invariant" proved="true">
+     <proof prover="6"><result status="valid" time="0.060962" steps="10921"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="hashcons&#39;vc.9" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="hashcons&#39;vc.9.0" expl="postcondition" proved="true">
+   <proof prover="6"><result status="valid" time="0.258291" steps="29398"/></proof>
+   </goal>
+   <goal name="hashcons&#39;vc.9.1" expl="postcondition" proved="true">
+   <proof prover="6"><result status="valid" time="0.084476" steps="8315"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="hashcons&#39;vc.10" expl="postcondition" proved="true">
+  <proof prover="6"><result status="valid" time="0.217198" steps="24730"/></proof>
+  </goal>
+  <goal name="hashcons&#39;vc.11" expl="postcondition" proved="true">
+  <proof prover="6"><result status="valid" time="0.355263" steps="23559"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_Node" proved="true">
+ <goal name="node&#39;vc" expl="VC for node" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="node&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.066813" steps="288"/></proof>
+  </goal>
+  <goal name="node&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.028080" steps="40"/></proof>
+  </goal>
+  <goal name="node&#39;vc.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.026771" steps="43"/></proof>
+  </goal>
+  <goal name="node&#39;vc.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.032788" steps="24"/></proof>
+  </goal>
+  <goal name="node&#39;vc.4" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.042761" steps="134"/></proof>
+  </goal>
+  <goal name="node&#39;vc.5" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.034798" steps="103"/></proof>
+  </goal>
+  <goal name="node&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.100856" steps="124686"/></proof>
+  </goal>
+  <goal name="node&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.071532" steps="225"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_True" proved="true">
+ <goal name="true_&#39;vc" expl="VC for true_" proved="true">
+ <proof prover="1"><result status="valid" time="0.110795" steps="408"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_False" proved="true">
+ <goal name="false_&#39;vc" expl="VC for false_" proved="true">
+ <proof prover="1"><result status="valid" time="0.112015" steps="408"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_V" proved="true">
+ <goal name="v&#39;vc" expl="VC for v" proved="true">
+ <proof prover="1"><result status="valid" time="0.691189" steps="4565"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_Not" proved="true">
+ <goal name="not&#39;&#39;vc" expl="VC for not&#39;" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="not&#39;&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.014381" steps="28"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.020099" steps="24"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.019752" steps="34"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.023399" steps="34"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.4" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.045274" steps="189"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.091999" steps="631"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.6" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.032005" steps="43"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.7" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.054350" steps="318"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.160383" steps="1447"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.037434" steps="53"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.10" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.066928" steps="208"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.027906" steps="62"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.462039" steps="2258"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.023782" steps="71"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.14" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.044259" steps="53"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.15" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.030585" steps="54"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.16" expl="type invariant" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="not&#39;&#39;vc.16.0" expl="type invariant" proved="true">
+   <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="2.149255" steps="88644"/></proof>
+   </goal>
+   <goal name="not&#39;&#39;vc.16.1" expl="type invariant" proved="true">
+   <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="1.592546" steps="78013"/></proof>
+   </goal>
+   <goal name="not&#39;&#39;vc.16.2" expl="type invariant" proved="true">
+   <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="4.972350" steps="184196"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="not&#39;&#39;vc.17" expl="postcondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.193849" steps="223796"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.18" expl="postcondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.143936" steps="136602"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.19" expl="postcondition" proved="true">
+  <proof prover="6"><result status="valid" time="0.786593" steps="51046"/></proof>
+  </goal>
+  <goal name="not&#39;&#39;vc.20" expl="postcondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.378495" steps="494677"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Bdd_Impl11_And">
+ <goal name="and&#39;vc" expl="VC for and">
+ <transf name="split_vc" >
+  <goal name="and&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.014341" steps="147"/></proof>
+  </goal>
+  <goal name="and&#39;vc.1" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.017227" steps="34"/></proof>
+  </goal>
+  <goal name="and&#39;vc.2" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.104687" steps="633"/></proof>
+  </goal>
+  <goal name="and&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.311449" steps="1457"/></proof>
+  </goal>
+  <goal name="and&#39;vc.4" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.023521" steps="70"/></proof>
+  </goal>
+  <goal name="and&#39;vc.5" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.023489" steps="88"/></proof>
+  </goal>
+  <goal name="and&#39;vc.6" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.175962" steps="944"/></proof>
+  </goal>
+  <goal name="and&#39;vc.7" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.671325" steps="2784"/></proof>
+  </goal>
+  <goal name="and&#39;vc.8" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.055781" steps="313"/></proof>
+  </goal>
+  <goal name="and&#39;vc.9" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.043391" steps="102"/></proof>
+  </goal>
+  <goal name="and&#39;vc.10" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.116983" steps="739"/></proof>
+  </goal>
+  <goal name="and&#39;vc.11" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.391323" steps="1622"/></proof>
+  </goal>
+  <goal name="and&#39;vc.12" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.484899" steps="2238"/></proof>
+  </goal>
+  <goal name="and&#39;vc.13" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.060713" steps="88"/></proof>
+  </goal>
+  <goal name="and&#39;vc.14" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.210758" steps="1061"/></proof>
+  </goal>
+  <goal name="and&#39;vc.15" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.550459" steps="3064"/></proof>
+  </goal>
+  <goal name="and&#39;vc.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.696039" steps="3865"/></proof>
+  </goal>
+  <goal name="and&#39;vc.17" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.047254" steps="102"/></proof>
+  </goal>
+  <goal name="and&#39;vc.18" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.109249" steps="631"/></proof>
+  </goal>
+  <goal name="and&#39;vc.19" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.035982" steps="68"/></proof>
+  </goal>
+  <goal name="and&#39;vc.20" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.292415" steps="1457"/></proof>
+  </goal>
+  <goal name="and&#39;vc.21" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.030529" steps="88"/></proof>
+  </goal>
+  <goal name="and&#39;vc.22" expl="variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.127493" steps="941"/></proof>
+  </goal>
+  <goal name="and&#39;vc.23" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.076955" steps="276"/></proof>
+  </goal>
+  <goal name="and&#39;vc.24" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.528175" steps="3015"/></proof>
+  </goal>
+  <goal name="and&#39;vc.25" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.036395" steps="102"/></proof>
+  </goal>
+  <goal name="and&#39;vc.26" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.016491" steps="40"/></proof>
+  </goal>
+  <goal name="and&#39;vc.27" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.016388" steps="40"/></proof>
+  </goal>
+  <goal name="and&#39;vc.28" expl="unreachable point" proved="true">
+  <proof prover="6"><result status="valid" time="0.085307" steps="6362"/></proof>
+  </goal>
+  <goal name="and&#39;vc.29" expl="precondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.251503" steps="254745"/></proof>
+  </goal>
+  <goal name="and&#39;vc.30" expl="precondition" proved="true">
+  <proof prover="6"><result status="valid" time="0.091440" steps="8897"/></proof>
+  </goal>
+  <goal name="and&#39;vc.31" expl="precondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="and&#39;vc.31.0" expl="precondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="and&#39;vc.31.0.0" expl="precondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="and&#39;vc.31.0.0.0" expl="precondition" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="and&#39;vc.31.0.0.0.0" expl="precondition" proved="true">
+      <proof prover="4"><result status="valid" time="0.754479" steps="817890"/></proof>
+      </goal>
+      <goal name="and&#39;vc.31.0.0.0.1" expl="precondition" proved="true">
+      <proof prover="4"><result status="valid" time="0.640772" steps="648683"/></proof>
+      </goal>
+      <goal name="and&#39;vc.31.0.0.0.2" expl="precondition" proved="true">
+      <proof prover="4"><result status="valid" time="0.485236" steps="564987"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="and&#39;vc.31.1" expl="precondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="and&#39;vc.31.1.0" expl="precondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="and&#39;vc.31.1.0.0" expl="precondition" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="and&#39;vc.31.1.0.0.0" expl="precondition" proved="true">
+      <proof prover="6"><result status="valid" time="0.721219" steps="43507"/></proof>
+      </goal>
+      <goal name="and&#39;vc.31.1.0.0.1" expl="precondition" proved="true">
+      <proof prover="4"><result status="valid" time="0.553150" steps="533860"/></proof>
+      </goal>
+      <goal name="and&#39;vc.31.1.0.0.2" expl="precondition" proved="true">
+      <proof prover="4"><result status="valid" time="0.475145" steps="510020"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="and&#39;vc.32" expl="precondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.116839" steps="143108"/></proof>
+  </goal>
+  <goal name="and&#39;vc.33" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.029470" steps="44"/></proof>
+  </goal>
+  <goal name="and&#39;vc.34" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.126516" steps="261"/></proof>
+  </goal>
+  <goal name="and&#39;vc.35" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.137980" steps="46"/></proof>
+  </goal>
+  <goal name="and&#39;vc.36" expl="type invariant">
+  <transf name="split_vc" >
+   <goal name="and&#39;vc.36.0" expl="type invariant" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="and&#39;vc.36.0.0" expl="type invariant" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="and&#39;vc.36.0.0.0" expl="type invariant" proved="true">
+     <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="6.159873" steps="204748"/></proof>
+     </goal>
+     <goal name="and&#39;vc.36.0.0.1" expl="type invariant" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="and&#39;vc.36.0.0.1.0" expl="type invariant" proved="true">
+      <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="5.458817" steps="227151"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="and&#39;vc.36.1" expl="type invariant">
+   <transf name="compute_specified" >
+    <goal name="and&#39;vc.36.1.0" expl="type invariant">
+    <proof prover="0"><result status="timeout" time="1.000000" steps="150624"/></proof>
+    <proof prover="1"><result status="timeout" time="1.000000" steps="6290"/></proof>
+    <proof prover="4"><result status="timeout" time="1.000000" steps="1814460"/></proof>
+    <proof prover="6"><result status="timeout" time="1.000000" steps="103253"/></proof>
+    <transf name="split_vc" >
+     <goal name="and&#39;vc.36.1.0.0" expl="type invariant">
+     <proof prover="0"><result status="timeout" time="1.000000" steps="148707"/></proof>
+     <proof prover="1"><result status="timeout" time="1.000000" steps="5373"/></proof>
+     <proof prover="4"><result status="timeout" time="1.000000" steps="1626937"/></proof>
+     <proof prover="6"><result status="timeout" time="1.000000" steps="94790"/></proof>
+     <transf name="split_vc" >
+      <goal name="and&#39;vc.36.1.0.0.0" expl="type invariant">
+      <proof prover="0"><result status="timeout" time="1.000000" steps="137687"/></proof>
+      <proof prover="1"><result status="timeout" time="1.000000" steps="2920"/></proof>
+      <proof prover="4"><result status="timeout" time="1.000000" steps="1811696"/></proof>
+      <proof prover="6"><result status="timeout" time="1.000000" steps="102071"/></proof>
+      <transf name="split_vc" >
+       <goal name="and&#39;vc.36.1.0.0.0.0" expl="type invariant">
+       <proof prover="0"><result status="timeout" time="1.000000" steps="124853"/></proof>
+       <proof prover="1"><result status="timeout" time="1.000000" steps="7774"/></proof>
+       <proof prover="4"><result status="timeout" time="1.000000" steps="1766597"/></proof>
+       <proof prover="6"><result status="timeout" time="1.000000" steps="101601"/></proof>
+       <transf name="split_vc" >
+        <goal name="and&#39;vc.36.1.0.0.0.0.0" expl="type invariant">
+        <proof prover="0"><result status="timeout" time="1.000000" steps="127242"/></proof>
+        <proof prover="1"><result status="timeout" time="1.000000" steps="6867"/></proof>
+        <proof prover="4"><result status="timeout" time="1.000000" steps="1262436"/></proof>
+        <proof prover="6"><result status="timeout" time="1.000000" steps="62945"/></proof>
+        <transf name="split_vc" >
+         <goal name="and&#39;vc.36.1.0.0.0.0.0.0" expl="type invariant">
+         <proof prover="0"><result status="timeout" time="1.000000" steps="127242"/></proof>
+         <proof prover="1"><result status="timeout" time="1.000000" steps="6816"/></proof>
+         <proof prover="4"><result status="timeout" time="1.000000" steps="1134508"/></proof>
+         <proof prover="6"><result status="timeout" time="1.000000" steps="57329"/></proof>
+         <transf name="inline_goal" >
+          <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0" expl="type invariant">
+          <transf name="split_all_full" >
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.0" expl="VC for and" proved="true">
+           <proof prover="1"><result status="valid" time="0.683797" steps="4550"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.1" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.109340" steps="271806"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.2" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.113475" steps="141474"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.3" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.077906" steps="76396"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.4" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.574229" steps="767568"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.5" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.086208" steps="197184"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.6" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.120677" steps="182523"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.7" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.068099" steps="182503"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.8" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.074155" steps="170143"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.9" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="212263"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="6089"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="1111257"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="75730"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.9.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="131289"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="3220"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="1145137"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="62984"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.9.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5320391"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="80556"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="26.628938" steps="158386959"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="25.847155" steps="1172619"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.10" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="100875"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="4113"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="959404"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="51795"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.10.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="92621"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="3144"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="849514"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="51768"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.10.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5496829"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="54335"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="25.509968" steps="35012699"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="25.285329" steps="1968278"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.11" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="100875"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3858"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="959516"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="51860"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.11.0" expl="VC for and" proved="true">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="100774"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="3060"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="880005"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="46389"/></proof>
+            <transf name="inline_goal" proved="true" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.11.0.0" expl="VC for and" proved="true">
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="valid" time="4.863292" steps="3792271"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.12" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="81921"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3575"/></proof>
+           <proof prover="4"><result status="timeout" time="0.769542" steps="849532"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="53786"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.12.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="1.291527" steps="80793"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.13" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="85814"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3739"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="925997"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="58571"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.13.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="1.654695" steps="82252"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.14" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="106613"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3689"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="1021106"/></proof>
+           <proof prover="6"><result status="timeout" time="0.799921" steps="51894"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.14.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="2.179227" steps="100469"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.15" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="98921"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="2388"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="988364"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="52799"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.15.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="95900"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2296"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="1103576"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="50840"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.0.0.0.15.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5298310"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="58798"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="26.077652" steps="21929179"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="26.017464" steps="2302773"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+        <goal name="and&#39;vc.36.1.0.0.0.0.1" expl="type invariant">
+        <proof prover="0"><result status="timeout" time="1.000000" steps="180097"/></proof>
+        <proof prover="1"><result status="timeout" time="1.000000" steps="6907"/></proof>
+        <proof prover="4"><result status="timeout" time="1.000000" steps="1015081"/></proof>
+        <proof prover="6"><result status="timeout" time="1.000000" steps="55525"/></proof>
+        <transf name="split_vc" >
+         <goal name="and&#39;vc.36.1.0.0.0.0.1.0" expl="type invariant">
+         <proof prover="0"><result status="timeout" time="1.000000" steps="180097"/></proof>
+         <proof prover="1"><result status="timeout" time="1.000000" steps="6124"/></proof>
+         <proof prover="4"><result status="timeout" time="1.000000" steps="1102434"/></proof>
+         <proof prover="6"><result status="timeout" time="1.000000" steps="57614"/></proof>
+         <transf name="inline_goal" >
+          <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0" expl="type invariant">
+          <transf name="split_all_full" >
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.0" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.079842" steps="76771"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.1" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.247299" steps="272291"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.2" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.098704" steps="141949"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.3" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.077256" steps="76813"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.4" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.682226" steps="776939"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.5" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.127758" steps="197742"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.6" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.081218" steps="182747"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.7" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.141996" steps="182727"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.8" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.116296" steps="170678"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.9" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="131249"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3678"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="1141442"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="64695"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.9.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="88115"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2899"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="1027956"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="59384"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.9.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5321535"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="75240"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="26.411741" steps="123512569"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="25.991905" steps="1455905"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.10" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="100419"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="4020"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="1002703"/></proof>
+           <proof prover="6"><result status="timeout" time="0.795126" steps="51022"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.10.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="92235"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2791"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="883439"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="50663"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.10.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="6467041"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="67751"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="136014954"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1870589"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.11" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="100419"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3953"/></proof>
+           <proof prover="4"><result status="timeout" time="0.698874" steps="783538"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="53920"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.11.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="92235"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2782"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="1088523"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="66217"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.11.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="4604847"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="58400"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="87948546"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="26.761246" steps="1142918"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.12" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="80837"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3815"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="943796"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="57887"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.12.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="1.584762" steps="82204"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.13" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="86412"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3587"/></proof>
+           <proof prover="4"><result status="timeout" time="0.737690" steps="794300"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="52637"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.13.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="1.547093" steps="82266"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.14" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="76245"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3847"/></proof>
+           <proof prover="4"><result status="timeout" time="0.713040" steps="786777"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="55552"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.14.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="2.018932" steps="93650"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.15" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="88192"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="2643"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="777154"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="52582"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.15.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="88061"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2192"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="791203"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="49806"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.1.0.0.15.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5298227"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="75614"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="34494341"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="2843495"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+        <goal name="and&#39;vc.36.1.0.0.0.0.2" expl="type invariant">
+        <proof prover="0"><result status="timeout" time="1.000000" steps="95325"/></proof>
+        <proof prover="1"><result status="timeout" time="1.000000" steps="6770"/></proof>
+        <proof prover="4"><result status="timeout" time="1.000000" steps="1092561"/></proof>
+        <proof prover="6"><result status="timeout" time="1.000000" steps="58192"/></proof>
+        <transf name="split_vc" >
+         <goal name="and&#39;vc.36.1.0.0.0.0.2.0" expl="type invariant">
+         <proof prover="0"><result status="timeout" time="1.000000" steps="96032"/></proof>
+         <proof prover="1"><result status="timeout" time="1.000000" steps="6396"/></proof>
+         <proof prover="4"><result status="timeout" time="1.000000" steps="1067617"/></proof>
+         <proof prover="6"><result status="timeout" time="1.000000" steps="58478"/></proof>
+         <transf name="inline_goal" >
+          <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0" expl="type invariant">
+          <transf name="split_all_full" >
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.0" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.050238" steps="76354"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.1" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.192046" steps="278441"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.2" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.093071" steps="141526"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.3" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.047037" steps="76396"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.4" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.452825" steps="607477"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.5" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.100645" steps="197317"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.6" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.132849" steps="182235"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.7" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.093209" steps="182215"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.8" expl="VC for and" proved="true">
+           <proof prover="4"><result status="valid" time="0.121194" steps="170271"/></proof>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.9" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="131386"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3397"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="1356391"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="71571"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.9.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="87790"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2304"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="912426"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="58679"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.9.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5322084"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="78898"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="25.835487" steps="113472306"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="25.444915" steps="1097193"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.10" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="100897"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3118"/></proof>
+           <proof prover="4"><result status="timeout" time="0.737038" steps="845533"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="56828"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.10.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="105714"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2428"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="1021427"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="47988"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.10.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5499062"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="54136"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="25.875166" steps="65608010"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="26.122474" steps="2072884"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.11" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="100897"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3267"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="1008402"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="59406"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.11.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="92652"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="2449"/></proof>
+            <proof prover="4"><result status="timeout" time="1.000000" steps="813728"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="47835"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.11.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5498807"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="54163"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="26.019786" steps="32438706"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="25.561892" steps="1182186"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.12" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="82581"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3350"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="847902"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="54848"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.12.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="1.699225" steps="82222"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.13" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="79606"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3336"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="888289"/></proof>
+           <proof prover="6"><result status="timeout" time="0.618115" steps="44312"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.13.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="1.616838" steps="80799"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.14" expl="VC for and" proved="true">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="81305"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="3508"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="1025347"/></proof>
+           <proof prover="6"><result status="timeout" time="1.000000" steps="53558"/></proof>
+           <transf name="split_vc" proved="true" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.14.0" expl="VC for and" proved="true">
+            <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="2.285115" steps="99072"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.15" expl="VC for and">
+           <proof prover="0"><result status="timeout" time="1.000000" steps="96283"/></proof>
+           <proof prover="1"><result status="timeout" time="1.000000" steps="2366"/></proof>
+           <proof prover="4"><result status="timeout" time="1.000000" steps="936888"/></proof>
+           <proof prover="6"><result status="timeout" time="0.775116" steps="49412"/></proof>
+           <transf name="split_vc" >
+            <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.15.0" expl="VC for and">
+            <proof prover="0"><result status="timeout" time="1.000000" steps="88435"/></proof>
+            <proof prover="1"><result status="timeout" time="1.000000" steps="1767"/></proof>
+            <proof prover="4"><result status="timeout" time="0.700027" steps="742843"/></proof>
+            <proof prover="6"><result status="timeout" time="1.000000" steps="48489"/></proof>
+            <transf name="inline_goal" >
+             <goal name="and&#39;vc.36.1.0.0.0.0.2.0.0.15.0.0" expl="VC for and">
+             <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5298558"/></proof>
+             <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="57335"/></proof>
+             <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="24.367402" steps="46001168"/></proof>
+             <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="26.167942" steps="2208910"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+     <goal name="and&#39;vc.36.1.0.1" expl="type invariant" proved="true">
+     <proof prover="4"><result status="valid" time="0.097928" steps="141012"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   <transf name="split_vc" >
+    <goal name="and&#39;vc.36.1.0" expl="type invariant">
+    <transf name="split_vc" >
+     <goal name="and&#39;vc.36.1.0.0" expl="type invariant">
+     <transf name="split_vc" >
+      <goal name="and&#39;vc.36.1.0.0.0" expl="type invariant">
+      <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5213370"/></proof>
+      <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="58692"/></proof>
+      <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="103847058"/></proof>
+      <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="571042"/></proof>
+      </goal>
+      <goal name="and&#39;vc.36.1.0.0.1" expl="type invariant">
+      <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="5056767"/></proof>
+      <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="60484"/></proof>
+      <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="41041376"/></proof>
+      <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="783643"/></proof>
+      </goal>
+      <goal name="and&#39;vc.36.1.0.0.2" expl="type invariant">
+      <proof prover="0" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="7243033"/></proof>
+      <proof prover="1" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="82910"/></proof>
+      <proof prover="4" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="307908026"/></proof>
+      <proof prover="6" timelimit="30" memlimit="4000"><result status="timeout" time="30.000000" steps="1103258"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="and&#39;vc.36.2" expl="type invariant" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="and&#39;vc.36.2.0" expl="type invariant" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="and&#39;vc.36.2.0.0" expl="type invariant" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="and&#39;vc.36.2.0.0.0" expl="type invariant" proved="true">
+      <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="4.533386" steps="221587"/></proof>
+      </goal>
+     </transf>
+     </goal>
+     <goal name="and&#39;vc.36.2.0.1" expl="type invariant" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="and&#39;vc.36.2.0.1.0" expl="type invariant" proved="true">
+      <proof prover="6" timelimit="30" memlimit="4000"><result status="valid" time="27.766429" steps="979620"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="and&#39;vc.37" expl="postcondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.532894" steps="573482"/></proof>
+  </goal>
+  <goal name="and&#39;vc.38" expl="postcondition" proved="true">
+  <proof prover="4"><result status="valid" time="0.211103" steps="282222"/></proof>
+  </goal>
+  <goal name="and&#39;vc.39" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="and&#39;vc.39.0" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="and&#39;vc.39.0.0" expl="postcondition" proved="true">
+    <proof prover="6"><result status="valid" time="0.271173" steps="21071"/></proof>
+    </goal>
+    <goal name="and&#39;vc.39.0.1" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="and&#39;vc.39.0.1.0" expl="postcondition" proved="true">
+     <proof prover="4"><result status="valid" time="0.307506" steps="277031"/></proof>
+     </goal>
+     <goal name="and&#39;vc.39.0.1.1" expl="postcondition" proved="true">
+     <proof prover="4"><result status="valid" time="0.802481" steps="1073001"/></proof>
+     </goal>
+     <goal name="and&#39;vc.39.0.1.2" expl="postcondition" proved="true">
+     <proof prover="1"><result status="valid" time="0.057312" steps="80"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="and&#39;vc.39.1" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="and&#39;vc.39.1.0" expl="postcondition" proved="true">
+    <proof prover="4"><result status="valid" time="0.143344" steps="191189"/></proof>
+    </goal>
+    <goal name="and&#39;vc.39.1.1" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="and&#39;vc.39.1.1.0" expl="postcondition" proved="true">
+     <proof prover="6"><result status="valid" time="0.088131" steps="13194"/></proof>
+     </goal>
+     <goal name="and&#39;vc.39.1.1.1" expl="postcondition" proved="true">
+     <proof prover="6"><result status="valid" time="0.767550" steps="60440"/></proof>
+     </goal>
+     <goal name="and&#39;vc.39.1.1.2" expl="postcondition" proved="true">
+     <proof prover="1"><result status="valid" time="0.052401" steps="80"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="and&#39;vc.39.2" expl="postcondition" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="and&#39;vc.39.2.0" expl="postcondition" proved="true">
+    <proof prover="4"><result status="valid" time="0.267631" steps="211631"/></proof>
+    </goal>
+    <goal name="and&#39;vc.39.2.1" expl="postcondition" proved="true">
+    <transf name="split_vc" proved="true" >
+     <goal name="and&#39;vc.39.2.1.0" expl="postcondition" proved="true">
+     <proof prover="6"><result status="valid" time="0.085755" steps="6462"/></proof>
+     </goal>
+     <goal name="and&#39;vc.39.2.1.1" expl="postcondition" proved="true">
+     <transf name="split_vc" proved="true" >
+      <goal name="and&#39;vc.39.2.1.1.0" expl="postcondition" proved="true">
+      <proof prover="6"><result status="valid" time="0.921127" steps="60842"/></proof>
+      </goal>
+     </transf>
+     </goal>
+     <goal name="and&#39;vc.39.2.1.2" expl="postcondition" proved="true">
+     <proof prover="6"><result status="valid" time="0.199316" steps="14823"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="and&#39;vc.40" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="and&#39;vc.40.0" expl="postcondition" proved="true">
+   <proof prover="4"><result status="valid" time="0.442270" steps="369517"/></proof>
+   </goal>
+   <goal name="and&#39;vc.40.1" expl="postcondition" proved="true">
+   <proof prover="6"><result status="valid" time="0.318785" steps="31086"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Bdd_Hashmap_Impl2" proved="true">
+ <goal name="hash_refn" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="1704"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl1" proved="true">
+ <goal name="hash_refn" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="2397"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl2" proved="true">
+ <goal name="hash_refn" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="693"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl13" proved="true">
+ <goal name="assert_receiver_is_total_eq_refn" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="20"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl19" proved="true">
+ <goal name="assert_receiver_is_total_eq_refn" proved="true">
+ <proof prover="1"><result status="valid" time="0.010356" steps="1"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl14" proved="true">
+ <goal name="eq_refn" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="692"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl7" proved="true">
+ <goal name="eq_refn" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="693"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl15" proved="true">
+ <goal name="clone&#39;_refn" proved="true">
+ <proof prover="1"><result status="valid" time="0.011794" steps="12"/></proof>
+ </goal>
+</theory>
+<theory name="Bdd_Impl0" proved="true">
+ <goal name="clone&#39;_refn" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.010000" steps="929"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

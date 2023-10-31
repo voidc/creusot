@@ -54,19 +54,16 @@ where
     K::DeepModelTy: OrdLogic,
 {
     #[logic]
-    #[trusted]
-    #[ensures(result.len() == (self.v@).len() &&
-              forall<i: Int> i >= 0 && i < (self.v@).len() ==>
-              result[i] == (self.v@)[i].0.deep_model())]
     fn key_seq(self) -> Seq<K::DeepModelTy> {
-        pearlite! { absurd }
+        pearlite! {
+            Seq::new((self.v@).len(), |i| (self.v@)[i].0.deep_model())
+        }
     }
 
     #[predicate]
     fn is_sorted(self) -> bool {
         pearlite! {
-            forall<m: Int, n: Int> m >= 0 && n >= 0 && m < (self.v@).len() && n < (self.v@).len() && m < n ==>
-                self.key_seq()[m] < self.key_seq()[n]
+            self.key_seq().sorted()
         }
     }
 }
@@ -127,6 +124,7 @@ where
         Entry::Vacant(VacantEntry { map: self, index: i, key })
     }
 
+    /*
     /// Finds entry reference, either directly associated with `min_key_inclusive`, or the entry with the
     /// closest key (in terms of sorting order) greater than `min_key_inclusive`. Returns `None` if
     /// map does not contain entry with key greater or equal to `min_key_inclusive`.
@@ -154,11 +152,12 @@ where
             },
         }
     }
+    */
 
     /// Insert `value` for `key` in the map. If `key` is already contained, the function
     /// replaces the previously held value and returns it.
     #[maintains((mut self).is_sorted())]
-    #[ensures(exists<i: Int> i >= 0 && i < ((^self).v@).len() ==>
+    #[ensures(exists<i: Int> i >= 0 && i < ((^self).v@).len() &&
               (^self).key_seq()[i] == key.deep_model() && ((^self).v@)[i].1 == value)]
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
         match self.find_k(&key) {
@@ -177,7 +176,7 @@ where
               !self.key_seq().contains(key.deep_model()) &&
               *self == ^self)]
     #[ensures(forall<v: V> result == Some(v) ==>
-              exists<i: Int> i >= 0 && i < (self.v@).len() ==>
+              exists<i: Int> i >= 0 && i < (self.v@).len() &&
               self.key_seq()[i] == key.deep_model() && (self.v@)[i].1 == v &&
               ((^self).v@) == (self.v@).subsequence(0, i).concat(
                   (self.v@).subsequence(i + 1, (self.v@).len())
@@ -193,7 +192,7 @@ where
     #[requires(self.is_sorted())]
     #[ensures(result == None ==> !self.key_seq().contains(key.deep_model()))]
     #[ensures(forall<v: _> result == Some(v) ==>
-              exists<i: Int> i >= 0 && i < (self.v@).len() ==>
+              exists<i: Int> i >= 0 && i < (self.v@).len() &&
               self.key_seq()[i] == key.deep_model() && (self.v@)[i].1 == *v)]
     pub fn get(&self, key: &K) -> Option<&V> {
         match self.find_k(key) {
@@ -216,7 +215,7 @@ where
               forall<i: Int> i >= 0 && i < (self.v@).len() ==>
               self.key_seq()[i] <= key.key.deep_model())]
     #[ensures(forall<entry: _> result == Some(entry) ==>
-              exists<i: Int> i >= 0 && i < (self.v@).len() ==>
+              exists<i: Int> i >= 0 && i < (self.v@).len() &&
               self.key_seq()[i] == entry.0.key.deep_model() &&
               self.key_seq()[i] > key.key.deep_model() &&
               (self.v@)[i].1 == *entry.1 &&

@@ -486,6 +486,7 @@ fn elaborate_type_invariants<'tcx>(
 ) {
     if is_user_tyinv(ctx.tcx, def_id)
         || is_inv_internal(ctx.tcx, def_id)
+        || item_type(ctx.tcx, def_id) == ItemType::Constant
         || (is_predicate(ctx.tcx, def_id) || is_ghost(ctx.tcx, def_id) || is_logic(ctx.tcx, def_id))
             && pre_sig.contract.ensures.is_empty()
     {
@@ -495,6 +496,10 @@ fn elaborate_type_invariants<'tcx>(
     let subst = InternalSubsts::identity_for_item(ctx.tcx, def_id);
 
     for (name, span, ty) in pre_sig.inputs.iter() {
+        if name.is_empty() {
+            continue;
+        }
+
         if let Some(term) = pearlite::type_invariant_term(ctx, def_id, *name, *span, *ty) {
             let term = EarlyBinder::bind(term).subst(ctx.tcx, subst);
             pre_sig.contract.requires.push(term);

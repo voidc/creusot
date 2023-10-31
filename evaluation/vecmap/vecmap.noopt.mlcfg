@@ -24,6 +24,10 @@ module Alloc_RawVec_RawVec_Type
   type t_rawvec 't 'a =
     | C_RawVec (Core_Ptr_Unique_Unique_Type.t_unique 't) usize 'a
     
+  let function rawvec_alloc (self : t_rawvec 't 'a) : 'a = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_RawVec _ _ a -> a
+      end
 end
 module Alloc_Vec_Vec_Type
   use prelude.Int
@@ -32,6 +36,10 @@ module Alloc_Vec_Vec_Type
   type t_vec 't 'a =
     | C_Vec (Alloc_RawVec_RawVec_Type.t_rawvec 't 'a) usize
     
+  let function vec_buf (self : t_vec 't 'a) : Alloc_RawVec_RawVec_Type.t_rawvec 't 'a = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_Vec a _ -> a
+      end
 end
 module Alloc_Alloc_Global_Type
   type t_global  =
@@ -445,6 +453,98 @@ module Vecmap_VecMap_Type_Inv
   clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   axiom inv_t_vecmap [@rewrite] : forall self : Vecmap_VecMap_Type.t_vecmap k v . Inv0.inv self = (Invariant0.invariant' self /\ Inv1.inv (Vecmap_VecMap_Type.vecmap_v self))
+end
+module CreusotContracts_Std1_Vec_Impl3_Invariant_Stub
+  type t
+  type a
+  use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
+  predicate invariant' (self : Alloc_Vec_Vec_Type.t_vec t a)
+end
+module CreusotContracts_Std1_Vec_Impl3_Invariant_Interface
+  type t
+  type a
+  use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
+  predicate invariant' (self : Alloc_Vec_Vec_Type.t_vec t a)
+  val invariant' (self : Alloc_Vec_Vec_Type.t_vec t a) : bool
+    ensures { result = invariant' self }
+    
+end
+module CreusotContracts_Std1_Vec_Impl3_Invariant
+  type t
+  type a
+  use seq.Seq
+  use seq.Seq
+  clone Core_Num_Impl11_Max_Stub as Max0
+  use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = Alloc_Vec_Vec_Type.t_vec t a
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Seq.seq t
+  clone CreusotContracts_Std1_Vec_Impl0_ShallowModel_Stub as ShallowModel0 with
+    type t = t,
+    type a = a,
+    predicate Inv0.inv = Inv1.inv,
+    val Max0.mAX' = Max0.mAX',
+    predicate Inv1.inv = Inv0.inv,
+    axiom .
+  predicate invariant' (self : Alloc_Vec_Vec_Type.t_vec t a) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/std/vec.rs" 60 20 60 41] Inv0.inv (ShallowModel0.shallow_model self)
+  val invariant' (self : Alloc_Vec_Vec_Type.t_vec t a) : bool
+    ensures { result = invariant' self }
+    
+end
+module Alloc_Vec_Vec_Type_Inv
+  type t
+  type a
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec t a
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant_Stub as Invariant0 with
+    type t = t,
+    type a = a
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Alloc_Vec_Vec_Type.t_vec t a
+  axiom inv_t_vec [@rewrite] : forall self : Alloc_Vec_Vec_Type.t_vec t a . Inv0.inv self = (Invariant0.invariant' self /\ Inv1.inv (Alloc_Vec_Vec_Type.vec_buf self))
+end
+module CreusotContracts_Logic_Seq_Seq_Type_Inv
+  type t
+  use prelude.Seq
+  use prelude.Int
+  use seq.Seq
+  use seq.Seq
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Seq.seq t
+  axiom inv_t_seq [@rewrite] : forall self : Seq.seq t . Inv0.inv self = (forall i : int . 0 <= i /\ i < Seq.length self -> Inv1.inv (Seq.get self i))
+end
+module Alloc_RawVec_RawVec_Type_Inv
+  type t
+  type a
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = a
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec t a
+  axiom inv_t_rawvec [@rewrite] : forall self : Alloc_RawVec_RawVec_Type.t_rawvec t a . Inv0.inv self = Inv1.inv (Alloc_RawVec_RawVec_Type.rawvec_alloc self)
+end
+module TyInv_Tuple2
+  type t0
+  type t1
+  clone CreusotContracts_Invariant_Inv_Stub as Inv2 with
+    type t = t1
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = (t0, t1)
+  axiom inv_tuple2 [@rewrite] : forall self : (t0, t1) . Inv0.inv self = (let (a_0, a_1) = self in Inv1.inv a_0 /\ Inv2.inv a_1)
+end
+module Alloc_Alloc_Global_Type_Inv
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  axiom inv_t_global : forall self : Alloc_Alloc_Global_Type.t_global . Inv0.inv self = true
 end
 module TyInv_Trivial
   type t
@@ -935,11 +1035,11 @@ module Vecmap_Impl2_New
   use seq.Seq
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
     type t = DeepModelTy0.deepModelTy
   clone TyInv_Trivial as TyInv_Trivial2 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
@@ -952,44 +1052,44 @@ module Vecmap_Impl2_New
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -997,9 +1097,27 @@ module Vecmap_Impl2_New
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv3.inv,
+    predicate Inv0.inv = Inv8.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = v,
+    predicate Inv0.inv = Inv7.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
+    predicate Inv0.inv = Inv6.inv,
+    axiom .
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv5.inv,
     axiom .
   clone CreusotContracts_Model_DeepModel_DeepModel_Interface as DeepModel0 with
     type self = k,
@@ -1011,7 +1129,6 @@ module Vecmap_Impl2_New
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = Seq.seq (k, v)
   clone Core_Num_Impl11_Max as Max0
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
@@ -1031,6 +1148,24 @@ module Vecmap_Impl2_New
     predicate Inv0.inv = Inv1.inv,
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv2.inv
+  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv6.inv,
+    predicate Inv2.inv = Inv7.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv5.inv,
+    axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
@@ -1040,19 +1175,30 @@ module Vecmap_Impl2_New
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant1 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv1.inv,
+    val Max0.mAX' = Max0.mAX'
   clone Vecmap_Impl1_Invariant as Invariant0 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv1.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
@@ -1212,6 +1358,15 @@ module CreusotContracts_Resolve_Impl1_Resolve
     ensures { result = resolve self }
     
 end
+module TyInv_Borrow_Shared
+  type t
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = t
+  axiom inv_borrow_shared [@rewrite] : forall self : t . Inv0.inv self = Inv1.inv self
+end
 module CreusotContracts_Model_Impl4_DeepModel_Stub
   type t
   use prelude.Borrow
@@ -1343,15 +1498,6 @@ module Alloc_Vec_Impl1_Len_Interface
     requires {[#"/home/dominik/.rustup/toolchains/nightly-2023-06-29-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/alloc/src/vec/mod.rs" 2049 16 2049 20] Inv0.inv self}
     ensures { [#"/mnt/data/projects/creusot/creusot-contracts/src/std/vec.rs" 75 26 75 48] UIntSize.to_int result = Seq.length (ShallowModel0.shallow_model self) }
     
-end
-module TyInv_Borrow_Shared
-  type t
-  use prelude.Borrow
-  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
-    type t = t
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = t
-  axiom inv_borrow_shared [@rewrite] : forall self : t . Inv0.inv self = Inv1.inv self
 end
 module CreusotContracts_Std1_Slice_SliceIndex_InBounds_Stub
   type self
@@ -1607,10 +1753,21 @@ module Vecmap_Impl2_FindK
   clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
     type t = DeepModelTy0.deepModelTy,
     function LeLog0.le_log = LeLog0.le_log
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv13.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial3 with
+    type t = v,
+    predicate Inv0.inv = Inv12.inv,
+    axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
@@ -1643,57 +1800,94 @@ module Vecmap_Impl2_FindK
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv13.inv,
+    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv8.inv,
+    predicate Inv2.inv = Inv12.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv8.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv0.inv = Inv9.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv4.inv,
+    axiom .
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = k,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial6 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = DeepModelTy0.deepModelTy,
     predicate Inv0.inv = Inv7.inv,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv4.inv,
+    val Max0.mAX' = Max0.mAX'
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = usize
-  clone TyInv_Trivial as TyInv_Trivial5 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = usize,
     predicate Inv0.inv = Inv6.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv4.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared3 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl5_HasValue as HasValue0 with
     type t = (k, v)
@@ -1701,16 +1895,17 @@ module Vecmap_Impl2_FindK
     type t = (k, v)
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv1.inv,
-    predicate Inv1.inv = Inv8.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
@@ -2132,10 +2327,21 @@ module Vecmap_Impl2_Entry
   use prelude.Int
   use prelude.UIntSize
   use seq.Seq
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = v,
+    predicate Inv0.inv = Inv14.inv,
+    axiom .
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv13.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   use seq.Seq
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = Seq.seq (k, v)
@@ -2168,7 +2374,7 @@ module Vecmap_Impl2_Entry
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
   use Vecmap_OccupiedEntry_Type as Vecmap_OccupiedEntry_Type
-  clone Vecmap_Impl6_Invariant as Invariant2 with
+  clone Vecmap_Impl6_Invariant as Invariant3 with
     type k = k,
     type v = v,
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
@@ -2179,7 +2385,7 @@ module Vecmap_Impl2_Entry
     predicate Inv1.inv = Inv7.inv,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
   use Vecmap_VacantEntry_Type as Vecmap_VacantEntry_Type
-  clone Vecmap_Impl4_Invariant as Invariant1 with
+  clone Vecmap_Impl4_Invariant as Invariant2 with
     type k = k,
     type v = v,
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
@@ -2191,14 +2397,32 @@ module Vecmap_Impl2_Entry
   clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
     type t = DeepModelTy0.deepModelTy,
     function LeLog0.le_log = LeLog0.le_log
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv12.inv,
+    predicate Inv1.inv = Inv3.inv,
+    predicate Inv2.inv = Inv14.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv13.inv,
+    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial4 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = DeepModelTy0.deepModelTy,
     predicate Inv0.inv = Inv10.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = k
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
@@ -2207,7 +2431,7 @@ module Vecmap_Impl2_Entry
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv9.inv,
-    predicate Invariant0.invariant' = Invariant2.invariant',
+    predicate Invariant0.invariant' = Invariant3.invariant',
     predicate Inv1.inv = Inv1.inv,
     predicate Inv2.inv = Inv3.inv,
     axiom .
@@ -2217,13 +2441,20 @@ module Vecmap_Impl2_Entry
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv8.inv,
-    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Invariant0.invariant' = Invariant2.invariant',
     predicate Inv1.inv = Inv1.inv,
     predicate Inv2.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant1 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv6.inv,
+    val Max0.mAX' = Max0.mAX'
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
@@ -2235,13 +2466,17 @@ module Vecmap_Impl2_Entry
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv12.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv6.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
@@ -2298,7 +2533,7 @@ module Vecmap_Impl2_Entry
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv5.inv,
     predicate Inv1.inv = Inv1.inv,
@@ -2313,7 +2548,7 @@ module Vecmap_Impl2_Entry
     predicate Inv1.inv = Inv8.inv,
     predicate Inv2.inv = Inv9.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = k,
     predicate Inv0.inv = Inv3.inv,
     axiom .
@@ -2339,9 +2574,10 @@ module Vecmap_Impl2_Entry
     function DeepModel0.deep_model = DeepModel1.deep_model
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve2 with
     type self = k
@@ -2642,6 +2878,15 @@ module Vecmap_Impl8_DeepModel
     ensures { result = deep_model self }
     
 end
+module Vecmap_KeyRef_Type_Inv
+  type k
+  use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
+  axiom inv_t_keyref [@rewrite] : forall self : Vecmap_KeyRef_Type.t_keyref k . Inv0.inv self = Inv1.inv (Vecmap_KeyRef_Type.keyref_key self)
+end
 module Vecmap_Impl10_AsRef_Interface
   type k
   use prelude.Borrow
@@ -2669,17 +2914,33 @@ module Vecmap_Impl10_AsRef
   type k
   use prelude.Borrow
   use prelude.Int
+  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
+    predicate Inv0.inv = Inv4.inv,
+    axiom .
+  use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv1 with
+    type k = k,
+    predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv4.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   clone CreusotContracts_Model_DeepModel_DeepModel_Interface as DeepModel4 with
     type self = k,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = k
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv1.inv,
     axiom .
   clone CreusotContracts_Model_Impl4_DeepModel as DeepModel3 with
     type t = k,
@@ -2689,17 +2950,17 @@ module Vecmap_Impl10_AsRef
     type k = k,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function DeepModel0.deep_model = DeepModel4.deep_model
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone Vecmap_Impl8_DeepModel as DeepModel1 with
     type k = k,
@@ -2812,12 +3073,26 @@ end
 module Vecmap_Impl11_ToOwned_Impl
   type k
   use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
+    predicate Inv0.inv = Inv3.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = k
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+    type t = k,
+    predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv3.inv,
+    axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv1 with
+    type k = k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
@@ -2830,9 +3105,10 @@ module Vecmap_Impl11_ToOwned_Impl
     function DeepModel0.deep_model = DeepModel3.deep_model
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv2.inv,
     axiom .
   clone Vecmap_Impl8_DeepModel as DeepModel1 with
     type k = k,
@@ -2912,6 +3188,18 @@ module Core_Slice_Impl0_Get_Interface
     ensures { [#"/mnt/data/projects/creusot/creusot-contracts/src/std/slice.rs" 246 18 246 55] InBounds0.in_bounds index (ShallowModel0.shallow_model self) \/ result = Core_Option_Option_Type.C_None }
     ensures { [#"/home/dominik/.rustup/toolchains/nightly-2023-06-29-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/slice/mod.rs" 601 4 603 28] Inv3.inv result }
     
+end
+module Core_Option_Option_Type_Inv
+  type t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t
+  use Core_Option_Option_Type as Core_Option_Option_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Core_Option_Option_Type.t_option t
+  axiom inv_t_option [@rewrite] : forall self : Core_Option_Option_Type.t_option t . Inv0.inv self = match (self) with
+    | Core_Option_Option_Type.C_None -> true
+    | Core_Option_Option_Type.C_Some a_0 -> Inv1.inv (Core_Option_Option_Type.some_0 self)
+    end
 end
 module Core_Cmp_Impls_Impl10_Le_Interface
   type a
@@ -2995,6 +3283,17 @@ module CreusotContracts_Std1_Slice_Impl0_ShallowModel
     
   axiom shallow_model_spec : forall self : slice t . ([#"/mnt/data/projects/creusot/creusot-contracts/src/std/slice.rs" 19 21 19 25] Inv0.inv self) -> ([#"/mnt/data/projects/creusot/creusot-contracts/src/std/slice.rs" 19 4 19 50] Inv1.inv (shallow_model self)) && ([#"/mnt/data/projects/creusot/creusot-contracts/src/std/slice.rs" 18 14 18 41] shallow_model self = Slice.id self) && ([#"/mnt/data/projects/creusot/creusot-contracts/src/std/slice.rs" 17 14 17 41] Seq.length (shallow_model self) <= UIntSize.to_int Max0.mAX')
 end
+module TyInv_Slice
+  type t
+  use prelude.Slice
+  use prelude.Seq
+  use prelude.Int
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = slice t
+  axiom inv_slice [@rewrite] : forall self : slice t . Inv0.inv self = (forall i : int . 0 <= i /\ i < Seq.length (Slice.id self) -> Inv1.inv (Seq.get (Slice.id self) i))
+end
 module Vecmap_Impl2_IsValidKeyref_Interface
   type k
   type v
@@ -3071,6 +3370,18 @@ module Vecmap_Impl2_IsValidKeyref
   use prelude.UIntSize
   use seq.Seq
   use prelude.Int
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv20 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv20.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv19 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial3 with
+    type t = v,
+    predicate Inv0.inv = Inv19.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   clone CreusotContracts_Logic_Ord_OrdLogic_LeLog_Interface as LeLog0 with
@@ -3081,13 +3392,26 @@ module Vecmap_Impl2_IsValidKeyref
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
-    type t = slice (k, v)
-  clone TyInv_Trivial as TyInv_Trivial13 with
-    type t = slice (k, v),
-    predicate Inv0.inv = Inv15.inv,
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv18 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv18.inv,
+    predicate Inv1.inv = Inv20.inv,
     axiom .
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv17 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv17.inv,
+    predicate Inv1.inv = Inv15.inv,
+    predicate Inv2.inv = Inv19.inv,
+    axiom .
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
@@ -3120,17 +3444,35 @@ module Vecmap_Impl2_IsValidKeyref
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv16 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial12 with
+  clone TyInv_Trivial as TyInv_Trivial2 with
     type t = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv16.inv,
+    axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv12.inv,
+    predicate Inv1.inv = Inv11.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = k,
+    predicate Inv0.inv = Inv15.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
+    type t = slice (k, v)
+  clone TyInv_Slice as TyInv_Slice0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv14.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
@@ -3138,7 +3480,7 @@ module Vecmap_Impl2_IsValidKeyref
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv13.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
@@ -3150,103 +3492,114 @@ module Vecmap_Impl2_IsValidKeyref
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial11 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv12.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial10 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv11.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv18.inv,
     axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial9 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv1 with
+    type k = k,
     predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv15.inv,
     axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+    type t = k
   clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial8 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv9.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial7 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared6 with
     type t = k,
     predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial6 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared5 with
     type t = (k, v),
     predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = usize
-  clone TyInv_Trivial as TyInv_Trivial5 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = usize,
     predicate Inv0.inv = Inv6.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl0_ShallowModel_Interface as ShallowModel3 with
     type t = (k, v),
-    predicate Inv0.inv = Inv15.inv,
+    predicate Inv0.inv = Inv14.inv,
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone TyInv_Trivial as TyInv_Trivial4 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared4 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv14.inv,
+    predicate Inv0.inv = Inv16.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -3265,11 +3618,10 @@ module Vecmap_Impl2_IsValidKeyref
     type k = k,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function DeepModel0.deep_model = DeepModel0.deep_model
-  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared3 with
     type t = k,
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv15.inv,
     axiom .
   clone CreusotContracts_Model_Impl4_DeepModel as DeepModel1 with
     type t = k,
@@ -3277,15 +3629,17 @@ module Vecmap_Impl2_IsValidKeyref
     function DeepModel0.deep_model = DeepModel0.deep_model
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = Core_Option_Option_Type.t_option (k, v)
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Core_Option_Option_Type.t_option (k, v),
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl5_HasValue as HasValue0 with
     type t = (k, v)
@@ -3293,9 +3647,10 @@ module Vecmap_Impl2_IsValidKeyref
     type t = (k, v)
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = slice (k, v)
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = slice (k, v),
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Model_Impl5_ShallowModel as ShallowModel2 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
@@ -3496,6 +3851,15 @@ module Core_Iter_Traits_Collect_Impl0_IntoIter_Interface
     ensures { [#"/mnt/data/projects/creusot/creusot-contracts/src/std/iter.rs" 89 0 166 1] IntoIterPost0.into_iter_post self result }
     ensures { [#"/home/dominik/.rustup/toolchains/nightly-2023-06-29-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/iter/traits/collect.rs" 281 4 281 27] Inv0.inv result }
     
+end
+module Core_Ops_Range_Range_Type_Inv
+  type idx
+  use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = idx
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Core_Ops_Range_Range_Type.t_range idx
+  axiom inv_t_range [@rewrite] : forall self : Core_Ops_Range_Range_Type.t_range idx . Inv0.inv self = (Inv1.inv (Core_Ops_Range_Range_Type.range_start self) /\ Inv1.inv (Core_Ops_Range_Range_Type.range_end self))
 end
 module CreusotContracts_Std1_Iter_Iterator_Completed_Stub
   type self
@@ -3820,10 +4184,21 @@ module Vecmap_Impl2_EntryFromRef
   use prelude.Ghost
   use seq.Seq
   use prelude.Borrow
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv25 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv25.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv24 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial3 with
+    type t = v,
+    predicate Inv0.inv = Inv24.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   use seq.Seq
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
     type t = Seq.seq (k, v)
@@ -3856,7 +4231,7 @@ module Vecmap_Impl2_EntryFromRef
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
   use Vecmap_OccupiedEntry_Type as Vecmap_OccupiedEntry_Type
-  clone Vecmap_Impl6_Invariant as Invariant2 with
+  clone Vecmap_Impl6_Invariant as Invariant3 with
     type k = k,
     type v = v,
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
@@ -3867,7 +4242,7 @@ module Vecmap_Impl2_EntryFromRef
     predicate Inv1.inv = Inv13.inv,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
   use Vecmap_VacantEntry_Type as Vecmap_VacantEntry_Type
-  clone Vecmap_Impl4_Invariant as Invariant1 with
+  clone Vecmap_Impl4_Invariant as Invariant2 with
     type k = k,
     type v = v,
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
@@ -3879,13 +4254,32 @@ module Vecmap_Impl2_EntryFromRef
   clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
     type t = DeepModelTy0.deepModelTy,
     function LeLog0.le_log = LeLog0.le_log
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv23 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv23.inv,
+    predicate Inv1.inv = Inv25.inv,
+    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = k
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone CreusotContracts_Invariant_Inv_Interface as Inv21 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv22 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v
   clone Vecmap_OccupiedEntry_Type_Inv as Vecmap_OccupiedEntry_Type_Inv0 with
+    type k = k,
+    type v = v,
+    predicate Inv0.inv = Inv22.inv,
+    predicate Invariant0.invariant' = Invariant3.invariant',
+    predicate Inv1.inv = Inv6.inv,
+    predicate Inv2.inv = Inv7.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv21 with
+    type t = Vecmap_VacantEntry_Type.t_vacantentry k v
+  clone Vecmap_VacantEntry_Type_Inv as Vecmap_VacantEntry_Type_Inv0 with
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv21.inv,
@@ -3894,30 +4288,39 @@ module Vecmap_Impl2_EntryFromRef
     predicate Inv2.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv20 with
-    type t = Vecmap_VacantEntry_Type.t_vacantentry k v
-  clone Vecmap_VacantEntry_Type_Inv as Vecmap_VacantEntry_Type_Inv0 with
-    type k = k,
-    type v = v,
-    predicate Inv0.inv = Inv20.inv,
-    predicate Invariant0.invariant' = Invariant1.invariant',
-    predicate Inv1.inv = Inv6.inv,
-    predicate Inv2.inv = Inv7.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv19 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial15 with
+  clone TyInv_Trivial as TyInv_Trivial2 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
+  clone CreusotContracts_Invariant_Inv_Interface as Inv19 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv19.inv,
+    predicate Inv1.inv = Inv7.inv,
+    predicate Inv2.inv = Inv24.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv17 with
+    type t = usize
   clone CreusotContracts_Invariant_Inv_Interface as Inv18 with
     type t = Seq.seq usize
-  clone TyInv_Trivial as TyInv_Trivial14 with
-    type t = Seq.seq usize,
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv1 with
+    type t = usize,
     predicate Inv0.inv = Inv18.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant1 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv13.inv,
+    predicate Inv1.inv = Inv12.inv,
+    val Max0.mAX' = Max0.mAX'
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
@@ -3930,53 +4333,63 @@ module Vecmap_Impl2_EntryFromRef
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv17 with
-    type t = usize
-  clone TyInv_Trivial as TyInv_Trivial13 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = usize,
     predicate Inv0.inv = Inv17.inv,
     axiom .
   use Core_Option_Option_Type as Core_Option_Option_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv16 with
     type t = Core_Option_Option_Type.t_option usize
-  clone TyInv_Trivial as TyInv_Trivial12 with
-    type t = Core_Option_Option_Type.t_option usize,
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
+    type t = usize,
     predicate Inv0.inv = Inv16.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
   use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = Core_Ops_Range_Range_Type.t_range usize
   clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
     type t = borrowed (Core_Ops_Range_Range_Type.t_range usize)
-  clone TyInv_Trivial as TyInv_Trivial11 with
-    type t = borrowed (Core_Ops_Range_Range_Type.t_range usize),
+  clone TyInv_Borrow as TyInv_Borrow1 with
+    type t = Core_Ops_Range_Range_Type.t_range usize,
     predicate Inv0.inv = Inv15.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone TyInv_Trivial as TyInv_Trivial10 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared5 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv14.inv,
+    predicate Inv1.inv = Inv12.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial9 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv13.inv,
+    predicate Inv1.inv = Inv19.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial8 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv12.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv1.inv = Inv23.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared4 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv11.inv,
     predicate Inv1.inv = Inv6.inv,
     axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
   clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial7 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared3 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
     predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv2.inv,
     axiom .
   use Vecmap_Entry_Type as Vecmap_Entry_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
@@ -3985,58 +4398,58 @@ module Vecmap_Impl2_EntryFromRef
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv9.inv,
-    predicate Inv1.inv = Inv20.inv,
-    predicate Inv2.inv = Inv21.inv,
+    predicate Inv1.inv = Inv21.inv,
+    predicate Inv2.inv = Inv22.inv,
     axiom .
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv19.inv,
+    predicate Inv0.inv = Inv20.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -4049,7 +4462,7 @@ module Vecmap_Impl2_EntryFromRef
     predicate Inv0.inv = Inv8.inv,
     predicate Inv1.inv = Inv6.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial6 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = k,
     predicate Inv0.inv = Inv7.inv,
     axiom .
@@ -4062,15 +4475,17 @@ module Vecmap_Impl2_EntryFromRef
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial5 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = k,
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial4 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = (k, v),
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv19.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl5_HasValue as HasValue0 with
     type t = (k, v)
@@ -4084,8 +4499,6 @@ module Vecmap_Impl2_EntryFromRef
     type idx = usize,
     predicate Resolve0.resolve = Resolve3.resolve,
     function DeepModel0.deep_model = DeepModel5.deep_model
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = Core_Ops_Range_Range_Type.t_range usize
   clone CreusotContracts_Std1_Iter_Range_Impl0_Produces as Produces0 with
     type idx = usize,
     function DeepModel0.deep_model = DeepModel5.deep_model
@@ -4100,9 +4513,10 @@ module Vecmap_Impl2_EntryFromRef
     predicate Inv0.inv = Inv3.inv,
     predicate Produces0.produces = Produces0.produces,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = Core_Ops_Range_Range_Type.t_range usize,
+  clone Core_Ops_Range_Range_Type_Inv as Core_Ops_Range_Range_Type_Inv0 with
+    type idx = usize,
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
   clone CreusotContracts_Std1_Iter_Impl0_IntoIterPost as IntoIterPost0 with
     type i = Core_Ops_Range_Range_Type.t_range usize
@@ -4112,17 +4526,17 @@ module Vecmap_Impl2_EntryFromRef
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     type ShallowModelTy0.shallowModelTy = Seq.seq (k, v),
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model
-  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
-    type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv1 with
+    type k = k,
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv5.inv,
     axiom .
   clone Vecmap_Impl8_DeepModel as DeepModel4 with
     type k = k,
@@ -4146,9 +4560,10 @@ module Vecmap_Impl2_EntryFromRef
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv1.inv,
     axiom .
   clone CreusotContracts_Model_Impl4_DeepModel as DeepModel1 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
@@ -4775,13 +5190,28 @@ module Vecmap_InsertInternal
   use prelude.Int
   use prelude.UIntSize
   use seq.Seq
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv8.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
-  clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial6 with
+  clone TyInv_Trivial as TyInv_Trivial2 with
     type t = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv7.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
@@ -4791,95 +5221,28 @@ module Vecmap_InsertInternal
   clone CreusotContracts_Logic_Ord_OrdLogic_LeLog_Interface as LeLog0 with
     type self = DeepModelTy0.deepModelTy
   use seq.Seq
-  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
-    type t = Seq.seq (k, v)
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = Seq.seq (k, v),
-    predicate Inv0.inv = Inv5.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial4 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
+    type t = Seq.seq (k, v)
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
     type t = (k, v),
-    predicate Inv0.inv = Inv4.inv,
+    predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
-    type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv6.inv,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
-    type self = DeepModelTy0.deepModelTy,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv6.inv,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
-    type self = DeepModelTy0.deepModelTy,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv6.inv,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
-    type self = DeepModelTy0.deepModelTy,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv6.inv,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
-    type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv6.inv,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
-    type self = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
-    type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv6.inv,
-    function GtLog0.gt_log = GtLog0.gt_log,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
-    type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv6.inv,
-    function GeLog0.ge_log = GeLog0.ge_log,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_LtLog_Interface as LtLog0 with
-    type self = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
-    type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv6.inv,
-    function LtLog0.lt_log = LtLog0.lt_log,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    axiom .
-  clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
-    type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv6.inv,
-    function LeLog0.le_log = LeLog0.le_log,
-    function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    axiom .
-  clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
-    type t = DeepModelTy0.deepModelTy,
-    function LeLog0.le_log = LeLog0.le_log
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = v
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = v,
-    predicate Inv0.inv = Inv3.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = k,
-    predicate Inv0.inv = Inv2.inv,
-    axiom .
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
-  use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global))
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)),
-    predicate Inv0.inv = Inv1.inv,
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv2.inv,
+    predicate Inv2.inv = Inv3.inv,
     axiom .
   clone Core_Num_Impl11_Max as Max0
+  use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
   clone CreusotContracts_Std1_Vec_Impl0_ShallowModel_Interface as ShallowModel1 with
@@ -4889,6 +5252,84 @@ module Vecmap_InsertInternal
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv5.inv,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel1.shallow_model,
+    predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv0.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
+    type self = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv7.inv,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
+    type self = DeepModelTy0.deepModelTy,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    predicate Inv0.inv = Inv7.inv,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
+    type self = DeepModelTy0.deepModelTy,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    predicate Inv0.inv = Inv7.inv,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
+    type self = DeepModelTy0.deepModelTy,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    predicate Inv0.inv = Inv7.inv,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
+    type self = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv7.inv,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
+    type self = DeepModelTy0.deepModelTy
+  clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
+    type self = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv7.inv,
+    function GtLog0.gt_log = GtLog0.gt_log,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
+    type self = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv7.inv,
+    function GeLog0.ge_log = GeLog0.ge_log,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_LtLog_Interface as LtLog0 with
+    type self = DeepModelTy0.deepModelTy
+  clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
+    type self = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv7.inv,
+    function LtLog0.lt_log = LtLog0.lt_log,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
+    type self = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv7.inv,
+    function LeLog0.le_log = LeLog0.le_log,
+    function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
+    type t = DeepModelTy0.deepModelTy,
+    function LeLog0.le_log = LeLog0.le_log
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = v,
+    predicate Inv0.inv = Inv3.inv,
+    axiom .
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global))
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+    predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv0.inv,
+    axiom .
   clone CreusotContracts_Logic_Ops_Impl0_IndexLogic as IndexLogic0 with
     type t = (k, v),
     type a = Alloc_Alloc_Global_Type.t_global,
@@ -4896,9 +5337,12 @@ module Vecmap_InsertInternal
     predicate Inv0.inv = Inv0.inv,
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv5.inv
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv6.inv,
     axiom .
   clone CreusotContracts_Model_DeepModel_DeepModel_Interface as DeepModel0 with
     type self = k,
@@ -5080,6 +5524,12 @@ module Vecmap_Impl2_Insert
   use prelude.Int
   use prelude.UIntSize
   use seq.Seq
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv16 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv16.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   clone CreusotContracts_Logic_Ord_OrdLogic_LeLog_Interface as LeLog0 with
@@ -5090,7 +5540,6 @@ module Vecmap_Impl2_Insert
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
@@ -5123,26 +5572,48 @@ module Vecmap_Impl2_Insert
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial10 with
+  clone TyInv_Trivial as TyInv_Trivial3 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv12.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv0.inv = Inv14.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv2.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = v
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv13.inv,
+    predicate Inv1.inv = Inv1.inv,
+    predicate Inv2.inv = Inv3.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv12.inv,
+    predicate Inv1.inv = Inv16.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
@@ -5151,50 +5622,58 @@ module Vecmap_Impl2_Insert
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
     type t = usize
-  clone TyInv_Trivial as TyInv_Trivial9 with
+  clone TyInv_Trivial as TyInv_Trivial2 with
     type t = usize,
     predicate Inv0.inv = Inv11.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial8 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
     predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv2.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
+    predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -5202,58 +5681,60 @@ module Vecmap_Impl2_Insert
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv15.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv9.inv,
-    predicate Inv1.inv = Inv12.inv,
+    predicate Inv1.inv = Inv14.inv,
     axiom .
   use Core_Option_Option_Type as Core_Option_Option_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
     type t = Core_Option_Option_Type.t_option v
-  clone TyInv_Trivial as TyInv_Trivial7 with
-    type t = Core_Option_Option_Type.t_option v,
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
+    type t = v,
     predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global))
-  clone TyInv_Trivial as TyInv_Trivial6 with
-    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)),
+  clone TyInv_Borrow as TyInv_Borrow3 with
+    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv2.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = borrowed (Vecmap_VecMap_Type.t_vecmap k v)
-  clone TyInv_Borrow as TyInv_Borrow0 with
+  clone TyInv_Borrow as TyInv_Borrow2 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv6.inv,
-    predicate Inv1.inv = Inv12.inv,
+    predicate Inv1.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = borrowed v
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = borrowed v,
+  clone TyInv_Borrow as TyInv_Borrow1 with
+    type t = v,
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = borrowed (k, v)
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = borrowed (k, v),
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv13.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = v
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = v,
     predicate Inv0.inv = Inv3.inv,
     axiom .
@@ -5267,13 +5748,14 @@ module Vecmap_Impl2_Insert
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     type ShallowModelTy0.shallowModelTy = Seq.seq (k, v),
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv2.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv12.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = k,
     predicate Inv0.inv = Inv1.inv,
     axiom .
@@ -5285,9 +5767,10 @@ module Vecmap_Impl2_Insert
     function DeepModel0.deep_model = DeepModel0.deep_model
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv1.inv,
     axiom .
   clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve6 with
     type self = v
@@ -5618,6 +6101,11 @@ module Vecmap_Impl2_Remove
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
   use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv13.inv,
+    axiom .
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
@@ -5650,78 +6138,104 @@ module Vecmap_Impl2_Remove
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial7 with
+  clone TyInv_Trivial as TyInv_Trivial2 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv9.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv0.inv = Inv11.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv1.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
+  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = k,
+    predicate Inv0.inv = Inv9.inv,
+    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
     type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global))
-  clone TyInv_Trivial as TyInv_Trivial6 with
-    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)),
+  clone TyInv_Borrow as TyInv_Borrow1 with
+    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv1.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
     predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv1.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = (k, v)
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
+    predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -5729,33 +6243,34 @@ module Vecmap_Impl2_Remove
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv12.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv6.inv,
-    predicate Inv1.inv = Inv9.inv,
-    axiom .
-  use Core_Option_Option_Type as Core_Option_Option_Type
-  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
-    type t = Core_Option_Option_Type.t_option v
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = Core_Option_Option_Type.t_option v,
-    predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = v
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  use Core_Option_Option_Type as Core_Option_Option_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
+    type t = Core_Option_Option_Type.t_option v
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
+    type t = v,
+    predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv4.inv,
+    axiom .
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = v,
     predicate Inv0.inv = Inv4.inv,
     axiom .
@@ -5763,18 +6278,19 @@ module Vecmap_Impl2_Remove
     type self = v
   clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve3 with
     type self = k
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = (k, v),
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv9.inv,
+    predicate Inv2.inv = Inv4.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = borrowed (Vecmap_VecMap_Type.t_vecmap k v)
   clone TyInv_Borrow as TyInv_Borrow0 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv2.inv,
-    predicate Inv1.inv = Inv9.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Logic_Ops_Impl0_IndexLogic as IndexLogic0 with
     type t = (k, v),
@@ -5787,15 +6303,19 @@ module Vecmap_Impl2_Remove
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     type ShallowModelTy0.shallowModelTy = Seq.seq (k, v),
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv1.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv10.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Contains as Contains0 with
     type t = DeepModelTy0.deepModelTy
@@ -5976,10 +6496,15 @@ module Vecmap_Impl2_Get
   clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
     type t = DeepModelTy0.deepModelTy,
     function LeLog0.le_log = LeLog0.le_log
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv15.inv,
+    axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
@@ -6012,88 +6537,130 @@ module Vecmap_Impl2_Get
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv14.inv,
+    predicate Inv1.inv = Inv15.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial8 with
+  clone TyInv_Trivial as TyInv_Trivial3 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = v,
+    predicate Inv0.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv9.inv,
+    predicate Inv2.inv = Inv12.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv9.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv0.inv = Inv10.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv5.inv,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv5.inv,
+    val Max0.mAX' = Max0.mAX'
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = k,
+    predicate Inv0.inv = Inv9.inv,
+    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
     type t = usize
-  clone TyInv_Trivial as TyInv_Trivial7 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = usize,
     predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone TyInv_Trivial as TyInv_Trivial6 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared4 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv5.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv5.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -6101,34 +6668,37 @@ module Vecmap_Impl2_Get
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = v
   use Core_Option_Option_Type as Core_Option_Option_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = Core_Option_Option_Type.t_option v
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = Core_Option_Option_Type.t_option v,
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
+    type t = v,
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = v
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared3 with
     type t = v,
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl5_HasValue as HasValue0 with
     type t = (k, v)
@@ -6140,16 +6710,17 @@ module Vecmap_Impl2_Get
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv1.inv,
-    predicate Inv1.inv = Inv9.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Contains as Contains0 with
     type t = DeepModelTy0.deepModelTy
@@ -6271,6 +6842,21 @@ module Core_Result_Impl0_IsOk_Interface
     ensures { [#"/mnt/data/projects/creusot/creusot-contracts/src/std/result.rs" 22 26 22 63] result = (exists t : t . Inv1.inv t /\ self = Core_Result_Result_Type.C_Ok t) }
     
 end
+module Core_Result_Result_Type_Inv
+  type t
+  type e
+  clone CreusotContracts_Invariant_Inv_Stub as Inv2 with
+    type t = e
+  use Core_Result_Result_Type as Core_Result_Result_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Core_Result_Result_Type.t_result t e
+  axiom inv_t_result [@rewrite] : forall self : Core_Result_Result_Type.t_result t e . Inv0.inv self = match (self) with
+    | Core_Result_Result_Type.C_Ok a_0 -> Inv1.inv (Core_Result_Result_Type.ok_0 self)
+    | Core_Result_Result_Type.C_Err a_0 -> Inv2.inv (Core_Result_Result_Type.err_0 self)
+    end
+end
 module Vecmap_Impl2_ContainsKey_Interface
   type k
   type v
@@ -6304,6 +6890,18 @@ module Vecmap_Impl2_ContainsKey
   use prelude.Int
   use prelude.UIntSize
   use seq.Seq
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial3 with
+    type t = v,
+    predicate Inv0.inv = Inv13.inv,
+    axiom .
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv12.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   clone CreusotContracts_Logic_Ord_OrdLogic_LeLog_Interface as LeLog0 with
@@ -6314,13 +6912,44 @@ module Vecmap_Impl2_ContainsKey
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
-    type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+  use Core_Result_Result_Type as Core_Result_Result_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
+    type t = usize
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = Core_Result_Result_Type.t_result usize usize
+  clone Core_Result_Result_Type_Inv as Core_Result_Result_Type_Inv0 with
+    type t = usize,
+    type e = usize,
+    predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv5.inv,
+    predicate Inv2.inv = Inv5.inv,
     axiom .
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv7.inv,
+    predicate Inv2.inv = Inv13.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv9.inv,
+    predicate Inv1.inv = Inv12.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+    type t = DeepModelTy0.deepModelTy
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv8.inv,
+    axiom .
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
@@ -6353,83 +6982,96 @@ module Vecmap_Impl2_ContainsKey
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv2.inv,
+    val Max0.mAX' = Max0.mAX'
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = k,
+    predicate Inv0.inv = Inv7.inv,
+    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv6.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv2.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
-    type t = usize
-  clone TyInv_Trivial as TyInv_Trivial4 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = usize,
     predicate Inv0.inv = Inv5.inv,
     axiom .
-  use Core_Result_Result_Type as Core_Result_Result_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = Core_Result_Result_Type.t_result usize usize
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = Core_Result_Result_Type.t_result usize usize,
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv2.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -6437,21 +7079,22 @@ module Vecmap_Impl2_ContainsKey
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
@@ -6614,10 +7257,15 @@ module Vecmap_Impl2_NextMapping
   clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
     type t = DeepModelTy0.deepModelTy,
     function LeLog0.le_log = LeLog0.le_log
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv23 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv23.inv,
+    axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
@@ -6650,52 +7298,94 @@ module Vecmap_Impl2_NextMapping
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv18 with
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv22 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv22.inv,
+    predicate Inv1.inv = Inv23.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv21 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial3 with
+    type t = v,
+    predicate Inv0.inv = Inv21.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv20 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = k,
+    predicate Inv0.inv = Inv20.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv19 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv18.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv0.inv = Inv19.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv10.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv18 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple21 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv18.inv,
+    predicate Inv1.inv = Inv20.inv,
+    predicate Inv2.inv = Inv21.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv17 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial16 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = DeepModelTy0.deepModelTy,
     predicate Inv0.inv = Inv17.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv16 with
-    type t = Seq.seq usize
-  clone TyInv_Trivial as TyInv_Trivial15 with
-    type t = Seq.seq usize,
-    predicate Inv0.inv = Inv16.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
     type t = usize
-  clone TyInv_Trivial as TyInv_Trivial14 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv16 with
+    type t = Seq.seq usize
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv1 with
+    type t = usize,
+    predicate Inv0.inv = Inv16.inv,
+    predicate Inv1.inv = Inv15.inv,
+    axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv10.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = usize,
     predicate Inv0.inv = Inv15.inv,
     axiom .
   use Core_Option_Option_Type as Core_Option_Option_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
     type t = Core_Option_Option_Type.t_option usize
-  clone TyInv_Trivial as TyInv_Trivial13 with
-    type t = Core_Option_Option_Type.t_option usize,
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv1 with
+    type t = usize,
     predicate Inv0.inv = Inv14.inv,
+    predicate Inv1.inv = Inv15.inv,
     axiom .
   use Core_Ops_Range_Range_Type as Core_Ops_Range_Range_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = Core_Ops_Range_Range_Type.t_range usize
   clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
     type t = borrowed (Core_Ops_Range_Range_Type.t_range usize)
-  clone TyInv_Trivial as TyInv_Trivial12 with
-    type t = borrowed (Core_Ops_Range_Range_Type.t_range usize),
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = Core_Ops_Range_Range_Type.t_range usize,
     predicate Inv0.inv = Inv13.inv,
+    predicate Inv1.inv = Inv1.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
@@ -6704,69 +7394,83 @@ module Vecmap_Impl2_NextMapping
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone TyInv_Trivial as TyInv_Trivial11 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared5 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv12.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial10 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv18.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial9 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv10.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv22.inv,
     axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial8 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv1 with
+    type k = k,
     predicate Inv0.inv = Inv9.inv,
+    predicate Inv1.inv = Inv20.inv,
     axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Get as Get0 with
     type t = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
-    type t = Core_Option_Option_Type.t_option (Vecmap_KeyRef_Type.t_keyref k, v)
-  clone TyInv_Trivial as TyInv_Trivial7 with
-    type t = Core_Option_Option_Type.t_option (Vecmap_KeyRef_Type.t_keyref k, v),
-    predicate Inv0.inv = Inv8.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = (Vecmap_KeyRef_Type.t_keyref k, v)
-  clone TyInv_Trivial as TyInv_Trivial6 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+    type t = Core_Option_Option_Type.t_option (Vecmap_KeyRef_Type.t_keyref k, v)
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
     type t = (Vecmap_KeyRef_Type.t_keyref k, v),
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = v
-  clone TyInv_Trivial as TyInv_Trivial5 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = Vecmap_KeyRef_Type.t_keyref k,
+    type t1 = v,
+    predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv3.inv,
+    predicate Inv2.inv = Inv6.inv,
+    axiom .
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared4 with
     type t = v,
     predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv21.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial4 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared3 with
     type t = k,
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv20.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
-  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = Vecmap_VecMap_Type.t_vecmap k v,
     predicate Inv0.inv = Inv4.inv,
-    predicate Inv1.inv = Inv18.inv,
+    predicate Inv1.inv = Inv19.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv5.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv18.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl5_HasValue as HasValue0 with
     type t = (k, v)
@@ -6833,8 +7537,6 @@ module Vecmap_Impl2_NextMapping
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Core_Ops_Range_Range_Type.t_range usize
   clone CreusotContracts_Std1_Iter_Range_Impl0_Produces as Produces0 with
     type idx = usize,
     function DeepModel0.deep_model = DeepModel3.deep_model
@@ -6849,9 +7551,10 @@ module Vecmap_Impl2_NextMapping
     predicate Inv0.inv = Inv1.inv,
     predicate Produces0.produces = Produces0.produces,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Core_Ops_Range_Range_Type.t_range usize,
+  clone Core_Ops_Range_Range_Type_Inv as Core_Ops_Range_Range_Type_Inv0 with
+    type idx = usize,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv15.inv,
     axiom .
   clone CreusotContracts_Std1_Iter_Impl0_IntoIterPost as IntoIterPost0 with
     type i = Core_Ops_Range_Range_Type.t_range usize
@@ -6891,9 +7594,10 @@ module Vecmap_Impl2_NextMapping
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve6 with
     type self = v
@@ -7254,6 +7958,12 @@ module Vecmap_Impl2_MinEntry
   use prelude.Borrow
   use prelude.Slice
   use seq.Seq
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv19 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv19.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   clone CreusotContracts_Logic_Ord_OrdLogic_LeLog_Interface as LeLog0 with
@@ -7264,7 +7974,28 @@ module Vecmap_Impl2_MinEntry
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv18 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv18.inv,
+    predicate Inv1.inv = Inv19.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
+    type t = v
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv17 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple21 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv17.inv,
+    predicate Inv1.inv = Inv13.inv,
+    predicate Inv2.inv = Inv14.inv,
+    axiom .
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
@@ -7297,23 +8028,49 @@ module Vecmap_Impl2_MinEntry
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv16 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial11 with
+  clone TyInv_Trivial as TyInv_Trivial2 with
     type t = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv16.inv,
+    axiom .
+  use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
+    predicate Inv0.inv = Inv15.inv,
+    predicate Inv1.inv = Inv3.inv,
+    axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv9.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = v,
+    predicate Inv0.inv = Inv14.inv,
+    axiom .
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
     predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
     type t = slice (k, v)
-  clone TyInv_Trivial as TyInv_Trivial10 with
-    type t = slice (k, v),
+  clone TyInv_Slice as TyInv_Slice0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv12.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
@@ -7321,7 +8078,7 @@ module Vecmap_Impl2_MinEntry
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv11.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
@@ -7331,19 +8088,24 @@ module Vecmap_Impl2_MinEntry
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial9 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial8 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv9.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv18.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial7 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared5 with
     type t = (k, v),
     predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv17.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl0_ShallowModel_Interface as ShallowModel3 with
     type t = (k, v),
@@ -7353,46 +8115,49 @@ module Vecmap_Impl2_MinEntry
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone TyInv_Trivial as TyInv_Trivial6 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared4 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
-  use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
+    type t = (Vecmap_KeyRef_Type.t_keyref k, v)
   use Core_Option_Option_Type as Core_Option_Option_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = Core_Option_Option_Type.t_option (Vecmap_KeyRef_Type.t_keyref k, v)
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = Core_Option_Option_Type.t_option (Vecmap_KeyRef_Type.t_keyref k, v),
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv1 with
+    type t = (Vecmap_KeyRef_Type.t_keyref k, v),
     predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv5.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -7400,45 +8165,47 @@ module Vecmap_Impl2_MinEntry
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv13.inv,
+    predicate Inv0.inv = Inv16.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
-    type t = (Vecmap_KeyRef_Type.t_keyref k, v)
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = (Vecmap_KeyRef_Type.t_keyref k, v),
-    predicate Inv0.inv = Inv5.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = v
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = Vecmap_KeyRef_Type.t_keyref k,
+    type t1 = v,
+    predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv15.inv,
+    predicate Inv2.inv = Inv4.inv,
+    axiom .
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared3 with
     type t = v,
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv14.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = k,
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = Core_Option_Option_Type.t_option (k, v)
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Core_Option_Option_Type.t_option (k, v),
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ops_Impl2_IndexLogic as IndexLogic0 with
     type t = (k, v),
@@ -7448,9 +8215,10 @@ module Vecmap_Impl2_MinEntry
     predicate Inv1.inv = Inv10.inv
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = slice (k, v)
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = slice (k, v),
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Model_Impl5_ShallowModel as ShallowModel2 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
@@ -7642,6 +8410,12 @@ module Vecmap_Impl2_MaxKey
   use prelude.Slice
   use seq.Seq
   use prelude.Int
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv16 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv16.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   clone CreusotContracts_Logic_Ord_OrdLogic_LeLog_Interface as LeLog0 with
@@ -7649,10 +8423,24 @@ module Vecmap_Impl2_MaxKey
   clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
     type t = DeepModelTy0.deepModelTy,
     function LeLog0.le_log = LeLog0.le_log
+  clone CreusotContracts_Invariant_Inv_Interface as Inv15 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = v,
+    predicate Inv0.inv = Inv15.inv,
+    axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv14.inv,
+    predicate Inv1.inv = Inv16.inv,
+    axiom .
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
@@ -7685,23 +8473,46 @@ module Vecmap_Impl2_MaxKey
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant0 with
+  clone Vecmap_Impl1_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial9 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv13.inv,
+    axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv7.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
+    predicate Inv0.inv = Inv12.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
     predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv12.inv,
+    predicate Inv2.inv = Inv15.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
     type t = slice (k, v)
-  clone TyInv_Trivial as TyInv_Trivial8 with
-    type t = slice (k, v),
+  clone TyInv_Slice as TyInv_Slice0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
@@ -7709,7 +8520,7 @@ module Vecmap_Impl2_MaxKey
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv9.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Invariant0.invariant' = Invariant1.invariant',
     predicate Inv1.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
@@ -7721,13 +8532,17 @@ module Vecmap_Impl2_MaxKey
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial7 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial6 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv7.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Std1_Slice_Impl0_ShallowModel_Interface as ShallowModel3 with
     type t = (k, v),
@@ -7737,83 +8552,88 @@ module Vecmap_Impl2_MaxKey
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone TyInv_Trivial as TyInv_Trivial5 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared4 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv7.inv,
     axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+    type t = k
   use Core_Option_Option_Type as Core_Option_Option_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = Core_Option_Option_Type.t_option k
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = Core_Option_Option_Type.t_option k,
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv1 with
+    type t = k,
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv13.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared3 with
     type t = k,
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = (k, v)
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared2 with
     type t = (k, v),
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = Core_Option_Option_Type.t_option (k, v)
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Core_Option_Option_Type.t_option (k, v),
+  clone Core_Option_Option_Type_Inv as Core_Option_Option_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Logic_Ops_Impl2_IndexLogic as IndexLogic0 with
     type t = (k, v),
@@ -7823,9 +8643,10 @@ module Vecmap_Impl2_MaxKey
     predicate Inv1.inv = Inv8.inv
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = slice (k, v)
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = slice (k, v),
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
   clone CreusotContracts_Model_Impl5_ShallowModel as ShallowModel2 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
@@ -7959,11 +8780,11 @@ module Vecmap_Impl3_Keyref
   use seq.Seq
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
-  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial5 with
+  clone TyInv_Trivial as TyInv_Trivial2 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
@@ -7976,44 +8797,44 @@ module Vecmap_Impl3_Keyref
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -8021,27 +8842,55 @@ module Vecmap_Impl3_Keyref
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv14.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
+    type t = v
+  clone TyInv_Trivial as TyInv_Trivial1 with
+    type t = v,
+    predicate Inv0.inv = Inv13.inv,
+    axiom .
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv12.inv,
     axiom .
   clone CreusotContracts_Logic_Seq_Impl0_SortedRange as SortedRange0 with
     type t = DeepModelTy0.deepModelTy,
     function LeLog0.le_log = LeLog0.le_log
+  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv11.inv,
+    predicate Inv1.inv = Inv4.inv,
+    predicate Inv2.inv = Inv13.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv10.inv,
+    predicate Inv1.inv = Inv12.inv,
+    axiom .
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
   use seq.Seq
-  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
-    type t = Seq.seq (k, v)
   clone Core_Num_Impl11_Max as Max0
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)
-  clone CreusotContracts_Model_DeepModel_DeepModel_Interface as DeepModel0 with
-    type self = k,
-    type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
+  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+    type t = Seq.seq (k, v)
   clone CreusotContracts_Std1_Vec_Impl0_ShallowModel_Interface as ShallowModel0 with
     type t = (k, v),
     type a = Alloc_Alloc_Global_Type.t_global,
@@ -8049,6 +8898,16 @@ module Vecmap_Impl3_Keyref
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv9.inv,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant3 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv9.inv,
+    predicate Inv1.inv = Inv8.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone CreusotContracts_Model_DeepModel_DeepModel_Interface as DeepModel0 with
+    type self = k,
+    type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
   clone Vecmap_KeySeqInternal as KeySeqInternal0 with
     type k = k,
     type v = v,
@@ -8070,26 +8929,24 @@ module Vecmap_Impl3_Keyref
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv9.inv,
+    predicate Inv1.inv = Inv11.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv8.inv,
+    predicate Invariant0.invariant' = Invariant3.invariant',
+    predicate Inv1.inv = Inv10.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = k,
-    predicate Inv0.inv = Inv7.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv6.inv,
+    predicate Inv0.inv = Inv7.inv,
     predicate Invariant0.invariant' = Invariant2.invariant',
     predicate Inv1.inv = Inv8.inv,
     axiom .
@@ -8112,25 +8969,29 @@ module Vecmap_Impl3_Keyref
     predicate Inv0.inv = Inv8.inv,
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv9.inv
-  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v
   clone Vecmap_OccupiedEntry_Type_Inv as Vecmap_OccupiedEntry_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv5.inv,
+    predicate Inv0.inv = Inv6.inv,
     predicate Invariant0.invariant' = Invariant1.invariant',
-    predicate Inv1.inv = Inv6.inv,
-    predicate Inv2.inv = Inv7.inv,
+    predicate Inv1.inv = Inv7.inv,
+    predicate Inv2.inv = Inv4.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = Vecmap_VacantEntry_Type.t_vacantentry k v
   clone Vecmap_VacantEntry_Type_Inv as Vecmap_VacantEntry_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv4.inv,
+    predicate Inv0.inv = Inv5.inv,
     predicate Invariant0.invariant' = Invariant0.invariant',
-    predicate Inv1.inv = Inv6.inv,
-    predicate Inv2.inv = Inv7.inv,
+    predicate Inv1.inv = Inv7.inv,
+    predicate Inv2.inv = Inv4.inv,
+    axiom .
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
+    predicate Inv0.inv = Inv4.inv,
     axiom .
   use Vecmap_Entry_Type as Vecmap_Entry_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
@@ -8139,21 +9000,23 @@ module Vecmap_Impl3_Keyref
     type k = k,
     type v = v,
     predicate Inv0.inv = Inv3.inv,
-    predicate Inv1.inv = Inv4.inv,
-    predicate Inv2.inv = Inv5.inv,
+    predicate Inv1.inv = Inv5.inv,
+    predicate Inv2.inv = Inv6.inv,
     axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
-  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
-    type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
-    predicate Inv0.inv = Inv2.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
+    predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv1.inv,
+    axiom .
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv4.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_Entry_Type.t_entry k v
@@ -8308,6 +9171,12 @@ module Vecmap_Impl5_Insert
   use prelude.Int
   use prelude.UIntSize
   use seq.Seq
+  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv10.inv,
+    axiom .
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
   clone CreusotContracts_Logic_Ord_OrdLogic_LeLog_Interface as LeLog0 with
@@ -8318,7 +9187,6 @@ module Vecmap_Impl5_Insert
   clone CreusotContracts_Logic_Seq_Impl0_Sorted as Sorted0 with
     type t = DeepModelTy0.deepModelTy,
     predicate SortedRange0.sorted_range = SortedRange0.sorted_range
-  use Alloc_Alloc_Global_Type as Alloc_Alloc_Global_Type
   use Alloc_Vec_Vec_Type as Alloc_Vec_Vec_Type
   use seq.Seq
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
@@ -8351,84 +9219,110 @@ module Vecmap_Impl5_Insert
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant1 with
+  clone Vecmap_Impl1_Invariant as Invariant2 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
-    type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
+    type t = v
+  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
+    type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv9.inv,
+    predicate Inv1.inv = Inv4.inv,
+    predicate Inv2.inv = Inv3.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+    type t = DeepModelTy0.deepModelTy
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = DeepModelTy0.deepModelTy,
+    predicate Inv0.inv = Inv8.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv6.inv,
-    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv0.inv = Inv7.inv,
+    predicate Invariant0.invariant' = Invariant2.invariant',
     predicate Inv1.inv = Inv0.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GeLog_Interface as GeLog0 with
     type self = DeepModelTy0.deepModelTy
   use Core_Cmp_Ordering_Type as Core_Cmp_Ordering_Type
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLog_Interface as CmpLog0 with
     type self = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = k,
     predicate Inv0.inv = Inv4.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = v
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant1 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv0.inv,
+    val Max0.mAX' = Max0.mAX'
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = v,
     predicate Inv0.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -8436,13 +9330,13 @@ module Vecmap_Impl5_Insert
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv7.inv,
+    predicate Inv0.inv = Inv8.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -8465,22 +9359,26 @@ module Vecmap_Impl5_Insert
     type v = v,
     predicate Inv0.inv = Inv2.inv,
     predicate Invariant0.invariant' = Invariant0.invariant',
-    predicate Inv1.inv = Inv6.inv,
+    predicate Inv1.inv = Inv7.inv,
     predicate Inv2.inv = Inv4.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global))
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)),
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv0.inv,
     axiom .
   clone CreusotContracts_Model_Impl7_ShallowModel as ShallowModel1 with
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     type ShallowModelTy0.shallowModelTy = Seq.seq (k, v),
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv1.inv = Inv6.inv,
     axiom .
   clone Vecmap_Impl13_Resolve as Resolve1 with
     type k = k,
@@ -8603,11 +9501,11 @@ module Vecmap_Impl7_Replace
   use prelude.Int
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
-  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial7 with
+  clone TyInv_Trivial as TyInv_Trivial3 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
@@ -8620,44 +9518,44 @@ module Vecmap_Impl7_Replace
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -8665,7 +9563,7 @@ module Vecmap_Impl7_Replace
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv10.inv,
+    predicate Inv0.inv = Inv13.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -8708,29 +9606,34 @@ module Vecmap_Impl7_Replace
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant1 with
+  clone Vecmap_Impl1_Invariant as Invariant2 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial6 with
-    type t = k,
-    predicate Inv0.inv = Inv9.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv8.inv,
-    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv0.inv = Inv12.inv,
+    predicate Invariant0.invariant' = Invariant2.invariant',
     predicate Inv1.inv = Inv0.inv,
     axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = k,
+    predicate Inv0.inv = Inv11.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv10.inv,
+    axiom .
   use Vecmap_OccupiedEntry_Type as Vecmap_OccupiedEntry_Type
-  clone Vecmap_Impl6_Invariant as Invariant0 with
+  clone Vecmap_Impl6_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
@@ -8740,48 +9643,76 @@ module Vecmap_Impl7_Replace
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv6.inv,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v
   clone Vecmap_OccupiedEntry_Type_Inv as Vecmap_OccupiedEntry_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv7.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
-    predicate Inv1.inv = Inv8.inv,
-    predicate Inv2.inv = Inv9.inv,
+    predicate Inv0.inv = Inv9.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv1.inv = Inv12.inv,
+    predicate Inv2.inv = Inv11.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial5 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = v
+  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv11.inv,
+    predicate Inv2.inv = Inv1.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv7 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv10.inv,
+    axiom .
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = usize
-  clone TyInv_Trivial as TyInv_Trivial4 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = usize,
     predicate Inv0.inv = Inv5.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global))
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)),
+  clone TyInv_Borrow as TyInv_Borrow2 with
+    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv4.inv,
+    predicate Inv1.inv = Inv0.inv,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel0.shallow_model,
+    predicate Inv0.inv = Inv6.inv,
+    predicate Inv1.inv = Inv0.inv,
+    val Max0.mAX' = Max0.mAX'
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = borrowed (Vecmap_OccupiedEntry_Type.t_occupiedentry k v)
-  clone TyInv_Borrow as TyInv_Borrow0 with
+  clone TyInv_Borrow as TyInv_Borrow1 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v,
     predicate Inv0.inv = Inv3.inv,
-    predicate Inv1.inv = Inv7.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = borrowed (k, v)
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = borrowed (k, v),
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv8.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = v
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = v,
     predicate Inv0.inv = Inv1.inv,
     axiom .
@@ -8795,9 +9726,12 @@ module Vecmap_Impl7_Replace
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     type ShallowModelTy0.shallowModelTy = Seq.seq (k, v),
     function ShallowModel0.shallow_model = ShallowModel0.shallow_model
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv7.inv,
     axiom .
   clone CreusotContracts_Resolve_Impl1_Resolve as Resolve2 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v
@@ -8892,11 +9826,11 @@ module Vecmap_Impl7_GetMut
   use prelude.UIntSize
   clone CreusotContracts_Model_DeepModel_DeepModelTy_Type as DeepModelTy0 with
     type self = k
-  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv14 with
     type t = DeepModelTy0.deepModelTy
-  clone TyInv_Trivial as TyInv_Trivial8 with
+  clone TyInv_Trivial as TyInv_Trivial3 with
     type t = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_GtLog_Interface as GtLog0 with
     type self = DeepModelTy0.deepModelTy
@@ -8909,44 +9843,44 @@ module Vecmap_Impl7_GetMut
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_EqCmp_Interface as EqCmp0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym2_Interface as Antisym20 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Antisym1_Interface as Antisym10 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Trans_Interface as Trans0 with
     type self = DeepModelTy0.deepModelTy,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_Refl_Interface as Refl0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGtLog_Interface as CmpGtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     function GtLog0.gt_log = GtLog0.gt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpGeLog_Interface as CmpGeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     function GeLog0.ge_log = GeLog0.ge_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLtLog_Interface as CmpLtLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     function LtLog0.lt_log = LtLog0.lt_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -8954,7 +9888,7 @@ module Vecmap_Impl7_GetMut
     type self = DeepModelTy0.deepModelTy
   clone CreusotContracts_Logic_Ord_OrdLogic_CmpLeLog_Interface as CmpLeLog0 with
     type self = DeepModelTy0.deepModelTy,
-    predicate Inv0.inv = Inv11.inv,
+    predicate Inv0.inv = Inv14.inv,
     function LeLog0.le_log = LeLog0.le_log,
     function CmpLog0.cmp_log = CmpLog0.cmp_log,
     axiom .
@@ -8997,29 +9931,34 @@ module Vecmap_Impl7_GetMut
     type v = v,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy,
     function KeySeqInternal0.key_seq_internal = KeySeqInternal0.key_seq_internal
-  clone Vecmap_Impl1_Invariant as Invariant1 with
+  clone Vecmap_Impl1_Invariant as Invariant2 with
     type k = k,
     type v = v,
     function KeySeq0.key_seq = KeySeq0.key_seq,
     predicate Sorted0.sorted = Sorted0.sorted,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
-    type t = k
-  clone TyInv_Trivial as TyInv_Trivial7 with
-    type t = k,
-    predicate Inv0.inv = Inv10.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv13 with
     type t = Vecmap_VecMap_Type.t_vecmap k v
   clone Vecmap_VecMap_Type_Inv as Vecmap_VecMap_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv9.inv,
-    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv0.inv = Inv13.inv,
+    predicate Invariant0.invariant' = Invariant2.invariant',
     predicate Inv1.inv = Inv0.inv,
     axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv12 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial2 with
+    type t = k,
+    predicate Inv0.inv = Inv12.inv,
+    axiom .
+  clone CreusotContracts_Invariant_Inv_Interface as Inv11 with
+    type t = Alloc_Alloc_Global_Type.t_global
+  clone Alloc_Alloc_Global_Type_Inv as Alloc_Alloc_Global_Type_Inv0 with
+    predicate Inv0.inv = Inv11.inv,
+    axiom .
   use Vecmap_OccupiedEntry_Type as Vecmap_OccupiedEntry_Type
-  clone Vecmap_Impl6_Invariant as Invariant0 with
+  clone Vecmap_Impl6_Invariant as Invariant1 with
     type k = k,
     type v = v,
     function ShallowModel0.shallow_model = ShallowModel1.shallow_model,
@@ -9029,54 +9968,83 @@ module Vecmap_Impl7_GetMut
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv7.inv,
     type DeepModelTy0.deepModelTy = DeepModelTy0.deepModelTy
-  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+  clone CreusotContracts_Invariant_Inv_Interface as Inv10 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v
   clone Vecmap_OccupiedEntry_Type_Inv as Vecmap_OccupiedEntry_Type_Inv0 with
     type k = k,
     type v = v,
-    predicate Inv0.inv = Inv8.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
-    predicate Inv1.inv = Inv9.inv,
-    predicate Inv2.inv = Inv10.inv,
+    predicate Inv0.inv = Inv10.inv,
+    predicate Invariant0.invariant' = Invariant1.invariant',
+    predicate Inv1.inv = Inv13.inv,
+    predicate Inv2.inv = Inv12.inv,
     axiom .
-  clone TyInv_Trivial as TyInv_Trivial6 with
-    type t = Seq.seq (k, v),
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = v
+  clone CreusotContracts_Invariant_Inv_Interface as Inv9 with
+    type t = (k, v)
+  clone TyInv_Tuple2 as TyInv_Tuple20 with
+    type t0 = k,
+    type t1 = v,
+    predicate Inv0.inv = Inv9.inv,
+    predicate Inv1.inv = Inv12.inv,
+    predicate Inv2.inv = Inv1.inv,
+    axiom .
+  use Alloc_RawVec_RawVec_Type as Alloc_RawVec_RawVec_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv8 with
+    type t = Alloc_RawVec_RawVec_Type.t_rawvec (k, v) (Alloc_Alloc_Global_Type.t_global)
+  clone Alloc_RawVec_RawVec_Type_Inv as Alloc_RawVec_RawVec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    predicate Inv0.inv = Inv8.inv,
+    predicate Inv1.inv = Inv11.inv,
+    axiom .
+  clone CreusotContracts_Logic_Seq_Seq_Type_Inv as CreusotContracts_Logic_Seq_Seq_Type_Inv0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv6 with
     type t = usize
-  clone TyInv_Trivial as TyInv_Trivial5 with
+  clone TyInv_Trivial as TyInv_Trivial1 with
     type t = usize,
     predicate Inv0.inv = Inv6.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
     type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global))
-  clone TyInv_Trivial as TyInv_Trivial4 with
-    type t = borrowed (Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global)),
+  clone TyInv_Borrow as TyInv_Borrow3 with
+    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     predicate Inv0.inv = Inv5.inv,
+    predicate Inv1.inv = Inv0.inv,
     axiom .
+  clone CreusotContracts_Std1_Vec_Impl3_Invariant as Invariant0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
+    function ShallowModel0.shallow_model = ShallowModel1.shallow_model,
+    predicate Inv0.inv = Inv7.inv,
+    predicate Inv1.inv = Inv0.inv,
+    val Max0.mAX' = Max0.mAX'
   clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
     type t = borrowed (Vecmap_OccupiedEntry_Type.t_occupiedentry k v)
-  clone TyInv_Borrow as TyInv_Borrow0 with
+  clone TyInv_Borrow as TyInv_Borrow2 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v,
     predicate Inv0.inv = Inv4.inv,
-    predicate Inv1.inv = Inv8.inv,
+    predicate Inv1.inv = Inv10.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = borrowed v
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = borrowed v,
+  clone TyInv_Borrow as TyInv_Borrow1 with
+    type t = v,
     predicate Inv0.inv = Inv3.inv,
+    predicate Inv1.inv = Inv1.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = borrowed (k, v)
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = borrowed (k, v),
+  clone TyInv_Borrow as TyInv_Borrow0 with
+    type t = (k, v),
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv9.inv,
     axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = v
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = v,
     predicate Inv0.inv = Inv1.inv,
     axiom .
@@ -9090,9 +10058,12 @@ module Vecmap_Impl7_GetMut
     type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
     type ShallowModelTy0.shallowModelTy = Seq.seq (k, v),
     function ShallowModel0.shallow_model = ShallowModel1.shallow_model
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Alloc_Vec_Vec_Type.t_vec (k, v) (Alloc_Alloc_Global_Type.t_global),
+  clone Alloc_Vec_Vec_Type_Inv as Alloc_Vec_Vec_Type_Inv0 with
+    type t = (k, v),
+    type a = Alloc_Alloc_Global_Type.t_global,
     predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv8.inv,
     axiom .
   clone CreusotContracts_Resolve_Impl1_Resolve as Resolve2 with
     type t = Vecmap_OccupiedEntry_Type.t_occupiedentry k v
@@ -9202,28 +10173,31 @@ module Vecmap_Impl15_Clone
   use prelude.Borrow
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = k,
     predicate Inv0.inv = Inv3.inv,
     axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared1 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv2.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone Core_Clone_Impls_Impl5_Clone_Interface as Clone1
   clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve1 with
@@ -9292,28 +10266,31 @@ module Vecmap_Impl9_Cloned
   use prelude.Borrow
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial3 with
+  clone TyInv_Trivial as TyInv_Trivial0 with
     type t = k,
     predicate Inv0.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = k
-  clone TyInv_Trivial as TyInv_Trivial2 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = k,
     predicate Inv0.inv = Inv2.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv1 with
+    type k = k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv3.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv2.inv,
     axiom .
   clone Core_Clone_Clone_Clone_Interface as Clone0 with
     type self = k,
@@ -9365,14 +10342,15 @@ module Vecmap_Impl12_From
   use prelude.Int
   use prelude.UIntSize
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
-    predicate Inv0.inv = Inv1.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv0.inv,
+    axiom .
   clone TyInv_Trivial as TyInv_Trivial0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,
@@ -9422,18 +10400,26 @@ end
 module Vecmap_Impl15
   type k
   use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
+    type t = k
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = k,
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
     predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv2.inv,
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial0 with
+  clone TyInv_Borrow_Shared as TyInv_Borrow_Shared0 with
     type t = Vecmap_KeyRef_Type.t_keyref k,
     predicate Inv0.inv = Inv0.inv,
+    predicate Inv1.inv = Inv1.inv,
     axiom .
   goal clone'_refn : [#"/mnt/data/projects/creusot/evaluation/vecmap/vecmap.rs" 497 15 497 20] forall self : Vecmap_KeyRef_Type.t_keyref k . Inv0.inv self -> Inv0.inv self /\ (forall result : Vecmap_KeyRef_Type.t_keyref k . Inv1.inv result /\ result = self -> Inv1.inv result /\ result = self)
 end
@@ -9443,14 +10429,15 @@ end
 module Vecmap_Impl12
   type k
   use Vecmap_KeyRef_Type as Vecmap_KeyRef_Type
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Vecmap_KeyRef_Type.t_keyref k,
-    predicate Inv0.inv = Inv1.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
     type t = k
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = Vecmap_KeyRef_Type.t_keyref k
+  clone Vecmap_KeyRef_Type_Inv as Vecmap_KeyRef_Type_Inv0 with
+    type k = k,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv0.inv,
+    axiom .
   clone TyInv_Trivial as TyInv_Trivial0 with
     type t = k,
     predicate Inv0.inv = Inv0.inv,

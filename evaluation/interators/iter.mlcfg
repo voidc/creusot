@@ -1,79 +1,4 @@
 
-module Iter_Fib_Type
-  use prelude.Int
-  use prelude.UInt32
-  use prelude.Ghost
-  type t_fib  =
-    | C_Fib uint32 uint32 (Ghost.ghost_ty uint32)
-    
-  let function fib_x (self : t_fib) : Ghost.ghost_ty uint32 = [@vc:do_not_keep_trace] [@vc:sp]
-    match (self) with
-      | C_Fib _ _ a -> a
-      end
-  let function fib_a (self : t_fib) : uint32 = [@vc:do_not_keep_trace] [@vc:sp]
-    match (self) with
-      | C_Fib a _ _ -> a
-      end
-  let function fib_b (self : t_fib) : uint32 = [@vc:do_not_keep_trace] [@vc:sp]
-    match (self) with
-      | C_Fib _ a _ -> a
-      end
-end
-module Iter_Impl0_Invariant_Stub
-  use Iter_Fib_Type as Iter_Fib_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 25 4 25 30] (self : Iter_Fib_Type.t_fib)
-    
-end
-module Iter_Impl0_Invariant_Interface
-  use Iter_Fib_Type as Iter_Fib_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 25 4 25 30] (self : Iter_Fib_Type.t_fib)
-    
-  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 25 4 25 30] (self : Iter_Fib_Type.t_fib) : bool
-    ensures { result = invariant' self }
-    
-end
-module Iter_Impl0_Invariant
-  use prelude.Ghost
-  use prelude.UInt32
-  use prelude.Int
-  use Iter_Fib_Type as Iter_Fib_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 25 4 25 30] (self : Iter_Fib_Type.t_fib)
-    
-   =
-    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 26 20 26 56] UInt32.to_int (Ghost.inner (Iter_Fib_Type.fib_x self)) + UInt32.to_int (Iter_Fib_Type.fib_a self) = UInt32.to_int (Iter_Fib_Type.fib_b self)
-  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 25 4 25 30] (self : Iter_Fib_Type.t_fib) : bool
-    ensures { result = invariant' self }
-    
-end
-module Iter_Impl1_Produces_Stub
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_Fib_Type as Iter_Fib_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 33 4 33 50] (self : Iter_Fib_Type.t_fib) (x : uint32) (other : Iter_Fib_Type.t_fib)
-    
-end
-module Iter_Impl1_Produces_Interface
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_Fib_Type as Iter_Fib_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 33 4 33 50] (self : Iter_Fib_Type.t_fib) (x : uint32) (other : Iter_Fib_Type.t_fib)
-    
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 33 4 33 50] (self : Iter_Fib_Type.t_fib) (x : uint32) (other : Iter_Fib_Type.t_fib) : bool
-    ensures { result = produces self x other }
-    
-end
-module Iter_Impl1_Produces
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_Fib_Type as Iter_Fib_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 33 4 33 50] (self : Iter_Fib_Type.t_fib) (x : uint32) (other : Iter_Fib_Type.t_fib)
-    
-   =
-    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 34 8 34 70] x = Iter_Fib_Type.fib_b self /\ Iter_Fib_Type.fib_a other = Iter_Fib_Type.fib_b self /\ Iter_Fib_Type.fib_b other = Iter_Fib_Type.fib_a self + Iter_Fib_Type.fib_b self
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 33 4 33 50] (self : Iter_Fib_Type.t_fib) (x : uint32) (other : Iter_Fib_Type.t_fib) : bool
-    ensures { result = produces self x other }
-    
-end
 module CreusotContracts_Invariant_Inv_Stub
   type t
   predicate inv (_x : t)
@@ -93,389 +18,29 @@ module CreusotContracts_Invariant_Inv
     ensures { result = inv _x }
     
 end
-module CreusotContracts_Resolve_Impl1_Resolve_Stub
-  type t
-  use prelude.Borrow
-  predicate resolve (self : borrowed t)
-end
-module CreusotContracts_Resolve_Impl1_Resolve_Interface
-  type t
-  use prelude.Borrow
-  predicate resolve (self : borrowed t)
-  val resolve (self : borrowed t) : bool
-    ensures { result = resolve self }
-    
-end
-module CreusotContracts_Resolve_Impl1_Resolve
-  type t
-  use prelude.Borrow
-  predicate resolve (self : borrowed t) =
-    [#"/mnt/data/projects/creusot/creusot-contracts/src/resolve.rs" 25 20 25 34]  ^ self =  * self
-  val resolve (self : borrowed t) : bool
-    ensures { result = resolve self }
-    
-end
-module TyInv_Borrow
-  type t
-  use prelude.Borrow
-  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
-    type t = t
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = borrowed t
-  axiom inv_borrow [@rewrite] : forall self : borrowed t . Inv0.inv self = (Inv1.inv ( * self) /\ Inv1.inv ( ^ self))
-end
-module Iter_Fib_Type_Inv
-  use Iter_Fib_Type as Iter_Fib_Type
-  clone Iter_Impl0_Invariant_Stub as Invariant0
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = Iter_Fib_Type.t_fib
-  axiom inv_t_fib [@rewrite] : forall self : Iter_Fib_Type.t_fib . Inv0.inv self = Invariant0.invariant' self
-end
-module Iter_Impl1_Next_Interface
-  use prelude.Borrow
-  use prelude.UInt32
-  use prelude.Int
-  use Iter_Fib_Type as Iter_Fib_Type
-  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
-    type t = Iter_Fib_Type.t_fib
-  clone Iter_Impl1_Produces_Stub as Produces0
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = borrowed (Iter_Fib_Type.t_fib)
-  val next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 39 4 39 29] (self : borrowed (Iter_Fib_Type.t_fib)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 39 17 39 21] Inv0.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 37 14 37 42] Produces0.produces ( * self) result ( ^ self) }
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 38 4 38 137] UInt32.to_int result > 1 -> (exists f2 : Iter_Fib_Type.t_fib . exists x : uint32 . exists f1 : Iter_Fib_Type.t_fib . Inv1.inv f2 /\ Inv1.inv f1 /\ Produces0.produces f1 x f2 /\ Produces0.produces f2 (Iter_Fib_Type.fib_a ( * self)) ( * self) /\ x + Iter_Fib_Type.fib_a ( * self) = result) }
-    
-end
-module Iter_Impl1_Next
-  use prelude.Borrow
+module Iter_SkipZerosHist_Type
   use prelude.Ghost
+  use seq.Seq
   use prelude.Int
   use prelude.UInt32
-  use Iter_Fib_Type as Iter_Fib_Type
-  clone Iter_Impl0_Invariant as Invariant0
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Iter_Fib_Type.t_fib
-  clone Iter_Fib_Type_Inv as Iter_Fib_Type_Inv0 with
-    predicate Inv0.inv = Inv1.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
-    type t = borrowed (Iter_Fib_Type.t_fib)
-  clone TyInv_Borrow as TyInv_Borrow0 with
-    type t = Iter_Fib_Type.t_fib,
-    predicate Inv0.inv = Inv0.inv,
-    predicate Inv1.inv = Inv1.inv,
-    axiom .
-  clone Iter_Impl1_Produces as Produces0
-  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve0 with
-    type t = Iter_Fib_Type.t_fib
-  let rec cfg next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 39 4 39 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (Iter_Fib_Type.t_fib)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 39 17 39 21] Inv0.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 37 14 37 42] Produces0.produces ( * self) result ( ^ self) }
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 38 4 38 137] UInt32.to_int result > 1 -> (exists f2 : Iter_Fib_Type.t_fib . exists x : uint32 . exists f1 : Iter_Fib_Type.t_fib . Inv1.inv f2 /\ Inv1.inv f1 /\ Produces0.produces f1 x f2 /\ Produces0.produces f2 (Iter_Fib_Type.fib_a ( * self)) ( * self) /\ x + Iter_Fib_Type.fib_a ( * self) = result) }
+  type t_skipzeroshist 'i =
+    | C_SkipZerosHist 'i (Ghost.ghost_ty (Seq.seq ('i, uint32)))
     
-   = [@vc:do_not_keep_trace] [@vc:sp]
-  var _0 : uint32;
-  var self : borrowed (Iter_Fib_Type.t_fib) = self;
-  var _4 : Ghost.ghost_ty uint32;
-  var next : uint32;
-  {
-    goto BB0
-  }
-  BB0 {
-    _4 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 40 17 40 31] Ghost.new (Iter_Fib_Type.fib_a ( * self)));
-    goto BB1
-  }
-  BB1 {
-    self <- { self with current = (let Iter_Fib_Type.C_Fib a b c =  * self in Iter_Fib_Type.C_Fib a b _4) };
-    _4 <- any Ghost.ghost_ty uint32;
-    next <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 41 19 41 34] Iter_Fib_Type.fib_a ( * self) + Iter_Fib_Type.fib_b ( * self));
-    self <- { self with current = (let Iter_Fib_Type.C_Fib a b c =  * self in Iter_Fib_Type.C_Fib (Iter_Fib_Type.fib_b ( * self)) b c) };
-    self <- { self with current = (let Iter_Fib_Type.C_Fib a b c =  * self in Iter_Fib_Type.C_Fib a next c) };
-    _0 <- Iter_Fib_Type.fib_a ( * self);
-    assert { [@expl:type invariant] Inv0.inv self };
-    assume { Resolve0.resolve self };
-    return _0
-  }
-  
-end
-module Iter_SkipZeros_Type
-  type t_skipzeros 'i =
-    | C_SkipZeros 'i
-    
-  let function skipzeros_inner (self : t_skipzeros 'i) : 'i = [@vc:do_not_keep_trace] [@vc:sp]
+  let function skipzeroshist_inner (self : t_skipzeroshist 'i) : 'i = [@vc:do_not_keep_trace] [@vc:sp]
     match (self) with
-      | C_SkipZeros a -> a
+      | C_SkipZerosHist a _ -> a
       end
-end
-module Iter_Iter_Produces_Stub
-  type self
-  use prelude.Int
-  use prelude.UInt32
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self)
-    
-end
-module Iter_Iter_Produces_Interface
-  type self
-  use prelude.Int
-  use prelude.UInt32
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self)
-    
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self) : bool
-    ensures { result = produces self x other }
-    
-end
-module Iter_Iter_Produces
-  type self
-  use prelude.Int
-  use prelude.UInt32
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self)
-    
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self) : bool
-    ensures { result = produces self x other }
-    
-end
-module Iter_Impl2_Produces_Stub
-  type i
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_SkipZeros_Type as Iter_SkipZeros_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 55 4 55 50] (self : Iter_SkipZeros_Type.t_skipzeros i) (x : uint32) (other : Iter_SkipZeros_Type.t_skipzeros i)
-    
-end
-module Iter_Impl2_Produces_Interface
-  type i
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_SkipZeros_Type as Iter_SkipZeros_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 55 4 55 50] (self : Iter_SkipZeros_Type.t_skipzeros i) (x : uint32) (other : Iter_SkipZeros_Type.t_skipzeros i)
-    
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 55 4 55 50] (self : Iter_SkipZeros_Type.t_skipzeros i) (x : uint32) (other : Iter_SkipZeros_Type.t_skipzeros i) : bool
-    ensures { result = produces self x other }
-    
-end
-module Iter_Impl2_Produces
-  type i
-  use prelude.Int
-  use prelude.UInt32
-  use seq.Seq
-  use seq.Seq
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = Seq.seq i
-  clone Iter_Iter_Produces_Stub as Produces0 with
-    type self = i
-  use Iter_SkipZeros_Type as Iter_SkipZeros_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 55 4 55 50] (self : Iter_SkipZeros_Type.t_skipzeros i) (x : uint32) (other : Iter_SkipZeros_Type.t_skipzeros i)
-    
-   =
-    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 57 12 60 54] UInt32.to_int x <> 0 /\ (Produces0.produces (Iter_SkipZeros_Type.skipzeros_inner self) x (Iter_SkipZeros_Type.skipzeros_inner other) \/ (exists s : Seq.seq i . Inv0.inv s /\ Seq.length s > 0 /\ Produces0.produces (Iter_SkipZeros_Type.skipzeros_inner self) (0 : uint32) (Seq.get s 0) /\ (forall i : int . 0 < i /\ i < Seq.length s -> Produces0.produces (Seq.get s (i - 1)) (0 : uint32) (Seq.get s i)) /\ Produces0.produces (Seq.get s (Seq.length s - 1)) x (Iter_SkipZeros_Type.skipzeros_inner other)))
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 55 4 55 50] (self : Iter_SkipZeros_Type.t_skipzeros i) (x : uint32) (other : Iter_SkipZeros_Type.t_skipzeros i) : bool
-    ensures { result = produces self x other }
-    
+  let function skipzeroshist_hist (self : t_skipzeroshist 'i) : Ghost.ghost_ty (Seq.seq ('i, uint32))
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_SkipZerosHist _ a -> a
+      end
 end
 module TyInv_Trivial
   type t
   clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
     type t = t
   axiom inv_trivial : forall self : t . Inv0.inv self = true
-end
-module Iter_Iter_Next_Interface
-  type self
-  use prelude.Borrow
-  use prelude.Int
-  use prelude.UInt32
-  clone Iter_Iter_Produces_Stub as Produces0 with
-    type self = self
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = borrowed self
-  val next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 13 4 13 30] (self : borrowed self) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 13 17 13 21] Inv0.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 12 14 12 42] Produces0.produces ( * self) result ( ^ self) }
-    
-end
-module Iter_Impl2_Next_Interface
-  type i
-  use prelude.Borrow
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_SkipZeros_Type as Iter_SkipZeros_Type
-  clone Iter_Impl2_Produces_Stub as Produces0 with
-    type i = i
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = borrowed (Iter_SkipZeros_Type.t_skipzeros i)
-  val next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 65 4 65 29] (self : borrowed (Iter_SkipZeros_Type.t_skipzeros i)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 65 17 65 21] Inv0.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 64 14 64 42] Produces0.produces ( * self) result ( ^ self) }
-    
-end
-module Iter_Impl2_Next
-  type i
-  use prelude.Borrow
-  use prelude.Int
-  use prelude.UInt32
-  use seq.Seq
-  use seq.Seq
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = Seq.seq i
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = Seq.seq i,
-    predicate Inv0.inv = Inv3.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
-    type t = borrowed i
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = borrowed i,
-    predicate Inv0.inv = Inv2.inv,
-    axiom .
-  use Iter_SkipZeros_Type as Iter_SkipZeros_Type
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = borrowed (Iter_SkipZeros_Type.t_skipzeros i)
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = borrowed (Iter_SkipZeros_Type.t_skipzeros i),
-    predicate Inv0.inv = Inv1.inv,
-    axiom .
-  clone Iter_Iter_Produces_Interface as Produces1 with
-    type self = i
-  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
-    type t = i
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = i,
-    predicate Inv0.inv = Inv0.inv,
-    axiom .
-  clone Iter_Impl2_Produces as Produces0 with
-    type i = i,
-    predicate Produces0.produces = Produces1.produces,
-    predicate Inv0.inv = Inv3.inv
-  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve0 with
-    type t = Iter_SkipZeros_Type.t_skipzeros i
-  clone Iter_Iter_Next_Interface as Next0 with
-    type self = i,
-    predicate Inv0.inv = Inv2.inv,
-    predicate Produces0.produces = Produces1.produces
-  let rec cfg next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 65 4 65 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (Iter_SkipZeros_Type.t_skipzeros i)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 65 17 65 21] Inv1.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 64 14 64 42] Produces0.produces ( * self) result ( ^ self) }
-    
-   = [@vc:do_not_keep_trace] [@vc:sp]
-  var _0 : uint32;
-  var self : borrowed (Iter_SkipZeros_Type.t_skipzeros i) = self;
-  var next : uint32;
-  var _4 : borrowed i;
-  var _9 : uint32;
-  var _10 : borrowed i;
-  {
-    goto BB0
-  }
-  BB0 {
-    _4 <- Borrow.borrow_mut (Iter_SkipZeros_Type.skipzeros_inner ( * self));
-    self <- { self with current = (let Iter_SkipZeros_Type.C_SkipZeros a =  * self in Iter_SkipZeros_Type.C_SkipZeros ( ^ _4)) };
-    assume { Inv0.inv ( ^ _4) };
-    next <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 66 23 66 40] Next0.next _4);
-    _4 <- any borrowed i;
-    goto BB1
-  }
-  BB1 {
-    goto BB2
-  }
-  BB2 {
-    goto BB3
-  }
-  BB3 {
-    switch ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 67 14 67 23] next = ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 67 22 67 23] (0 : uint32)))
-      | False -> goto BB6
-      | True -> goto BB4
-      end
-  }
-  BB4 {
-    _10 <- Borrow.borrow_mut (Iter_SkipZeros_Type.skipzeros_inner ( * self));
-    self <- { self with current = (let Iter_SkipZeros_Type.C_SkipZeros a =  * self in Iter_SkipZeros_Type.C_SkipZeros ( ^ _10)) };
-    assume { Inv0.inv ( ^ _10) };
-    _9 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 68 19 68 36] Next0.next _10);
-    _10 <- any borrowed i;
-    goto BB5
-  }
-  BB5 {
-    next <- _9;
-    _9 <- any uint32;
-    goto BB2
-  }
-  BB6 {
-    assert { [@expl:type invariant] Inv1.inv self };
-    assume { Resolve0.resolve self };
-    _0 <- next;
-    return _0
-  }
-  
-end
-module Iter_Hist_Type
-  use prelude.Ghost
-  use seq.Seq
-  use prelude.Int
-  use prelude.UInt32
-  type t_hist 'i =
-    | C_Hist 'i (Ghost.ghost_ty (Seq.seq ('i, uint32)))
-    
-  let function hist_inner (self : t_hist 'i) : 'i = [@vc:do_not_keep_trace] [@vc:sp]
-    match (self) with
-      | C_Hist a _ -> a
-      end
-  let function hist_hist (self : t_hist 'i) : Ghost.ghost_ty (Seq.seq ('i, uint32)) = [@vc:do_not_keep_trace] [@vc:sp]
-    match (self) with
-      | C_Hist _ a -> a
-      end
-end
-module Iter_Impl3_Produces_Stub
-  type i
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_Hist_Type as Iter_Hist_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 82 4 82 50] (self : Iter_Hist_Type.t_hist i) (x : uint32) (other : Iter_Hist_Type.t_hist i)
-    
-end
-module Iter_Impl3_Produces_Interface
-  type i
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_Hist_Type as Iter_Hist_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 82 4 82 50] (self : Iter_Hist_Type.t_hist i) (x : uint32) (other : Iter_Hist_Type.t_hist i)
-    
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 82 4 82 50] (self : Iter_Hist_Type.t_hist i) (x : uint32) (other : Iter_Hist_Type.t_hist i) : bool
-    ensures { result = produces self x other }
-    
-end
-module Iter_Impl3_Produces
-  type i
-  use prelude.Int
-  use prelude.UInt32
-  clone Iter_Iter_Produces_Stub as Produces0 with
-    type self = i
-  use Iter_Hist_Type as Iter_Hist_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 82 4 82 50] (self : Iter_Hist_Type.t_hist i) (x : uint32) (other : Iter_Hist_Type.t_hist i)
-    
-   =
-    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 80 4 80 16] Produces0.produces (Iter_Hist_Type.hist_inner self) x (Iter_Hist_Type.hist_inner other)
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 82 4 82 50] (self : Iter_Hist_Type.t_hist i) (x : uint32) (other : Iter_Hist_Type.t_hist i) : bool
-    ensures { result = produces self x other }
-    
-end
-module CreusotContracts_Resolve_Resolve_Resolve_Stub
-  type self
-  predicate resolve (self : self)
-end
-module CreusotContracts_Resolve_Resolve_Resolve_Interface
-  type self
-  predicate resolve (self : self)
-  val resolve (self : self) : bool
-    ensures { result = resolve self }
-    
-end
-module CreusotContracts_Resolve_Resolve_Resolve
-  type self
-  predicate resolve (self : self)
-  val resolve (self : self) : bool
-    ensures { result = resolve self }
-    
 end
 module CreusotContracts_Logic_Ops_Impl6_IndexLogic_Stub
   type t
@@ -505,217 +70,49 @@ module CreusotContracts_Logic_Ops_Impl6_IndexLogic
     ensures { result = index_logic self ix }
     
 end
-module Iter_Impl4_Invariant_Stub
-  type i
-  use Iter_Hist_Type as Iter_Hist_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 98 4 98 30] (self : Iter_Hist_Type.t_hist i)
-    
-end
-module Iter_Impl4_Invariant_Interface
-  type i
-  use Iter_Hist_Type as Iter_Hist_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 98 4 98 30] (self : Iter_Hist_Type.t_hist i)
-    
-  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 98 4 98 30] (self : Iter_Hist_Type.t_hist i) : bool
-    ensures { result = invariant' self }
-    
-end
-module Iter_Impl4_Invariant
-  type i
-  use prelude.Int
-  use prelude.Ghost
-  use seq.Seq
-  use prelude.UInt32
-  clone Iter_Iter_Produces_Stub as Produces0 with
-    type self = i
-  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic_Stub as IndexLogic0 with
-    type t = (i, uint32)
-  use Iter_Hist_Type as Iter_Hist_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 98 4 98 30] (self : Iter_Hist_Type.t_hist i)
-    
-   =
-    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 99 8 102 9] (forall i : int . 0 < i /\ i < Seq.length (Ghost.inner (Iter_Hist_Type.hist_hist self)) -> Produces0.produces (let (a, _) = IndexLogic0.index_logic (Iter_Hist_Type.hist_hist self) (i - 1) in a) (let (_, a) = IndexLogic0.index_logic (Iter_Hist_Type.hist_hist self) (i - 1) in a) (let (a, _) = IndexLogic0.index_logic (Iter_Hist_Type.hist_hist self) i in a)) /\ Produces0.produces (let (a, _) = IndexLogic0.index_logic (Iter_Hist_Type.hist_hist self) (Seq.length (Ghost.inner (Iter_Hist_Type.hist_hist self)) - 1) in a) (let (_, a) = IndexLogic0.index_logic (Iter_Hist_Type.hist_hist self) (Seq.length (Ghost.inner (Iter_Hist_Type.hist_hist self)) - 1) in a) (Iter_Hist_Type.hist_inner self)
-  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 98 4 98 30] (self : Iter_Hist_Type.t_hist i) : bool
-    ensures { result = invariant' self }
-    
-end
-module Iter_Hist_Type_Inv
-  type i
-  use prelude.Ghost
-  use prelude.Seq
-  use prelude.Int
-  use Iter_Hist_Type as Iter_Hist_Type
-  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
-    type t = i
-  clone Iter_Impl4_Invariant_Stub as Invariant0 with
-    type i = i
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = Iter_Hist_Type.t_hist i
-  axiom inv_t_hist [@rewrite] : forall self : Iter_Hist_Type.t_hist i . Inv0.inv self = (Invariant0.invariant' self /\ Inv1.inv (Iter_Hist_Type.hist_inner self) /\ (forall i : int . 0 <= i /\ i < Seq.length (Ghost.inner (Iter_Hist_Type.hist_hist self)) -> (let (a_0, a_1) = Seq.get (Ghost.inner (Iter_Hist_Type.hist_hist self)) i in Inv1.inv a_0)))
-end
-module Iter_Impl3_Next_Interface
-  type i
-  use prelude.Borrow
+module Iter_Iter_Produces_Stub
+  type self
   use prelude.Int
   use prelude.UInt32
-  use Iter_Hist_Type as Iter_Hist_Type
-  clone Iter_Impl3_Produces_Stub as Produces0 with
-    type i = i
-  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
-    type t = borrowed (Iter_Hist_Type.t_hist i)
-  val next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 87 4 87 29] (self : borrowed (Iter_Hist_Type.t_hist i)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 87 17 87 21] Inv0.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 86 14 86 42] Produces0.produces ( * self) result ( ^ self) }
+  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self)
     
 end
-module Iter_Impl3_Next
-  type i
-  use prelude.Borrow
-  use prelude.Ghost
-  use seq.Seq
+module Iter_Iter_Produces_Interface
+  type self
   use prelude.Int
   use prelude.UInt32
-  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
-    type t = (i, uint32)
-  clone Iter_Iter_Produces_Interface as Produces1 with
-    type self = i
-  use Iter_Hist_Type as Iter_Hist_Type
-  clone Iter_Impl4_Invariant as Invariant0 with
-    type i = i,
-    function IndexLogic0.index_logic = IndexLogic0.index_logic,
-    predicate Produces0.produces = Produces1.produces
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = i
-  clone CreusotContracts_Invariant_Inv_Interface as Inv5 with
-    type t = Iter_Hist_Type.t_hist i
-  clone Iter_Hist_Type_Inv as Iter_Hist_Type_Inv0 with
-    type i = i,
-    predicate Inv0.inv = Inv5.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
-    predicate Inv1.inv = Inv1.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv4 with
-    type t = borrowed i
-  clone TyInv_Trivial as TyInv_Trivial3 with
-    type t = borrowed i,
-    predicate Inv0.inv = Inv4.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
-    type t = borrowed (Iter_Hist_Type.t_hist i)
-  clone TyInv_Borrow as TyInv_Borrow0 with
-    type t = Iter_Hist_Type.t_hist i,
-    predicate Inv0.inv = Inv3.inv,
-    predicate Inv1.inv = Inv5.inv,
-    axiom .
-  use seq.Seq
-  use prelude.Ghost
-  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
-    type t = Ghost.ghost_ty (Seq.seq (i, uint32))
-  clone TyInv_Trivial as TyInv_Trivial2 with
-    type t = Ghost.ghost_ty (Seq.seq (i, uint32)),
-    predicate Inv0.inv = Inv2.inv,
-    axiom .
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = i,
-    predicate Inv0.inv = Inv1.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
-    type t = Ghost.ghost_ty i
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = Ghost.ghost_ty i,
-    predicate Inv0.inv = Inv0.inv,
-    axiom .
-  clone Iter_Impl3_Produces as Produces0 with
-    type i = i,
-    predicate Produces0.produces = Produces1.produces
-  clone CreusotContracts_Resolve_Impl1_Resolve as Resolve2 with
-    type t = Iter_Hist_Type.t_hist i
-  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve1 with
-    type self = Ghost.ghost_ty (Seq.seq (i, uint32))
-  clone Iter_Iter_Next_Interface as Next0 with
-    type self = i,
-    predicate Inv0.inv = Inv4.inv,
-    predicate Produces0.produces = Produces1.produces
-  clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve0 with
-    type self = Ghost.ghost_ty i
-  let rec cfg next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 87 4 87 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (Iter_Hist_Type.t_hist i)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 87 17 87 21] Inv3.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 86 14 86 42] Produces0.produces ( * self) result ( ^ self) }
+  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self)
     
-   = [@vc:do_not_keep_trace] [@vc:sp]
-  var _0 : uint32;
-  var self : borrowed (Iter_Hist_Type.t_hist i) = self;
-  var old' : Ghost.ghost_ty i;
-  var x : uint32;
-  var _6 : borrowed i;
-  var _7 : Ghost.ghost_ty (Seq.seq (i, uint32));
-  {
-    goto BB0
-  }
-  BB0 {
-    old' <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 88 18 88 36] Ghost.new (Iter_Hist_Type.hist_inner ( * self)));
-    goto BB1
-  }
-  BB1 {
-    assert { [@expl:type invariant] Inv0.inv old' };
-    assume { Resolve0.resolve old' };
-    _6 <- Borrow.borrow_mut (Iter_Hist_Type.hist_inner ( * self));
-    self <- { self with current = (let Iter_Hist_Type.C_Hist a b =  * self in Iter_Hist_Type.C_Hist ( ^ _6) b) };
-    assume { Inv1.inv ( ^ _6) };
-    x <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 89 16 89 33] Next0.next _6);
-    _6 <- any borrowed i;
-    goto BB2
-  }
-  BB2 {
-    _7 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 90 20 90 53] Ghost.new (Seq.snoc (Ghost.inner (Iter_Hist_Type.hist_hist ( * self))) (Ghost.inner old', x)));
-    goto BB3
-  }
-  BB3 {
-    self <- { self with current = (let Iter_Hist_Type.C_Hist a b =  * self in Iter_Hist_Type.C_Hist a _7) };
-    _7 <- any Ghost.ghost_ty (Seq.seq (i, uint32));
-    assert { [@expl:type invariant] Inv2.inv (Iter_Hist_Type.hist_hist ( * self)) };
-    assume { Resolve1.resolve (Iter_Hist_Type.hist_hist ( * self)) };
-    assert { [@expl:type invariant] Inv3.inv self };
-    assume { Resolve2.resolve self };
-    _0 <- x;
-    return _0
-  }
-  
+  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self) : bool
+    ensures { result = produces self x other }
+    
 end
-module Iter_SkipZerosHist_Type
-  use prelude.Ghost
-  use seq.Seq
+module Iter_Iter_Produces
+  type self
   use prelude.Int
   use prelude.UInt32
-  type t_skipzeroshist 'i =
-    | C_SkipZerosHist 'i (Ghost.ghost_ty (Seq.seq ('i, uint32)))
+  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self)
     
-  let function skipzeroshist_inner (self : t_skipzeroshist 'i) : 'i = [@vc:do_not_keep_trace] [@vc:sp]
-    match (self) with
-      | C_SkipZerosHist a _ -> a
-      end
-  let function skipzeroshist_hist (self : t_skipzeroshist 'i) : Ghost.ghost_ty (Seq.seq ('i, uint32))
-   = [@vc:do_not_keep_trace] [@vc:sp]
-    match (self) with
-      | C_SkipZerosHist _ a -> a
-      end
+  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 10 4 10 51] (self : self) (x : uint32) (other : self) : bool
+    ensures { result = produces self x other }
+    
 end
-module Iter_Impl7_Invariant_Stub
+module Iter_Impl2_Invariant_Stub
   type i
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 156 4 156 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i)
+  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 192 4 192 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i)
     
 end
-module Iter_Impl7_Invariant_Interface
+module Iter_Impl2_Invariant_Interface
   type i
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 156 4 156 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i)
+  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 192 4 192 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i)
     
-  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 156 4 156 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
+  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 192 4 192 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
     ensures { result = invariant' self }
     
 end
-module Iter_Impl7_Invariant
+module Iter_Impl2_Invariant
   type i
   use prelude.Ghost
   use seq.Seq
@@ -726,11 +123,11 @@ module Iter_Impl7_Invariant
   clone CreusotContracts_Logic_Ops_Impl6_IndexLogic_Stub as IndexLogic0 with
     type t = (i, uint32)
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 156 4 156 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i)
+  predicate invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 192 4 192 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i)
     
    =
-    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 157 8 161 9] Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) > 0 -> (forall i : int . 0 < i /\ i < Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) -> Produces0.produces (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (i - 1) in a) (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (i - 1) in a) (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) i in a)) /\ Produces0.produces (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) - 1) in a) (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) - 1) in a) (Iter_SkipZerosHist_Type.skipzeroshist_inner self)
-  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 156 4 156 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
+    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 193 8 197 9] Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) > 0 -> (forall i : int . 0 < i /\ i < Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) -> Produces0.produces (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (i - 1) in a) (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (i - 1) in a) (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) i in a)) /\ Produces0.produces (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) - 1) in a) (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist self) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) - 1) in a) (Iter_SkipZerosHist_Type.skipzeroshist_inner self)
+  val invariant' [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 192 4 192 30] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
     ensures { result = invariant' self }
     
 end
@@ -742,41 +139,97 @@ module Iter_SkipZerosHist_Type_Inv
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
   clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
     type t = i
-  clone Iter_Impl7_Invariant_Stub as Invariant0 with
+  clone Iter_Impl2_Invariant_Stub as Invariant0 with
     type i = i
   clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
     type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
   axiom inv_t_skipzeroshist [@rewrite] : forall self : Iter_SkipZerosHist_Type.t_skipzeroshist i . Inv0.inv self = (Invariant0.invariant' self /\ Inv1.inv (Iter_SkipZerosHist_Type.skipzeroshist_inner self) /\ (forall i : int . 0 <= i /\ i < Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) -> (let (a_0, a_1) = Seq.get (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist self)) i in Inv1.inv a_0)))
 end
-module Iter_Impl5_New_Interface
+module Iter_Iter_ProducesInj_Stub
+  type self
+  use prelude.Int
+  use prelude.UInt32
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone Iter_Iter_Produces_Stub as Produces0 with
+    type self = self
+  function produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 4 16 54] (a : self) (x : uint32) (y : uint32) (b : self) : ()
+    
+end
+module Iter_Iter_ProducesInj_Interface
+  type self
+  use prelude.Int
+  use prelude.UInt32
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone Iter_Iter_Produces_Stub as Produces0 with
+    type self = self
+  function produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 4 16 54] (a : self) (x : uint32) (y : uint32) (b : self) : ()
+    
+  val produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 4 16 54] (a : self) (x : uint32) (y : uint32) (b : self) : ()
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 13 15 13 31] Produces0.produces a x b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 14 15 14 31] Produces0.produces a y b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 20 16 21] Inv0.inv a}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 45 16 46] Inv0.inv b}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 15 14 15 20] x = y }
+    ensures { result = produces_inj a x y b }
+    
+  axiom produces_inj_spec : forall a : self, x : uint32, y : uint32, b : self . ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 13 15 13 31] Produces0.produces a x b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 14 15 14 31] Produces0.produces a y b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 20 16 21] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 45 16 46] Inv0.inv b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 15 14 15 20] x = y)
+end
+module Iter_Iter_ProducesInj
+  type self
+  use prelude.Int
+  use prelude.UInt32
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  clone Iter_Iter_Produces_Stub as Produces0 with
+    type self = self
+  function produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 4 16 54] (a : self) (x : uint32) (y : uint32) (b : self) : ()
+    
+  val produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 4 16 54] (a : self) (x : uint32) (y : uint32) (b : self) : ()
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 13 15 13 31] Produces0.produces a x b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 14 15 14 31] Produces0.produces a y b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 20 16 21] Inv0.inv a}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 45 16 46] Inv0.inv b}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 15 14 15 20] x = y }
+    ensures { result = produces_inj a x y b }
+    
+  axiom produces_inj_spec : forall a : self, x : uint32, y : uint32, b : self . ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 13 15 13 31] Produces0.produces a x b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 14 15 14 31] Produces0.produces a y b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 20 16 21] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 16 45 16 46] Inv0.inv b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 15 14 15 20] x = y)
+end
+module Iter_Impl0_New_Interface
   type i
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
   clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
     type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
   clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
     type t = i
-  val new [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 112 4 112 32] (inner : i) : Iter_SkipZerosHist_Type.t_skipzeroshist i
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 112 15 112 20] Inv0.inv inner}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 112 28 112 32] Inv1.inv result }
+  val new [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 141 4 141 32] (inner : i) : Iter_SkipZerosHist_Type.t_skipzeroshist i
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 141 15 141 20] Inv0.inv inner}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 141 28 141 32] Inv1.inv result }
     
 end
-module Iter_Impl5_New
+module Iter_Impl0_New
   type i
   use seq.Seq
   use prelude.Ghost
   use prelude.Int
   use prelude.UInt32
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = i
   clone Iter_Iter_Produces_Interface as Produces0 with
     type self = i
+  clone Iter_Iter_ProducesInj_Interface as ProducesInj0 with
+    type self = i,
+    predicate Produces0.produces = Produces0.produces,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
   clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
     type t = (i, uint32)
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  clone Iter_Impl7_Invariant as Invariant0 with
+  clone Iter_Impl2_Invariant as Invariant0 with
     type i = i,
     function IndexLogic0.index_logic = IndexLogic0.index_logic,
     predicate Produces0.produces = Produces0.produces
-  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
-    type t = i
   clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
   clone Iter_SkipZerosHist_Type_Inv as Iter_SkipZerosHist_Type_Inv0 with
@@ -789,9 +242,9 @@ module Iter_Impl5_New
     type t = i,
     predicate Inv0.inv = Inv0.inv,
     axiom .
-  let rec cfg new [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 112 4 112 32] [@cfg:stackify] [@cfg:subregion_analysis] (inner : i) : Iter_SkipZerosHist_Type.t_skipzeroshist i
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 112 15 112 20] Inv0.inv inner}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 112 28 112 32] Inv1.inv result }
+  let rec cfg new [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 141 4 141 32] [@cfg:stackify] [@cfg:subregion_analysis] (inner : i) : Iter_SkipZerosHist_Type.t_skipzeroshist i
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 141 15 141 20] Inv0.inv inner}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 141 28 141 32] Inv1.inv result }
     
    = [@vc:do_not_keep_trace] [@vc:sp]
   var _0 : Iter_SkipZerosHist_Type.t_skipzeroshist i;
@@ -801,7 +254,7 @@ module Iter_Impl5_New
     goto BB0
   }
   BB0 {
-    _3 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 115 18 115 36] Ghost.new (Seq.empty ));
+    _3 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 144 18 144 36] Ghost.new (Seq.empty ));
     goto BB1
   }
   BB1 {
@@ -818,26 +271,26 @@ module Iter_Impl5_New
   }
   
 end
-module Iter_Impl6_Produces_Stub
+module Iter_Impl1_Produces_Stub
   type i
   use prelude.Int
   use prelude.UInt32
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 123 4 123 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i)
+  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 152 4 152 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i)
     
 end
-module Iter_Impl6_Produces_Interface
+module Iter_Impl1_Produces_Interface
   type i
   use prelude.Int
   use prelude.UInt32
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 123 4 123 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i)
+  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 152 4 152 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i)
     
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 123 4 123 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
+  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 152 4 152 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
     ensures { result = produces self x other }
     
 end
-module Iter_Impl6_Produces
+module Iter_Impl1_Produces
   type i
   use prelude.Int
   use prelude.UInt32
@@ -846,30 +299,194 @@ module Iter_Impl6_Produces
   clone CreusotContracts_Logic_Ops_Impl6_IndexLogic_Stub as IndexLogic0 with
     type t = (i, uint32)
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 123 4 123 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i)
+  predicate produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 152 4 152 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i)
     
    =
-    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 125 12 130 13] UInt32.to_int x <> 0 /\ Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist other)) > 0 /\ Iter_SkipZerosHist_Type.skipzeroshist_inner self = (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist other) 0 in a) /\ (forall i : int . 0 <= i /\ i < Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist other)) - 1 -> (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist other) i in a) = (0 : uint32)) /\ (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist other) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist other)) - 1) in a) = x
-  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 123 4 123 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
+    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 154 12 159 13] UInt32.to_int x <> 0 /\ Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist other)) > 0 /\ Iter_SkipZerosHist_Type.skipzeroshist_inner self = (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist other) 0 in a) /\ (forall i : int . 0 <= i /\ i < Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist other)) - 1 -> (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist other) i in a) = (0 : uint32)) /\ (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist other) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist other)) - 1) in a) = x
+  val produces [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 152 4 152 50] (self : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (other : Iter_SkipZerosHist_Type.t_skipzeroshist i) : bool
     ensures { result = produces self x other }
     
 end
-module Iter_Impl6_Next_Interface
+module Iter_Impl1_ProducesInj_Stub
+  type i
+  use prelude.Int
+  use prelude.UInt32
+  use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
+  clone Iter_Impl1_Produces_Stub as Produces0 with
+    type i = i
+  function produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 4 168 53] (a : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (y : uint32) (b : Iter_SkipZerosHist_Type.t_skipzeroshist i) : ()
+    
+end
+module Iter_Impl1_ProducesInj_Interface
+  type i
+  use prelude.Int
+  use prelude.UInt32
+  use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
+  clone Iter_Impl1_Produces_Stub as Produces0 with
+    type i = i
+  function produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 4 168 53] (a : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (y : uint32) (b : Iter_SkipZerosHist_Type.t_skipzeroshist i) : ()
+    
+  val produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 4 168 53] (a : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (y : uint32) (b : Iter_SkipZerosHist_Type.t_skipzeroshist i) : ()
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 15 165 31] Produces0.produces a x b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 166 15 166 31] Produces0.produces a y b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 20 168 21] Inv0.inv a}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 45 168 46] Inv0.inv b}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 167 14 167 20] x = y }
+    ensures { result = produces_inj a x y b }
+    
+  axiom produces_inj_spec : forall a : Iter_SkipZerosHist_Type.t_skipzeroshist i, x : uint32, y : uint32, b : Iter_SkipZerosHist_Type.t_skipzeroshist i . ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 15 165 31] Produces0.produces a x b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 166 15 166 31] Produces0.produces a y b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 20 168 21] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 45 168 46] Inv0.inv b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 167 14 167 20] x = y)
+end
+module Iter_Impl1_ProducesInj
+  type i
+  use prelude.Int
+  use prelude.UInt32
+  use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
+  clone Iter_Impl1_Produces_Stub as Produces0 with
+    type i = i
+  function produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 4 168 53] (a : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (y : uint32) (b : Iter_SkipZerosHist_Type.t_skipzeroshist i) : ()
+    
+   =
+    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 163 4 163 10] ()
+  val produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 4 168 53] (a : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (y : uint32) (b : Iter_SkipZerosHist_Type.t_skipzeroshist i) : ()
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 15 165 31] Produces0.produces a x b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 166 15 166 31] Produces0.produces a y b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 20 168 21] Inv0.inv a}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 45 168 46] Inv0.inv b}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 167 14 167 20] x = y }
+    ensures { result = produces_inj a x y b }
+    
+  axiom produces_inj_spec : forall a : Iter_SkipZerosHist_Type.t_skipzeroshist i, x : uint32, y : uint32, b : Iter_SkipZerosHist_Type.t_skipzeroshist i . ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 15 165 31] Produces0.produces a x b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 166 15 166 31] Produces0.produces a y b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 20 168 21] Inv0.inv a) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 45 168 46] Inv0.inv b) -> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 167 14 167 20] x = y)
+end
+module Iter_Impl1_ProducesInj_Impl
+  type i
+  use prelude.Int
+  use prelude.UInt32
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
+    type t = i
+  clone Iter_Iter_Produces_Interface as Produces1 with
+    type self = i
+  clone Iter_Iter_ProducesInj_Interface as ProducesInj0 with
+    type self = i,
+    predicate Produces0.produces = Produces1.produces,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = i,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
+  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
+    type t = (i, uint32)
+  use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
+  clone Iter_Impl2_Invariant as Invariant0 with
+    type i = i,
+    function IndexLogic0.index_logic = IndexLogic0.index_logic,
+    predicate Produces0.produces = Produces1.produces
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
+  clone Iter_SkipZerosHist_Type_Inv as Iter_SkipZerosHist_Type_Inv0 with
+    type i = i,
+    predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv1.inv,
+    axiom .
+  clone Iter_Impl1_Produces as Produces0 with
+    type i = i,
+    function IndexLogic0.index_logic = IndexLogic0.index_logic
+  let rec ghost function produces_inj [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 4 168 53] (a : Iter_SkipZerosHist_Type.t_skipzeroshist i) (x : uint32) (y : uint32) (b : Iter_SkipZerosHist_Type.t_skipzeroshist i) : ()
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 15 165 31] Produces0.produces a x b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 166 15 166 31] Produces0.produces a y b}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 20 168 21] Inv0.inv a}
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 45 168 46] Inv0.inv b}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 167 14 167 20] x = y }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 163 4 163 10] ()
+end
+module CreusotContracts_Resolve_Resolve_Resolve_Stub
+  type self
+  predicate resolve (self : self)
+end
+module CreusotContracts_Resolve_Resolve_Resolve_Interface
+  type self
+  predicate resolve (self : self)
+  val resolve (self : self) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Resolve_Resolve
+  type self
+  predicate resolve (self : self)
+  val resolve (self : self) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Impl1_Resolve_Stub
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t)
+end
+module CreusotContracts_Resolve_Impl1_Resolve_Interface
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t)
+  val resolve (self : borrowed t) : bool
+    ensures { result = resolve self }
+    
+end
+module CreusotContracts_Resolve_Impl1_Resolve
+  type t
+  use prelude.Borrow
+  predicate resolve (self : borrowed t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/resolve.rs" 25 20 25 34]  ^ self =  * self
+  val resolve (self : borrowed t) : bool
+    ensures { result = resolve self }
+    
+end
+module Iter_Iter_Next_Interface
+  type self
+  use prelude.Borrow
+  use prelude.Int
+  use prelude.UInt32
+  clone Iter_Iter_Produces_Stub as Produces0 with
+    type self = self
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed self
+  val next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 19 4 19 30] (self : borrowed self) : uint32
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 19 17 19 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 18 14 18 42] Produces0.produces ( * self) result ( ^ self) }
+    
+end
+module TyInv_Borrow
+  type t
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv1 with
+    type t = t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = borrowed t
+  axiom inv_borrow [@rewrite] : forall self : borrowed t . Inv0.inv self = (Inv1.inv ( * self) /\ Inv1.inv ( ^ self))
+end
+module Iter_Impl1_Next_Interface
   type i
   use prelude.Borrow
   use prelude.Int
   use prelude.UInt32
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  clone Iter_Impl6_Produces_Stub as Produces0 with
+  clone Iter_Impl1_Produces_Stub as Produces0 with
     type i = i
   clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
     type t = borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i)
-  val next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 135 4 135 29] (self : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 135 17 135 21] Inv0.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 134 14 134 42] Produces0.produces ( * self) result ( ^ self) }
+  val next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 171 4 171 29] (self : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i)) : uint32
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 171 17 171 21] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 14 170 42] Produces0.produces ( * self) result ( ^ self) }
     
 end
-module Iter_Impl6_Next
+module Iter_Impl1_Next
   type i
   use prelude.Borrow
   use prelude.Ghost
@@ -881,7 +498,7 @@ module Iter_Impl6_Next
   clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
     type t = (i, uint32)
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  clone Iter_Impl7_Invariant as Invariant0 with
+  clone Iter_Impl2_Invariant as Invariant0 with
     type i = i,
     function IndexLogic0.index_logic = IndexLogic0.index_logic,
     predicate Produces0.produces = Produces1.produces
@@ -908,6 +525,11 @@ module Iter_Impl6_Next
     predicate Inv0.inv = Inv2.inv,
     predicate Inv1.inv = Inv4.inv,
     axiom .
+  clone Iter_Iter_ProducesInj_Interface as ProducesInj0 with
+    type self = i,
+    predicate Produces0.produces = Produces1.produces,
+    predicate Inv0.inv = Inv1.inv,
+    axiom .
   clone TyInv_Trivial as TyInv_Trivial1 with
     type t = i,
     predicate Inv0.inv = Inv1.inv,
@@ -919,7 +541,7 @@ module Iter_Impl6_Next
     type t = Ghost.ghost_ty i,
     predicate Inv0.inv = Inv0.inv,
     axiom .
-  clone Iter_Impl6_Produces as Produces0 with
+  clone Iter_Impl1_Produces as Produces0 with
     type i = i,
     function IndexLogic0.index_logic = IndexLogic0.index_logic
   clone CreusotContracts_Resolve_Impl1_Resolve as Resolve1 with
@@ -930,9 +552,9 @@ module Iter_Impl6_Next
     predicate Produces0.produces = Produces1.produces
   clone CreusotContracts_Resolve_Resolve_Resolve_Interface as Resolve0 with
     type self = Ghost.ghost_ty i
-  let rec cfg next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 135 4 135 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i)) : uint32
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 135 17 135 21] Inv2.inv self}
-    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 134 14 134 42] Produces0.produces ( * self) result ( ^ self) }
+  let rec cfg next [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 171 4 171 29] [@cfg:stackify] [@cfg:subregion_analysis] (self : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i)) : uint32
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 171 17 171 21] Inv2.inv self}
+    ensures { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 14 170 42] Produces0.produces ( * self) result ( ^ self) }
     
    = [@vc:do_not_keep_trace] [@vc:sp]
   var _0 : uint32;
@@ -949,7 +571,7 @@ module Iter_Impl6_Next
     goto BB0
   }
   BB0 {
-    old' <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 136 18 136 36] Ghost.new (Iter_SkipZerosHist_Type.skipzeroshist_inner ( * self)));
+    old' <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 172 18 172 36] Ghost.new (Iter_SkipZerosHist_Type.skipzeroshist_inner ( * self)));
     goto BB1
   }
   BB1 {
@@ -958,12 +580,12 @@ module Iter_Impl6_Next
     _6 <- Borrow.borrow_mut (Iter_SkipZerosHist_Type.skipzeroshist_inner ( * self));
     self <- { self with current = (let Iter_SkipZerosHist_Type.C_SkipZerosHist a b =  * self in Iter_SkipZerosHist_Type.C_SkipZerosHist ( ^ _6) b) };
     assume { Inv1.inv ( ^ _6) };
-    next <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 137 23 137 40] Next0.next _6);
+    next <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 173 23 173 40] Next0.next _6);
     _6 <- any borrowed i;
     goto BB2
   }
   BB2 {
-    _7 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 138 20 138 56] Ghost.new (Seq.singleton (Ghost.inner old', next)));
+    _7 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 174 20 174 56] Ghost.new (Seq.singleton (Ghost.inner old', next)));
     goto BB3
   }
   BB3 {
@@ -972,20 +594,20 @@ module Iter_Impl6_Next
     goto BB4
   }
   BB4 {
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 140 20 140 29] Inv2.inv self };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 141 20 141 65] Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) > 0 /\ (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self)) 0 in a) = Ghost.inner old' };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 140 8 140 31] forall i : int . 0 <= i /\ i < Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) - 1 -> (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self)) i in a) = (0 : uint32) };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 143 20 143 58] (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self)) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) - 1) in a) = next };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 176 20 176 29] Inv2.inv self };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 177 20 177 65] Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) > 0 /\ (let (a, _) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self)) 0 in a) = Ghost.inner old' };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 176 8 176 31] forall i : int . 0 <= i /\ i < Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) - 1 -> (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self)) i in a) = (0 : uint32) };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 179 20 179 58] (let (_, a) = IndexLogic0.index_logic (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self)) (Seq.length (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) - 1) in a) = next };
     goto BB5
   }
   BB5 {
-    switch ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 144 14 144 23] next = ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 144 22 144 23] (0 : uint32)))
+    switch ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 180 14 180 23] next = ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 180 22 180 23] (0 : uint32)))
       | False -> goto BB10
       | True -> goto BB6
       end
   }
   BB6 {
-    prev <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 145 23 145 41] Ghost.new (Iter_SkipZerosHist_Type.skipzeroshist_inner ( * self)));
+    prev <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 181 23 181 41] Ghost.new (Iter_SkipZerosHist_Type.skipzeroshist_inner ( * self)));
     goto BB7
   }
   BB7 {
@@ -994,14 +616,14 @@ module Iter_Impl6_Next
     _20 <- Borrow.borrow_mut (Iter_SkipZerosHist_Type.skipzeroshist_inner ( * self));
     self <- { self with current = (let Iter_SkipZerosHist_Type.C_SkipZerosHist a b =  * self in Iter_SkipZerosHist_Type.C_SkipZerosHist ( ^ _20) b) };
     assume { Inv1.inv ( ^ _20) };
-    _19 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 146 19 146 36] Next0.next _20);
+    _19 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 182 19 182 36] Next0.next _20);
     _20 <- any borrowed i;
     goto BB8
   }
   BB8 {
     next <- _19;
     _19 <- any uint32;
-    _21 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 147 24 147 61] Ghost.new (Seq.snoc (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) (Ghost.inner prev, next)));
+    _21 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 183 24 183 61] Ghost.new (Seq.snoc (Ghost.inner (Iter_SkipZerosHist_Type.skipzeroshist_hist ( * self))) (Ghost.inner prev, next)));
     goto BB9
   }
   BB9 {
@@ -1818,8 +1440,8 @@ module Iter_Client_Interface
   use prelude.UIntSize
   clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
     type t = i
-  val client [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 0 165 48] (i : i) (max : usize) : ()
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 31 165 32] Inv0.inv i}
+  val client [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 201 0 201 48] (i : i) (max : usize) : ()
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 201 31 201 32] Inv0.inv i}
     
 end
 module Iter_Client
@@ -1892,7 +1514,7 @@ module Iter_Client
     type self = i
   clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic2 with
     type t = (i, uint32)
-  clone Iter_Impl7_Invariant as Invariant0 with
+  clone Iter_Impl2_Invariant as Invariant0 with
     type i = i,
     function IndexLogic0.index_logic = IndexLogic2.index_logic,
     predicate Produces0.produces = Produces2.produces
@@ -1916,6 +1538,11 @@ module Iter_Client
     axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv3 with
     type t = i
+  clone Iter_Iter_ProducesInj_Interface as ProducesInj1 with
+    type self = i,
+    predicate Produces0.produces = Produces2.produces,
+    predicate Inv0.inv = Inv3.inv,
+    axiom .
   clone TyInv_Trivial as TyInv_Trivial1 with
     type t = i,
     predicate Inv0.inv = Inv3.inv,
@@ -1942,6 +1569,14 @@ module Iter_Client
     type idx = usize,
     predicate Resolve0.resolve = Resolve1.resolve,
     function DeepModel0.deep_model = DeepModel0.deep_model
+  clone Iter_Impl1_Produces as Produces1 with
+    type i = i,
+    function IndexLogic0.index_logic = IndexLogic2.index_logic
+  clone Iter_Impl1_ProducesInj as ProducesInj0 with
+    type i = i,
+    predicate Produces0.produces = Produces1.produces,
+    predicate Inv0.inv = Inv2.inv,
+    axiom .
   clone Iter_SkipZerosHist_Type_Inv as Iter_SkipZerosHist_Type_Inv0 with
     type i = i,
     predicate Inv0.inv = Inv2.inv,
@@ -2013,10 +1648,7 @@ module Iter_Client
     predicate Inv2.inv = Inv5.inv,
     val Max0.mAX' = Max0.mAX',
     predicate Inv3.inv = Inv6.inv
-  clone Iter_Impl6_Produces as Produces1 with
-    type i = i,
-    function IndexLogic0.index_logic = IndexLogic2.index_logic
-  clone Iter_Impl6_Next_Interface as Next1 with
+  clone Iter_Impl1_Next_Interface as Next1 with
     type i = i,
     predicate Inv0.inv = Inv9.inv,
     predicate Produces0.produces = Produces1.produces
@@ -2042,7 +1674,7 @@ module Iter_Client
     predicate Inv0.inv = Inv5.inv,
     val Max0.mAX' = Max0.mAX',
     predicate Inv1.inv = Inv6.inv
-  clone Iter_Impl5_New_Interface as New0 with
+  clone Iter_Impl0_New_Interface as New0 with
     type i = i,
     predicate Inv0.inv = Inv3.inv,
     predicate Inv1.inv = Inv2.inv
@@ -2050,8 +1682,8 @@ module Iter_Client
     type self = i,
     predicate Inv0.inv = Inv4.inv,
     predicate Inv1.inv = Inv3.inv
-  let rec cfg client [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 0 165 48] [@cfg:stackify] [@cfg:subregion_analysis] (i : i) (max : usize) : ()
-    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 165 31 165 32] Inv3.inv i}
+  let rec cfg client [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 201 0 201 48] [@cfg:stackify] [@cfg:subregion_analysis] (i : i) (max : usize) : ()
+    requires {[#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 201 31 201 32] Inv3.inv i}
     
    = [@vc:do_not_keep_trace] [@vc:sp]
   var _0 : ();
@@ -2064,56 +1696,56 @@ module Iter_Client
   var iter : Core_Ops_Range_Range_Type.t_range usize;
   var iter_old : Ghost.ghost_ty (Core_Ops_Range_Range_Type.t_range usize);
   var produced : Ghost.ghost_ty (Seq.seq usize);
-  var _24 : ();
-  var _25 : Core_Option_Option_Type.t_option usize;
-  var _26 : borrowed (Core_Ops_Range_Range_Type.t_range usize);
+  var _25 : ();
+  var _26 : Core_Option_Option_Type.t_option usize;
   var _27 : borrowed (Core_Ops_Range_Range_Type.t_range usize);
+  var _28 : borrowed (Core_Ops_Range_Range_Type.t_range usize);
   var __creusot_proc_iter_elem : usize;
-  var _30 : Ghost.ghost_ty (Seq.seq usize);
-  var _32 : ();
-  var _33 : borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
-  var _34 : uint32;
-  var _35 : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i);
-  var _36 : Ghost.ghost_ty (Seq.seq (Iter_SkipZerosHist_Type.t_skipzeroshist i));
+  var _31 : Ghost.ghost_ty (Seq.seq usize);
+  var _33 : ();
+  var _34 : borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
+  var _35 : uint32;
+  var _36 : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i);
+  var _37 : Ghost.ghost_ty (Seq.seq (Iter_SkipZerosHist_Type.t_skipzeroshist i));
   var i1 : i;
   var nz1 : Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global);
   var count : usize;
   var x : uint32;
-  var _50 : borrowed i;
-  var _53 : ();
-  var _54 : borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
+  var _51 : borrowed i;
+  var _56 : ();
+  var _57 : borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
   {
     goto BB0
   }
   BB0 {
-    _4 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 166 36 166 45] Clone0.clone' i);
+    _4 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 202 36 202 45] Clone0.clone' i);
     goto BB1
   }
   BB1 {
-    i2 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 166 17 166 46] New0.new _4);
+    i2 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 202 17 202 46] New0.new _4);
     _4 <- any i;
     goto BB2
   }
   BB2 {
-    nz2 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 167 18 167 28] New1.new ());
+    nz2 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 203 18 203 28] New1.new ());
     goto BB3
   }
   BB3 {
-    is <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 17 168 43] Ghost.new (Seq.singleton i2));
+    is <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 204 17 204 43] Ghost.new (Seq.singleton i2));
     goto BB4
   }
   BB4 {
     assert { [@expl:type invariant] Inv0.inv is };
     assume { Resolve0.resolve is };
-    iter <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] IntoIter0.into_iter (Core_Ops_Range_Range_Type.C_Range ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 175 13 175 14] (0 : usize)) max));
+    iter <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] IntoIter0.into_iter (Core_Ops_Range_Range_Type.C_Range ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 212 13 212 14] (0 : usize)) max));
     goto BB5
   }
   BB5 {
-    iter_old <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] Ghost.new iter);
+    iter_old <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] Ghost.new iter);
     goto BB6
   }
   BB6 {
-    produced <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] Ghost.new (Seq.empty ));
+    produced <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] Ghost.new (Seq.empty ));
     goto BB7
   }
   BB7 {
@@ -2132,44 +1764,48 @@ module Iter_Client
     goto BB12
   }
   BB12 {
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] Inv1.inv iter };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] Produces0.produces (Ghost.inner iter_old) (Ghost.inner produced) iter };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 16 170 23] Inv2.inv i2 };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 171 16 171 23] Inv0.inv is };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 172 16 172 44] Seq.length (ShallowModel0.shallow_model nz2) = Seq.length (Ghost.inner produced) };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 173 16 173 42] Seq.length (Ghost.inner is) = 1 + Seq.length (ShallowModel0.shallow_model nz2) };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] forall j : int . 0 < j /\ j < Seq.length (Ghost.inner is) -> Produces1.produces (IndexLogic0.index_logic is (j - 1)) (IndexLogic1.index_logic nz2 (j - 1)) (IndexLogic0.index_logic is j) };
     goto BB13
   }
   BB13 {
-    _27 <- Borrow.borrow_mut iter;
-    iter <-  ^ _27;
-    _26 <- Borrow.borrow_mut ( * _27);
-    _27 <- { _27 with current = ( ^ _26) };
-    _25 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] Next0.next _26);
-    _26 <- any borrowed (Core_Ops_Range_Range_Type.t_range usize);
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] Inv1.inv iter };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] Produces0.produces (Ghost.inner iter_old) (Ghost.inner produced) iter };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 16 206 23] Inv2.inv i2 };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 207 16 207 23] Inv0.inv is };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 208 16 208 44] Seq.length (ShallowModel0.shallow_model nz2) = Seq.length (Ghost.inner produced) };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 209 16 209 42] Seq.length (Ghost.inner is) = 1 + Seq.length (ShallowModel0.shallow_model nz2) };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 210 16 210 36] IndexLogic0.index_logic is (Seq.length (Ghost.inner is) - 1) = i2 };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] forall j : int . 0 < j /\ j < Seq.length (Ghost.inner is) -> Produces1.produces (IndexLogic0.index_logic is (j - 1)) (IndexLogic1.index_logic nz2 (j - 1)) (IndexLogic0.index_logic is j) };
     goto BB14
   }
   BB14 {
-    assume { Resolve1.resolve _27 };
-    switch (_25)
-      | Core_Option_Option_Type.C_None -> goto BB15
-      | Core_Option_Option_Type.C_Some _ -> goto BB16
-      end
+    _28 <- Borrow.borrow_mut iter;
+    iter <-  ^ _28;
+    _27 <- Borrow.borrow_mut ( * _28);
+    _28 <- { _28 with current = ( ^ _27) };
+    _26 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] Next0.next _27);
+    _27 <- any borrowed (Core_Ops_Range_Range_Type.t_range usize);
+    goto BB15
   }
   BB15 {
+    assume { Resolve1.resolve _28 };
+    switch (_26)
+      | Core_Option_Option_Type.C_None -> goto BB16
+      | Core_Option_Option_Type.C_Some _ -> goto BB17
+      end
+  }
+  BB16 {
     assume { Resolve2.resolve nz2 };
     assert { [@expl:type invariant] Inv2.inv i2 };
     assume { Resolve3.resolve i2 };
     i1 <- i;
     i <- any i;
-    nz1 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 181 18 181 28] New1.new ());
-    goto BB23
-  }
-  BB16 {
-    goto BB18
+    nz1 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 218 18 218 28] New1.new ());
+    goto BB24
   }
   BB17 {
+    goto BB19
+  }
+  BB18 {
     assume { Resolve2.resolve nz2 };
     assert { [@expl:type invariant] Inv2.inv i2 };
     assume { Resolve3.resolve i2 };
@@ -2177,111 +1813,109 @@ module Iter_Client
     assume { Resolve4.resolve i };
     absurd
   }
-  BB18 {
-    __creusot_proc_iter_elem <- Core_Option_Option_Type.some_0 _25;
-    _30 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 170 4 170 25] Ghost.new (Seq.(++) (Ghost.inner produced) (Seq.singleton __creusot_proc_iter_elem)));
-    goto BB19
-  }
   BB19 {
-    produced <- _30;
-    _30 <- any Ghost.ghost_ty (Seq.seq usize);
-    _33 <- Borrow.borrow_mut nz2;
-    nz2 <-  ^ _33;
-    _35 <- Borrow.borrow_mut i2;
-    i2 <-  ^ _35;
-    assume { Inv2.inv ( ^ _35) };
-    _34 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 176 17 176 26] Next1.next _35);
-    _35 <- any borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i);
+    __creusot_proc_iter_elem <- Core_Option_Option_Type.some_0 _26;
+    _31 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 206 4 206 25] Ghost.new (Seq.(++) (Ghost.inner produced) (Seq.singleton __creusot_proc_iter_elem)));
     goto BB20
   }
   BB20 {
-    _32 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 176 8 176 27] Push0.push _33 _34);
-    _33 <- any borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
-    _34 <- any uint32;
+    produced <- _31;
+    _31 <- any Ghost.ghost_ty (Seq.seq usize);
+    _34 <- Borrow.borrow_mut nz2;
+    nz2 <-  ^ _34;
+    _36 <- Borrow.borrow_mut i2;
+    i2 <-  ^ _36;
+    assume { Inv2.inv ( ^ _36) };
+    _35 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 213 17 213 26] Next1.next _36);
+    _36 <- any borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i);
     goto BB21
   }
   BB21 {
-    _36 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 177 13 177 32] Ghost.new (Seq.snoc (Ghost.inner is) i2));
+    _33 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 213 8 213 27] Push0.push _34 _35);
+    _34 <- any borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
+    _35 <- any uint32;
     goto BB22
   }
   BB22 {
-    is <- _36;
-    _36 <- any Ghost.ghost_ty (Seq.seq (Iter_SkipZerosHist_Type.t_skipzeroshist i));
-    assert { [@expl:type invariant] Inv0.inv is };
-    assume { Resolve0.resolve is };
-    _24 <- ();
-    goto BB12
+    _37 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 214 13 214 32] Ghost.new (Seq.snoc (Ghost.inner is) i2));
+    goto BB23
   }
   BB23 {
-    count <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 182 20 182 21] (0 : usize));
-    goto BB24
+    is <- _37;
+    _37 <- any Ghost.ghost_ty (Seq.seq (Iter_SkipZerosHist_Type.t_skipzeroshist i));
+    assert { [@expl:type invariant] Inv0.inv is };
+    assume { Resolve0.resolve is };
+    _25 <- ();
+    goto BB13
   }
   BB24 {
+    count <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 219 20 219 21] (0 : usize));
     goto BB25
   }
   BB25 {
     goto BB26
   }
   BB26 {
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 183 16 183 36] Seq.length (ShallowModel0.shallow_model nz1) = UIntSize.to_int count };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 184 16 184 28] count <= max };
-    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 183 4 183 38] forall k : int . 0 <= k /\ k < UIntSize.to_int count -> IndexLogic1.index_logic nz1 k = IndexLogic1.index_logic nz2 k };
     goto BB27
   }
   BB27 {
-    switch ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 186 10 186 21] count < max)
-      | False -> goto BB34
-      | True -> goto BB28
-      end
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 220 16 220 36] Seq.length (ShallowModel0.shallow_model nz1) = UIntSize.to_int count };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 221 16 221 28] count <= max };
+    invariant { [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 220 4 220 38] forall k : int . 0 <= k /\ k < UIntSize.to_int count -> IndexLogic1.index_logic nz1 k = IndexLogic1.index_logic nz2 k };
+    goto BB28
   }
   BB28 {
-    _50 <- Borrow.borrow_mut i1;
-    i1 <-  ^ _50;
-    assume { Inv3.inv ( ^ _50) };
-    x <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 187 16 187 25] Next2.next _50);
-    _50 <- any borrowed i;
-    goto BB29
-  }
-  BB29 {
-    switch ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 188 11 188 17] x <> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 188 16 188 17] (0 : uint32)))
-      | False -> goto BB32
-      | True -> goto BB30
+    switch ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 223 10 223 21] count < max)
+      | False -> goto BB36
+      | True -> goto BB29
       end
   }
+  BB29 {
+    _51 <- Borrow.borrow_mut i1;
+    i1 <-  ^ _51;
+    assume { Inv3.inv ( ^ _51) };
+    x <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 224 16 224 25] Next2.next _51);
+    _51 <- any borrowed i;
+    goto BB30
+  }
   BB30 {
-    _54 <- Borrow.borrow_mut nz1;
-    nz1 <-  ^ _54;
-    _53 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 189 12 189 23] Push0.push _54 x);
-    _54 <- any borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
-    goto BB31
+    switch ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 225 11 225 17] x <> ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 225 16 225 17] (0 : uint32)))
+      | False -> goto BB34
+      | True -> goto BB31
+      end
   }
   BB31 {
-    count <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 190 12 190 22] count + ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 190 21 190 22] (1 : usize)));
-    _24 <- ();
-    goto BB33
+    assert { [@expl:assertion] [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 226 28 226 44] IndexLogic1.index_logic nz2 (UIntSize.to_int count) = x };
+    goto BB32
   }
   BB32 {
-    _24 <- ();
+    _57 <- Borrow.borrow_mut nz1;
+    nz1 <-  ^ _57;
+    _56 <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 227 12 227 23] Push0.push _57 x);
+    _57 <- any borrowed (Alloc_Vec_Vec_Type.t_vec uint32 (Alloc_Alloc_Global_Type.t_global));
     goto BB33
   }
   BB33 {
-    goto BB26
+    count <- ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 228 12 228 22] count + ([#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 228 21 228 22] (1 : usize)));
+    _25 <- ();
+    goto BB35
   }
   BB34 {
-    assume { Resolve2.resolve nz1 };
-    assert { [@expl:type invariant] Inv3.inv i1 };
-    assume { Resolve4.resolve i1 };
-    assert { [@expl:assertion] [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 194 20 194 32] ShallowModel0.shallow_model nz1 = ShallowModel0.shallow_model nz2 };
+    _25 <- ();
     goto BB35
   }
   BB35 {
-    _0 <- ();
-    goto BB36
+    goto BB27
   }
   BB36 {
+    assume { Resolve2.resolve nz1 };
+    assert { [@expl:type invariant] Inv3.inv i1 };
+    assume { Resolve4.resolve i1 };
+    assert { [@expl:assertion] [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 232 20 232 32] ShallowModel0.shallow_model nz1 = ShallowModel0.shallow_model nz2 };
     goto BB37
   }
   BB37 {
+    _0 <- ();
     goto BB38
   }
   BB38 {
@@ -2291,114 +1925,21 @@ module Iter_Client
     goto BB40
   }
   BB40 {
+    goto BB41
+  }
+  BB41 {
+    goto BB42
+  }
+  BB42 {
     return _0
   }
   
 end
-module Iter_Impl0
-  
-end
-module Iter_Impl4
-  type i
-end
-module Iter_Impl7
-  type i
-end
 module Iter_Impl1
-  use prelude.Borrow
-  use prelude.Int
-  use prelude.UInt32
-  use Iter_Fib_Type as Iter_Fib_Type
-  clone Iter_Impl0_Invariant as Invariant0
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Iter_Fib_Type.t_fib
-  clone Iter_Fib_Type_Inv as Iter_Fib_Type_Inv0 with
-    predicate Inv0.inv = Inv1.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
-    type t = borrowed (Iter_Fib_Type.t_fib)
-  clone TyInv_Borrow as TyInv_Borrow0 with
-    type t = Iter_Fib_Type.t_fib,
-    predicate Inv0.inv = Inv0.inv,
-    predicate Inv1.inv = Inv1.inv,
-    axiom .
-  clone Iter_Impl1_Produces as Produces0
-  goal next_refn : [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 39 4 39 29] forall self : borrowed (Iter_Fib_Type.t_fib) . Inv0.inv self -> Inv0.inv self /\ (forall result : uint32 . (UInt32.to_int result > 1 -> (exists f2 : Iter_Fib_Type.t_fib . exists x : uint32 . exists f1 : Iter_Fib_Type.t_fib . Inv1.inv f2 /\ Inv1.inv f1 /\ Produces0.produces f1 x f2 /\ Produces0.produces f2 (Iter_Fib_Type.fib_a ( * self)) ( * self) /\ x + Iter_Fib_Type.fib_a ( * self) = result)) /\ Produces0.produces ( * self) result ( ^ self) -> Produces0.produces ( * self) result ( ^ self))
-end
-module Iter_Impl2
   type i
-  use prelude.Borrow
   use prelude.Int
   use prelude.UInt32
-  use seq.Seq
-  use seq.Seq
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Seq.seq i
-  clone TyInv_Trivial as TyInv_Trivial1 with
-    type t = Seq.seq i,
-    predicate Inv0.inv = Inv1.inv,
-    axiom .
-  clone Iter_Iter_Produces_Interface as Produces1 with
-    type self = i
-  use Iter_SkipZeros_Type as Iter_SkipZeros_Type
-  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
-    type t = borrowed (Iter_SkipZeros_Type.t_skipzeros i)
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = borrowed (Iter_SkipZeros_Type.t_skipzeros i),
-    predicate Inv0.inv = Inv0.inv,
-    axiom .
-  clone Iter_Impl2_Produces as Produces0 with
-    type i = i,
-    predicate Produces0.produces = Produces1.produces,
-    predicate Inv0.inv = Inv1.inv
-  goal next_refn : [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 65 4 65 29] forall self : borrowed (Iter_SkipZeros_Type.t_skipzeros i) . Inv0.inv self -> Inv0.inv self /\ (forall result : uint32 . Produces0.produces ( * self) result ( ^ self) -> Produces0.produces ( * self) result ( ^ self))
-end
-module Iter_Impl3
-  type i
   use prelude.Borrow
-  use prelude.Int
-  use prelude.UInt32
-  clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
-    type t = i
-  clone TyInv_Trivial as TyInv_Trivial0 with
-    type t = i,
-    predicate Inv0.inv = Inv2.inv,
-    axiom .
-  clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
-    type t = (i, uint32)
-  clone Iter_Iter_Produces_Interface as Produces1 with
-    type self = i
-  use Iter_Hist_Type as Iter_Hist_Type
-  clone Iter_Impl4_Invariant as Invariant0 with
-    type i = i,
-    function IndexLogic0.index_logic = IndexLogic0.index_logic,
-    predicate Produces0.produces = Produces1.produces
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Iter_Hist_Type.t_hist i
-  clone Iter_Hist_Type_Inv as Iter_Hist_Type_Inv0 with
-    type i = i,
-    predicate Inv0.inv = Inv1.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
-    predicate Inv1.inv = Inv2.inv,
-    axiom .
-  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
-    type t = borrowed (Iter_Hist_Type.t_hist i)
-  clone TyInv_Borrow as TyInv_Borrow0 with
-    type t = Iter_Hist_Type.t_hist i,
-    predicate Inv0.inv = Inv0.inv,
-    predicate Inv1.inv = Inv1.inv,
-    axiom .
-  clone Iter_Impl3_Produces as Produces0 with
-    type i = i,
-    predicate Produces0.produces = Produces1.produces
-  goal next_refn : [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 87 4 87 29] forall self : borrowed (Iter_Hist_Type.t_hist i) . Inv0.inv self -> Inv0.inv self /\ (forall result : uint32 . Produces0.produces ( * self) result ( ^ self) -> Produces0.produces ( * self) result ( ^ self))
-end
-module Iter_Impl6
-  type i
-  use prelude.Borrow
-  use prelude.Int
-  use prelude.UInt32
   clone CreusotContracts_Invariant_Inv_Interface as Inv2 with
     type t = i
   clone TyInv_Trivial as TyInv_Trivial0 with
@@ -2410,27 +1951,31 @@ module Iter_Impl6
   clone CreusotContracts_Logic_Ops_Impl6_IndexLogic as IndexLogic0 with
     type t = (i, uint32)
   use Iter_SkipZerosHist_Type as Iter_SkipZerosHist_Type
-  clone Iter_Impl7_Invariant as Invariant0 with
+  clone Iter_Impl2_Invariant as Invariant0 with
     type i = i,
     function IndexLogic0.index_logic = IndexLogic0.index_logic,
     predicate Produces0.produces = Produces1.produces
-  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
-    type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
-  clone Iter_SkipZerosHist_Type_Inv as Iter_SkipZerosHist_Type_Inv0 with
-    type i = i,
-    predicate Inv0.inv = Inv1.inv,
-    predicate Invariant0.invariant' = Invariant0.invariant',
-    predicate Inv1.inv = Inv2.inv,
-    axiom .
   clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = Iter_SkipZerosHist_Type.t_skipzeroshist i
+  clone CreusotContracts_Invariant_Inv_Interface as Inv1 with
     type t = borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i)
   clone TyInv_Borrow as TyInv_Borrow0 with
     type t = Iter_SkipZerosHist_Type.t_skipzeroshist i,
-    predicate Inv0.inv = Inv0.inv,
-    predicate Inv1.inv = Inv1.inv,
+    predicate Inv0.inv = Inv1.inv,
+    predicate Inv1.inv = Inv0.inv,
     axiom .
-  clone Iter_Impl6_Produces as Produces0 with
+  clone Iter_SkipZerosHist_Type_Inv as Iter_SkipZerosHist_Type_Inv0 with
+    type i = i,
+    predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    predicate Inv1.inv = Inv2.inv,
+    axiom .
+  clone Iter_Impl1_Produces as Produces0 with
     type i = i,
     function IndexLogic0.index_logic = IndexLogic0.index_logic
-  goal next_refn : [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 135 4 135 29] forall self : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i) . Inv0.inv self -> Inv0.inv self /\ (forall result : uint32 . Produces0.produces ( * self) result ( ^ self) -> Produces0.produces ( * self) result ( ^ self))
+  goal produces_inj_refn : [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 168 4 168 53] forall a : Iter_SkipZerosHist_Type.t_skipzeroshist i . forall x : uint32 . forall y : uint32 . forall b : Iter_SkipZerosHist_Type.t_skipzeroshist i . Inv0.inv b /\ Inv0.inv a /\ Produces0.produces a y b /\ Produces0.produces a x b -> Inv0.inv b /\ Inv0.inv a /\ Produces0.produces a y b /\ Produces0.produces a x b /\ (forall result : () . x = y -> x = y)
+  goal next_refn : [#"/mnt/data/projects/creusot/evaluation/interators/iter.rs" 171 4 171 29] forall self : borrowed (Iter_SkipZerosHist_Type.t_skipzeroshist i) . Inv1.inv self -> Inv1.inv self /\ (forall result : uint32 . Produces0.produces ( * self) result ( ^ self) -> Produces0.produces ( * self) result ( ^ self))
+end
+module Iter_Impl2
+  type i
 end

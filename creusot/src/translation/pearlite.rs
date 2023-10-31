@@ -350,12 +350,14 @@ impl<'a, 'tcx> ThirTerm<'a, 'tcx> {
             ExprKind::VarRef { id } => {
                 let map = self.ctx.hir();
                 let name = map.name(id.0);
+                assert!(!name.as_str().is_empty());
                 Ok(Term { ty, span, kind: TermKind::Var(name) })
             }
             // TODO: confirm this works
             ExprKind::UpvarRef { var_hir_id: id, .. } => {
                 let map = self.ctx.hir();
                 let name = map.name(id.0);
+                assert!(!name.as_str().is_empty());
 
                 Ok(Term { ty, span, kind: TermKind::Var(name) })
             }
@@ -867,7 +869,7 @@ pub(crate) fn type_invariant_term<'tcx>(
     span: Span,
     ty: Ty<'tcx>,
 ) -> Option<Term<'tcx>> {
-    // assert!(!name.as_str().is_empty(), "name has len 0, env={env_did:?}, ty={ty:?}");
+    assert!(!name.as_str().is_empty(), "name has len 0, env={env_did:?}, ty={ty:?}");
     let arg = Term { ty, span, kind: TermKind::Var(name) };
 
     let (inv_fn_did, inv_fn_substs) = ctx.type_invariant(env_did, ty)?;
@@ -1122,6 +1124,7 @@ impl<'tcx> Term<'tcx> {
     }
 
     pub(crate) fn var(sym: Symbol, ty: Ty<'tcx>) -> Self {
+        assert!(!sym.as_str().is_empty());
         Term { ty, kind: TermKind::Var(sym), span: DUMMY_SP }
     }
 

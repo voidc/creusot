@@ -39,7 +39,8 @@ use ::std::cmp::Ordering;
 /// A sparse map representation over a totally ordered key type.
 pub struct VecMap<K, V>
 where
-    K: Eq + Ord,
+    K: Eq + Ord + DeepModel,
+    K::DeepModelTy: OrdLogic,
 {
     v: Vec<(K, V)>,
 }
@@ -117,6 +118,7 @@ where
         Entry::Vacant(VacantEntry { map: self, index: i, key })
     }
 
+    /*
     /// Finds entry reference, either directly associated with `min_key_inclusive`, or the entry with the
     /// closest key (in terms of sorting order) greater than `min_key_inclusive`. Returns `None` if
     /// map does not contain entry with key greater or equal to `min_key_inclusive`.
@@ -143,10 +145,11 @@ where
             },
         }
     }
+    */
 
     /// Insert `value` for `key` in the map. If `key` is already contained, the function
     /// replaces the previously held value and returns it.
-    #[ensures(exists<i: Int> i >= 0 && i < ((^self).v@).len() ==>
+    #[ensures(exists<i: Int> i >= 0 && i < ((^self).v@).len() &&
               (^self).key_seq()[i] == key.deep_model() && ((^self).v@)[i].1 == value)]
     pub fn insert(&mut self, key: K, value: V) -> Option<V> {
         match self.find_k(&key) {
@@ -164,7 +167,7 @@ where
               !self.key_seq().contains(key.deep_model()) &&
               *self == ^self)]
     #[ensures(forall<v: V> result == Some(v) ==>
-              exists<i: Int> i >= 0 && i < (self.v@).len() ==>
+              exists<i: Int> i >= 0 && i < (self.v@).len() &&
               self.key_seq()[i] == key.deep_model() && (self.v@)[i].1 == v &&
               ((^self).v@) == (self.v@).subsequence(0, i).concat(
                   (self.v@).subsequence(i + 1, (self.v@).len())
@@ -179,7 +182,7 @@ where
     /// Get the value associated with `key`, if it exists.
     #[ensures(result == None ==> !self.key_seq().contains(key.deep_model()))]
     #[ensures(forall<v: _> result == Some(v) ==>
-              exists<i: Int> i >= 0 && i < (self.v@).len() ==>
+              exists<i: Int> i >= 0 && i < (self.v@).len() &&
               self.key_seq()[i] == key.deep_model() && (self.v@)[i].1 == *v)]
     pub fn get(&self, key: &K) -> Option<&V> {
         match self.find_k(key) {
@@ -200,7 +203,7 @@ where
               forall<i: Int> i >= 0 && i < (self.v@).len() ==>
               self.key_seq()[i] <= key.key.deep_model())]
     #[ensures(forall<entry: _> result == Some(entry) ==>
-              exists<i: Int> i >= 0 && i < (self.v@).len() ==>
+              exists<i: Int> i >= 0 && i < (self.v@).len() &&
               self.key_seq()[i] == entry.0.key.deep_model() &&
               self.key_seq()[i] > key.key.deep_model() &&
               (self.v@)[i].1 == *entry.1 &&
@@ -292,6 +295,8 @@ where
         Err(idx) => idx@ <= (self.v@).len(),
     })]
     fn find_k(&self, key: &K) -> Result<usize, usize> {
+        //proof_assert!(self.is_sorted());
+        //proof_assert!(self.key_seq_spec());
         let mut size = self.v.len();
         let mut left = 0;
         let mut right = size;
@@ -363,35 +368,11 @@ where
     }
 }
 
-impl<K: Clone + Eq + Ord, V: Clone> Clone for VecMap<K, V> {
-    #[ensures(result == *self)]
-    fn clone(&self) -> Self {
-        VecMap { v: self.v.clone() }
-    }
-}
-
-impl<K: Ord + Eq, V> ::std::default::Default for VecMap<K, V> {
-    #[ensures(result.is_default())]
-    fn default() -> Self {
-        Self { v: Vec::new() }
-    }
-}
-
-impl<K, V> creusot_contracts::Default for VecMap<K, V>
-where
-    K: Ord,
-{
-    #[predicate]
-    #[open]
-    fn is_default(self) -> bool {
-        pearlite! { (self.v@).len() == 0 }
-    }
-}
-
 /// A view into a single entry in a map, which may either be vacant or occupied.
 pub enum Entry<'a, K, V>
 where
-    K: Ord + Eq,
+    K: Ord + Eq + DeepModel,
+    K::DeepModelTy: OrdLogic,
 {
     /// A vacant Entry
     Vacant(VacantEntry<'a, K, V>),
@@ -403,7 +384,8 @@ where
 /// A vacant Entry.
 pub struct VacantEntry<'a, K, V>
 where
-    K: Ord + Eq,
+    K: Ord + Eq + DeepModel,
+    K::DeepModelTy: OrdLogic,
 {
     map: &'a mut VecMap<K, V>,
     key: K,
@@ -413,7 +395,8 @@ where
 /// An occupied Entry.
 pub struct OccupiedEntry<'a, K, V>
 where
-    K: Ord + Eq,
+    K: Ord + Eq + DeepModel,
+    K::DeepModelTy: OrdLogic,
 {
     map: &'a mut VecMap<K, V>,
     key: K,
@@ -436,7 +419,8 @@ where
 #[trusted]
 impl<K, V> Resolve for VacantEntry<'_, K, V>
 where
-    K: Eq + Ord,
+    K: Eq + Ord + DeepModel,
+    K::DeepModelTy: OrdLogic,
 {
     #[predicate]
     #[open]

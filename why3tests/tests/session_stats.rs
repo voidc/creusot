@@ -38,7 +38,7 @@ fn main() {
         stats.sort_by_key(|(_, _, _, c)| (c * 10000.) as i64);
 
         for (file, old, new, d_t) in stats {
-            let file = file.strip_prefix("../creusot/tests").unwrap().parent().unwrap();
+            let file = file.strip_prefix("../evaluation").unwrap().parent().unwrap();
             let d_n = new.steps as f64 / old.steps as f64 - 1.;
             println!(
                 "{}: t_old={:.2} t_new={:.2} ({:+.1}%) n_old={} n_new={} ({:+.1}%)",
@@ -97,7 +97,7 @@ struct Stats {
 
 fn collect_stats(args: &Args) -> impl Iterator<Item = (PathBuf, Stats)> + '_ {
     let filter = args.filter.clone();
-    glob::glob("../creusot/tests/**/why3session.xml")
+    glob::glob("../evaluation/**/why3session.xml")
         .unwrap()
         .flatten()
         .filter(move |f| match (&filter, f.to_str()) {

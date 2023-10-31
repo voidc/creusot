@@ -9,10 +9,17 @@ pub trait Iter {
     #[predicate]
     fn produces(self, x: u32, other: Self) -> bool;
 
+    #[law]
+    #[requires(a.produces(x, b))]
+    #[requires(a.produces(y, b))]
+    #[ensures(x == y)]
+    fn produces_inj(a: Self, x: u32, y: u32, b: Self);
+
     #[ensures(self.produces(result, ^self))]
     fn next(&mut self) -> u32;
 }
 
+/*
 struct Fib {
     a: u32,
     b: u32,
@@ -33,6 +40,13 @@ impl Iter for Fib {
     fn produces(self, x: u32, other: Self) -> bool {
         x == self.b && other.a == self.b && other.b == self.a + self.b
     }
+
+    #[law]
+    #[open]
+    #[requires(a.produces(x, b))]
+    #[requires(a.produces(y, b))]
+    #[ensures(x == y)]
+    fn produces_inj(a: Self, x: u32, y: u32, b: Self) {}
 
     #[ensures(self.produces(result, ^self))]
     #[ensures(result@ > 1 ==> exists<f1: Fib, x: u32, f2: Fib> f1.produces(x, f2) && f2.produces(self.a, *self) && x + self.a == result)]
@@ -61,6 +75,13 @@ impl<I: Iter> Iter for SkipZeros<I> {
         }
     }
 
+    #[law]
+    #[open]
+    #[requires(a.produces(x, b))]
+    #[requires(a.produces(y, b))]
+    #[ensures(x == y)]
+    fn produces_inj(a: Self, x: u32, y: u32, b: Self) {}
+
     #[ensures(self.produces(result, ^self))]
     fn next(&mut self) -> u32 {
         let mut next = self.inner.next();
@@ -83,6 +104,13 @@ impl<I: Iter> Iter for Hist<I> {
         self.inner.produces(x, other.inner)
     }
 
+    #[law]
+    #[open]
+    #[requires(a.produces(x, b))]
+    #[requires(a.produces(y, b))]
+    #[ensures(x == y)]
+    fn produces_inj(a: Self, x: u32, y: u32, b: Self) {}
+
     #[ensures(self.produces(result, ^self))]
     fn next(&mut self) -> u32 {
         let old = gh! { self.inner };
@@ -102,6 +130,7 @@ impl<I: Iter> Invariant for Hist<I> {
         }
     }
 }
+*/
 
 struct SkipZerosHist<I: Iter> {
     inner: I,
@@ -122,14 +151,20 @@ impl<I: Iter> Iter for SkipZerosHist<I> {
     #[open(self)]
     fn produces(self, x: u32, other: Self) -> bool {
         pearlite! {
-            x@ != 0 && (
-                other.hist.len() > 0 &&
-                self.inner == other.hist[0].0 &&
-                (forall<i: Int> 0 <= i && i < other.hist.len()-1 ==> other.hist[i].1 == 0u32) &&
-                other.hist[other.hist.len()-1].1 == x
-            )
+            x@ != 0 &&
+            other.hist.len() > 0 &&
+            self.inner == other.hist[0].0 &&
+            (forall<i: Int> 0 <= i && i < other.hist.len()-1 ==> other.hist[i].1 == 0u32) &&
+            other.hist[other.hist.len()-1].1 == x
         }
     }
+
+    #[law]
+    #[open]
+    #[requires(a.produces(x, b))]
+    #[requires(a.produces(y, b))]
+    #[ensures(x == y)]
+    fn produces_inj(a: Self, x: u32, y: u32, b: Self) {}
 
     #[ensures(self.produces(result, ^self))]
     fn next(&mut self) -> u32 {
@@ -171,6 +206,7 @@ pub fn client<I: Iter + Clone>(i: I, max: usize) {
     #[invariant(inv(is))]
     #[invariant(nz2@.len() == produced.len())]
     #[invariant(is.len() == 1 + nz2@.len())]
+    #[invariant(is[is.len()-1] == i2)]
     #[invariant(forall<j: Int> 0 < j && j < is.len() ==> is[j-1].produces(nz2[j-1], is[j]))]
     for _ in 0..max {
         nz2.push(i2.next());
@@ -186,6 +222,7 @@ pub fn client<I: Iter + Clone>(i: I, max: usize) {
     while count < max {
         let x = i1.next();
         if x != 0 {
+            proof_assert! { nz2[count@] == x };
             nz1.push(x);
             count += 1;
         }
