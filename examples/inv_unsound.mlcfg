@@ -1,0 +1,232 @@
+
+module InvUnsound_S_Type
+  type t_s  =
+    | C_S
+    
+end
+module CreusotContracts_Invariant_Inv_Stub
+  type t
+  predicate inv (_x : t)
+end
+module CreusotContracts_Invariant_Inv_Interface
+  type t
+  predicate inv (_x : t)
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module CreusotContracts_Invariant_Inv
+  type t
+  predicate inv (_x : t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/invariant.rs" 27 4 27 8] true
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module InvUnsound_Impl0_Invariant_Stub
+  use InvUnsound_S_Type as InvUnsound_S_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 9 4 9 30] (self : InvUnsound_S_Type.t_s)
+end
+module InvUnsound_Impl0_Invariant_Interface
+  use InvUnsound_S_Type as InvUnsound_S_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 9 4 9 30] (self : InvUnsound_S_Type.t_s)
+  val invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 9 4 9 30] (self : InvUnsound_S_Type.t_s) : bool
+    ensures { result = invariant' self }
+    
+end
+module InvUnsound_Impl0_Invariant
+  use InvUnsound_S_Type as InvUnsound_S_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_S_Type.t_s
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 9 4 9 30] (self : InvUnsound_S_Type.t_s) =
+    [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 10 8 10 18] not Inv0.inv self
+  val invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 9 4 9 30] (self : InvUnsound_S_Type.t_s) : bool
+    ensures { result = invariant' self }
+    
+end
+module InvUnsound_S_Type_Inv
+  use InvUnsound_S_Type as InvUnsound_S_Type
+  clone InvUnsound_Impl0_Invariant_Stub as Invariant0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_S_Type.t_s
+  axiom inv_t_s [@rewrite] : forall self : InvUnsound_S_Type.t_s . Inv0.inv self = Invariant0.invariant' self
+end
+module InvUnsound_Foo_Interface
+  use InvUnsound_S_Type as InvUnsound_S_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_S_Type.t_s
+  val foo [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 14 0 14 12] (x : InvUnsound_S_Type.t_s) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 14 7 14 8] Inv0.inv x}
+    
+end
+module InvUnsound_Foo
+  use InvUnsound_S_Type as InvUnsound_S_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = InvUnsound_S_Type.t_s
+  clone InvUnsound_Impl0_Invariant as Invariant0 with
+    predicate Inv0.inv = Inv0.inv
+  clone InvUnsound_S_Type_Inv as InvUnsound_S_Type_Inv0 with
+    predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  let rec cfg foo [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 14 0 14 12] [@cfg:stackify] [@cfg:subregion_analysis] (x : InvUnsound_S_Type.t_s) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 14 7 14 8] Inv0.inv x}
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : ();
+  {
+    goto BB0
+  }
+  BB0 {
+    assert { [@expl:assertion] [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 15 20 15 25] false };
+    _0 <- ();
+    return _0
+  }
+  
+end
+module InvUnsound_T_Type
+  type t_t  =
+    | C_T
+    
+end
+module InvUnsound_Impl1_Invariant_Stub
+  use InvUnsound_T_Type as InvUnsound_T_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 23 4 23 30] (self : InvUnsound_T_Type.t_t)
+end
+module InvUnsound_Impl1_Invariant_Interface
+  use InvUnsound_T_Type as InvUnsound_T_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 23 4 23 30] (self : InvUnsound_T_Type.t_t)
+  val invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 23 4 23 30] (self : InvUnsound_T_Type.t_t) : bool
+    ensures { result = invariant' self }
+    
+end
+module InvUnsound_Impl1_Invariant
+  use InvUnsound_T_Type as InvUnsound_T_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_T_Type.t_t
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 23 4 23 30] (self : InvUnsound_T_Type.t_t)
+   =
+    [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 24 8 24 45] not (exists x : InvUnsound_T_Type.t_t . Inv0.inv x /\ x = self)
+  val invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 23 4 23 30] (self : InvUnsound_T_Type.t_t) : bool
+    ensures { result = invariant' self }
+    
+end
+module InvUnsound_T_Type_Inv
+  use InvUnsound_T_Type as InvUnsound_T_Type
+  clone InvUnsound_Impl1_Invariant_Stub as Invariant0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_T_Type.t_t
+  axiom inv_t_t [@rewrite] : forall self : InvUnsound_T_Type.t_t . Inv0.inv self = Invariant0.invariant' self
+end
+module InvUnsound_Foo2_Interface
+  use InvUnsound_T_Type as InvUnsound_T_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_T_Type.t_t
+  val foo2 [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 28 0 28 13] (x : InvUnsound_T_Type.t_t) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 28 8 28 9] Inv0.inv x}
+    
+end
+module InvUnsound_Foo2
+  use InvUnsound_T_Type as InvUnsound_T_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = InvUnsound_T_Type.t_t
+  clone InvUnsound_Impl1_Invariant as Invariant0 with
+    predicate Inv0.inv = Inv0.inv
+  clone InvUnsound_T_Type_Inv as InvUnsound_T_Type_Inv0 with
+    predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  let rec cfg foo2 [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 28 0 28 13] [@cfg:stackify] [@cfg:subregion_analysis] (x : InvUnsound_T_Type.t_t) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 28 8 28 9] Inv0.inv x}
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : ();
+  {
+    goto BB0
+  }
+  BB0 {
+    assert { [@expl:assertion] [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 29 20 29 25] false };
+    _0 <- ();
+    return _0
+  }
+  
+end
+module InvUnsound_S3_Type
+  type t_s3  =
+    | C_S3
+    
+end
+module InvUnsound_Impl2_Invariant_Stub
+  use InvUnsound_S3_Type as InvUnsound_S3_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 36 4 36 30] (self : InvUnsound_S3_Type.t_s3)
+    
+end
+module InvUnsound_Impl2_Invariant_Interface
+  use InvUnsound_S3_Type as InvUnsound_S3_Type
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 36 4 36 30] (self : InvUnsound_S3_Type.t_s3)
+    
+  val invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 36 4 36 30] (self : InvUnsound_S3_Type.t_s3) : bool
+    ensures { result = invariant' self }
+    
+end
+module InvUnsound_Impl2_Invariant
+  use InvUnsound_S3_Type as InvUnsound_S3_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_S3_Type.t_s3
+  predicate invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 36 4 36 30] (self : InvUnsound_S3_Type.t_s3)
+    
+   =
+    [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 37 8 37 41] forall x : InvUnsound_S3_Type.t_s3 . Inv0.inv x -> false
+  val invariant' [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 36 4 36 30] (self : InvUnsound_S3_Type.t_s3) : bool
+    ensures { result = invariant' self }
+    
+end
+module InvUnsound_S3_Type_Inv
+  use InvUnsound_S3_Type as InvUnsound_S3_Type
+  clone InvUnsound_Impl2_Invariant_Stub as Invariant0
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_S3_Type.t_s3
+  axiom inv_t_s3 [@rewrite] : forall self : InvUnsound_S3_Type.t_s3 . Inv0.inv self = Invariant0.invariant' self
+end
+module InvUnsound_Foo3_Interface
+  use InvUnsound_S3_Type as InvUnsound_S3_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = InvUnsound_S3_Type.t_s3
+  val foo3 [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 41 0 41 14] (x : InvUnsound_S3_Type.t_s3) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 41 8 41 9] Inv0.inv x}
+    
+end
+module InvUnsound_Foo3
+  use InvUnsound_S3_Type as InvUnsound_S3_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = InvUnsound_S3_Type.t_s3
+  clone InvUnsound_Impl2_Invariant as Invariant0 with
+    predicate Inv0.inv = Inv0.inv
+  clone InvUnsound_S3_Type_Inv as InvUnsound_S3_Type_Inv0 with
+    predicate Inv0.inv = Inv0.inv,
+    predicate Invariant0.invariant' = Invariant0.invariant',
+    axiom .
+  let rec cfg foo3 [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 41 0 41 14] [@cfg:stackify] [@cfg:subregion_analysis] (x : InvUnsound_S3_Type.t_s3) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 41 8 41 9] Inv0.inv x}
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+  var _0 : ();
+  {
+    goto BB0
+  }
+  BB0 {
+    assert { [@expl:assertion] [#"/mnt/data/projects/creusot/examples/inv_unsound.rs" 42 20 42 25] false };
+    _0 <- ();
+    return _0
+  }
+  
+end
+module InvUnsound_Impl0
+  
+end
+module InvUnsound_Impl1
+  
+end
+module InvUnsound_Impl2
+  
+end

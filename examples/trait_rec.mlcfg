@@ -1,0 +1,224 @@
+
+module CreusotContracts_Invariant_Inv_Stub
+  type t
+  predicate inv (_x : t)
+end
+module CreusotContracts_Invariant_Inv_Interface
+  type t
+  predicate inv (_x : t)
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module CreusotContracts_Invariant_Inv
+  type t
+  predicate inv (_x : t) =
+    [#"/mnt/data/projects/creusot/creusot-contracts/src/invariant.rs" 16 4 16 8] true
+  val inv (_x : t) : bool
+    ensures { result = inv _x }
+    
+end
+module TraitRec_Foo_F_Stub
+  type self
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  function f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 4 7 16] (self : self) : ()
+end
+module TraitRec_Foo_F_Interface
+  type self
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  function f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 4 7 16] (self : self) : ()
+  val f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 4 7 16] (self : self) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 10 7 14] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 6 14 6 19] false }
+    ensures { result = f self }
+    
+  axiom f_spec : forall self : self . ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 10 7 14] Inv0.inv self) -> ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 6 14 6 19] false)
+end
+module TraitRec_Foo_F
+  type self
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = self
+  function f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 4 7 16] (self : self) : ()
+  val f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 4 7 16] (self : self) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 10 7 14] Inv0.inv self}
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 6 14 6 19] false }
+    ensures { result = f self }
+    
+  axiom f_spec : forall self : self . ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 7 10 7 14] Inv0.inv self) -> ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 6 14 6 19] false)
+end
+module TyInv_Trivial
+  type t
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = t
+  axiom inv_trivial : forall self : t . Inv0.inv self = true
+end
+module TraitRec_Rec_Stub
+  type t
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = t
+  function rec' [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 0 12 21] (x : t) : ()
+end
+module TraitRec_Rec_Interface
+  type t
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = t
+  function rec' [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 0 12 21] (x : t) : ()
+  val rec' [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 0 12 21] (x : t) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 15 12 16] Inv0.inv x}
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 11 10 11 15] false }
+    ensures { result = rec' x }
+    
+  axiom rec'_spec : forall x : t . ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 15 12 16] Inv0.inv x) -> ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 11 10 11 15] false)
+end
+module TraitRec_Rec
+  type t
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = t
+  clone TraitRec_Foo_F_Stub as F0 with
+    type self = t,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  function rec' [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 0 12 21] (x : t) : () =
+    [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 13 4 13 9] let _ = F0.f x in ()
+  val rec' [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 0 12 21] (x : t) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 15 12 16] Inv0.inv x}
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 11 10 11 15] false }
+    ensures { result = rec' x }
+    
+  axiom rec'_spec : forall x : t . ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 15 12 16] Inv0.inv x) -> ([#"/mnt/data/projects/creusot/examples/trait_rec.rs" 11 10 11 15] false)
+end
+module TraitRec_Rec_Impl
+  type t
+  use prelude.Borrow
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = t
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = t,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone TraitRec_Foo_F_Interface as F0 with
+    type self = t,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  let rec ghost function rec' [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 0 12 21] (x : t) : ()
+    requires {[#"/mnt/data/projects/creusot/examples/trait_rec.rs" 12 15 12 16] Inv0.inv x}
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 11 10 11 15] false }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 13 4 13 9] let _ = F0.f x in ()
+end
+module TraitRec_Bar_Type
+  type t_bar  =
+    | C_Bar
+    
+end
+module TraitRec_Impl0_F_Stub
+  use prelude.Borrow
+  use TraitRec_Bar_Type as TraitRec_Bar_Type
+  function f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 20 4 20 15] (self : TraitRec_Bar_Type.t_bar) : ()
+end
+module TraitRec_Impl0_F_Interface
+  use prelude.Borrow
+  use TraitRec_Bar_Type as TraitRec_Bar_Type
+  function f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 20 4 20 15] (self : TraitRec_Bar_Type.t_bar) : ()
+  val f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 20 4 20 15] (self : TraitRec_Bar_Type.t_bar) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 19 14 19 19] false }
+    ensures { result = f self }
+    
+  axiom f_spec : forall self : TraitRec_Bar_Type.t_bar . [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 19 14 19 19] false
+end
+module TraitRec_Impl0_F
+  use prelude.Borrow
+  use TraitRec_Bar_Type as TraitRec_Bar_Type
+  clone CreusotContracts_Invariant_Inv_Stub as Inv0 with
+    type t = TraitRec_Bar_Type.t_bar
+  clone TraitRec_Rec_Stub as Rec0 with
+    type t = TraitRec_Bar_Type.t_bar,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  function f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 20 4 20 15] (self : TraitRec_Bar_Type.t_bar) : () =
+    [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 21 8 21 17] let _ = Rec0.rec' self in ()
+  val f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 20 4 20 15] (self : TraitRec_Bar_Type.t_bar) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 19 14 19 19] false }
+    ensures { result = f self }
+    
+  axiom f_spec : forall self : TraitRec_Bar_Type.t_bar . [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 19 14 19 19] false
+end
+module TraitRec_Impl0_F_Impl
+  use prelude.Borrow
+  use TraitRec_Bar_Type as TraitRec_Bar_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = TraitRec_Bar_Type.t_bar
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = TraitRec_Bar_Type.t_bar,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone TraitRec_Rec as Rec0 with
+    type t = TraitRec_Bar_Type.t_bar,
+    predicate Inv0.inv = Inv0.inv,
+    function F0.f = f,
+    axiom .
+  let rec ghost function f [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 20 4 20 15] (self : TraitRec_Bar_Type.t_bar) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 19 14 19 19] false }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 21 8 21 17] let _ = Rec0.rec' self in ()
+end
+module TraitRec_Unsound_Stub
+  function unsound [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 27 0 27 12] (_1 : ()) : ()
+end
+module TraitRec_Unsound_Interface
+  function unsound [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 27 0 27 12] (_1 : ()) : ()
+  val unsound [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 27 0 27 12] (_1 : ()) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 26 10 26 15] false }
+    ensures { result = unsound _1 }
+    
+  axiom unsound_spec : forall _1 : () . [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 26 10 26 15] false
+end
+module TraitRec_Unsound
+  use TraitRec_Bar_Type as TraitRec_Bar_Type
+  clone TraitRec_Impl0_F_Stub as F0 with
+    axiom .
+  function unsound [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 27 0 27 12] (_1 : ()) : () =
+    [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 28 4 28 11] let _ = F0.f (TraitRec_Bar_Type.C_Bar) in ()
+  val unsound [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 27 0 27 12] (_1 : ()) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 26 10 26 15] false }
+    ensures { result = unsound _1 }
+    
+  axiom unsound_spec : forall _1 : () . [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 26 10 26 15] false
+end
+module TraitRec_Unsound_Impl
+  use prelude.Borrow
+  use TraitRec_Bar_Type as TraitRec_Bar_Type
+  clone CreusotContracts_Invariant_Inv_Interface as Inv0 with
+    type t = TraitRec_Bar_Type.t_bar
+  clone TyInv_Trivial as TyInv_Trivial0 with
+    type t = TraitRec_Bar_Type.t_bar,
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone TraitRec_Impl0_F as F0 with
+    function Rec0.rec' = Rec0.rec',
+    predicate Inv0.inv = Inv0.inv,
+    axiom .
+  clone TraitRec_Rec as Rec0 with
+    type t = TraitRec_Bar_Type.t_bar,
+    predicate Inv0.inv = Inv0.inv,
+    function F0.f = F0.f,
+    axiom .
+  let rec ghost function unsound [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 27 0 27 12] (_1 : ()) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 26 10 26 15] false }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 28 4 28 11] let _ = F0.f (TraitRec_Bar_Type.C_Bar) in ()
+end
+module TraitRec_Impl0
+  goal f_refn : [#"/mnt/data/projects/creusot/examples/trait_rec.rs" 20 4 20 15] true
+end

@@ -1,0 +1,85 @@
+
+module UninhabType_Unsound_Type
+  type t_unsound  =
+    
+end
+module UninhabType_Unsound1_Stub
+  use UninhabType_Unsound_Type as UninhabType_Unsound_Type
+  function unsound1 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 14 0 14 23] (x : UninhabType_Unsound_Type.t_unsound) : ()
+    
+end
+module UninhabType_Unsound1_Interface
+  use UninhabType_Unsound_Type as UninhabType_Unsound_Type
+  function unsound1 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 14 0 14 23] (x : UninhabType_Unsound_Type.t_unsound) : ()
+    
+  val unsound1 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 14 0 14 23] (x : UninhabType_Unsound_Type.t_unsound) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 13 10 13 15] false }
+    ensures { result = unsound1 x }
+    
+  axiom unsound1_spec : forall x : UninhabType_Unsound_Type.t_unsound . [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 13 10 13 15] false
+end
+module UninhabType_Unsound1
+  use UninhabType_Unsound_Type as UninhabType_Unsound_Type
+  function unsound1 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 14 0 14 23] (x : UninhabType_Unsound_Type.t_unsound) : ()
+    
+  val unsound1 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 14 0 14 23] (x : UninhabType_Unsound_Type.t_unsound) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 13 10 13 15] false }
+    ensures { result = unsound1 x }
+    
+  axiom unsound1_spec : forall x : UninhabType_Unsound_Type.t_unsound . [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 13 10 13 15] false
+end
+module UninhabType_Unsound1_Impl
+  use UninhabType_Unsound_Type as UninhabType_Unsound_Type
+  let rec ghost function unsound1 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 14 0 14 23] (x : UninhabType_Unsound_Type.t_unsound) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 13 10 13 15] false }
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 15 4 15 14] absurd
+end
+module UninhabType_Inf_Type
+  type t_inf  =
+    | C_Inf (t_inf)
+    
+  let function inf_0 (self : t_inf) : t_inf = [@vc:do_not_keep_trace] [@vc:sp]
+    match (self) with
+      | C_Inf a -> a
+      end
+end
+module UninhabType_Unsound2_Stub
+  use UninhabType_Inf_Type as UninhabType_Inf_Type
+  function unsound2 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 21 0 21 19] (x : UninhabType_Inf_Type.t_inf) : ()
+    
+end
+module UninhabType_Unsound2_Interface
+  use UninhabType_Inf_Type as UninhabType_Inf_Type
+  function unsound2 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 21 0 21 19] (x : UninhabType_Inf_Type.t_inf) : ()
+    
+  val unsound2 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 21 0 21 19] (x : UninhabType_Inf_Type.t_inf) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 19 10 19 15] false }
+    ensures { result = unsound2 x }
+    
+  axiom unsound2_spec : forall x : UninhabType_Inf_Type.t_inf . [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 19 10 19 15] false
+end
+module UninhabType_Unsound2
+  use UninhabType_Inf_Type as UninhabType_Inf_Type
+  function unsound2 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 21 0 21 19] (x : UninhabType_Inf_Type.t_inf) : ()
+    
+  val unsound2 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 21 0 21 19] (x : UninhabType_Inf_Type.t_inf) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 19 10 19 15] false }
+    ensures { result = unsound2 x }
+    
+  axiom def : forall x : UninhabType_Inf_Type.t_inf . unsound2 x = ([#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 22 4 22 18] unsound2 (UninhabType_Inf_Type.inf_0 x))
+  axiom unsound2_spec : forall x : UninhabType_Inf_Type.t_inf . [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 19 10 19 15] false
+end
+module UninhabType_Unsound2_Impl
+  use UninhabType_Inf_Type as UninhabType_Inf_Type
+  let rec ghost function unsound2 [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 21 0 21 19] (x : UninhabType_Inf_Type.t_inf) : ()
+    ensures { [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 19 10 19 15] false }
+    variant {[#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 20 10 20 11] x}
+    
+   = [@vc:do_not_keep_trace] [@vc:sp]
+    [#"/mnt/data/projects/creusot/examples/uninhab_type.rs" 22 4 22 18] unsound2 (UninhabType_Inf_Type.inf_0 x)
+end
+module UninhabType_Impl0
+  
+end
