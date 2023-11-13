@@ -32,6 +32,12 @@ pub struct CreusotArgs {
     /// Check the installed why3 version.
     #[clap(long, default_value_t = true, action = clap::ArgAction::Set)]
     pub check_why3: bool,
+    #[clap(long, default_value_t = true, action = clap::ArgAction::Set)]
+    tiopt_elide: bool,
+    #[clap(long, default_value_t = true, action = clap::ArgAction::Set)]
+    tiopt_clone: bool,
+    #[clap(long, default_value_t = true, action = clap::ArgAction::Set)]
+    tiopt_para: bool,
 }
 
 /// Parse a single key-value pair
