@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Alt-Ergo" version="2.5.1" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="CVC5" version="1.0.5" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg" proved="true">
+<path name=".."/><path name="consume.mlcfg"/>
+<theory name="Consume_SumRange" proved="true">
+ <goal name="sum_range&#39;vc" expl="VC for sum_range" proved="true">
+ <proof prover="1"><result status="valid" time="0.161313" steps="30225"/></proof>
+ </goal>
+</theory>
+<theory name="Consume_AllZero" proved="true">
+ <goal name="all_zero&#39;vc" expl="VC for all_zero" proved="true">
+ <proof prover="0"><result status="valid" time="0.263093" steps="1933"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

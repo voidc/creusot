@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="6">
+<prover id="0" name="Z3" version="4.12.2" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.5.1" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="CVC4" version="1.8" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="3" name="CVC5" version="1.0.5" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="mlcfg" proved="true">
+<path name=".."/><path name="consume_e3.mlcfg"/>
+<theory name="ConsumeE3_SumRange" proved="true">
+ <goal name="sum_range&#39;vc" expl="VC for sum_range" proved="true">
+ <proof prover="3"><result status="valid" time="0.156966" steps="26454"/></proof>
+ </goal>
+</theory>
+<theory name="ConsumeE3_AllZero" proved="true">
+ <goal name="all_zero&#39;vc" expl="VC for all_zero" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="all_zero&#39;vc.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.020163" steps="11"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.017651" steps="23"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.007430" steps="19"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.015796" steps="24"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.4" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.010836" steps="26"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.5" expl="loop invariant init" proved="true">
+  <proof prover="0"><result status="valid" time="0.126924" steps="263649"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.043239" steps="123"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.7" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.068211" steps="576"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.8" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.023177" steps="54"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.9" expl="loop invariant preservation" proved="true">
+  <proof prover="2"><result status="valid" time="0.315828" steps="57830"/></proof>
+  </goal>
+  <goal name="all_zero&#39;vc.10" expl="unreachable point" proved="true">
+  <proof prover="1"><result status="valid" time="0.022344" steps="46"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>
