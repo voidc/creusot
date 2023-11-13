@@ -19,119 +19,6 @@ pub trait Iter {
     fn next(&mut self) -> u32;
 }
 
-/*
-struct Fib {
-    a: u32,
-    b: u32,
-    x: Ghost<u32>,
-}
-
-impl Invariant for Fib {
-    #[predicate]
-    #[open(self)]
-    fn invariant(self) -> bool {
-        pearlite! { self.x.inner()@ + self.a@ == self.b@ }
-    }
-}
-
-impl Iter for Fib {
-    #[predicate]
-    #[open(self)]
-    fn produces(self, x: u32, other: Self) -> bool {
-        x == self.b && other.a == self.b && other.b == self.a + self.b
-    }
-
-    #[law]
-    #[open]
-    #[requires(a.produces(x, b))]
-    #[requires(a.produces(y, b))]
-    #[ensures(x == y)]
-    fn produces_inj(a: Self, x: u32, y: u32, b: Self) {}
-
-    #[ensures(self.produces(result, ^self))]
-    #[ensures(result@ > 1 ==> exists<f1: Fib, x: u32, f2: Fib> f1.produces(x, f2) && f2.produces(self.a, *self) && x + self.a == result)]
-    fn next(&mut self) -> u32 {
-        self.x = gh! { self.a };
-        let next = self.a + self.b;
-        self.a = self.b;
-        self.b = next;
-        self.a
-    }
-}
-
-struct SkipZeros<I: Iter> {
-    inner: I,
-}
-
-impl<I: Iter> Iter for SkipZeros<I> {
-    #[predicate]
-    #[open(self)]
-    fn produces(self, x: u32, other: Self) -> bool {
-        pearlite! {
-            x@ != 0 && (self.inner.produces(x, other.inner) ||
-            exists<s: Seq<I>> s.len() > 0 && self.inner.produces(0u32, s[0]) &&
-                (forall<i: Int> 0 < i && i < s.len() ==> s[i-1].produces(0u32, s[i])) &&
-                s[s.len()-1].produces(x, other.inner))
-        }
-    }
-
-    #[law]
-    #[open]
-    #[requires(a.produces(x, b))]
-    #[requires(a.produces(y, b))]
-    #[ensures(x == y)]
-    fn produces_inj(a: Self, x: u32, y: u32, b: Self) {}
-
-    #[ensures(self.produces(result, ^self))]
-    fn next(&mut self) -> u32 {
-        let mut next = self.inner.next();
-        while next == 0 {
-            next = self.inner.next();
-        }
-        next
-    }
-}
-
-struct Hist<I: Iter> {
-    inner: I,
-    hist: Ghost<Seq<(I, u32)>>,
-}
-
-impl<I: Iter> Iter for Hist<I> {
-    #[predicate]
-    #[open(self)]
-    fn produces(self, x: u32, other: Self) -> bool {
-        self.inner.produces(x, other.inner)
-    }
-
-    #[law]
-    #[open]
-    #[requires(a.produces(x, b))]
-    #[requires(a.produces(y, b))]
-    #[ensures(x == y)]
-    fn produces_inj(a: Self, x: u32, y: u32, b: Self) {}
-
-    #[ensures(self.produces(result, ^self))]
-    fn next(&mut self) -> u32 {
-        let old = gh! { self.inner };
-        let x = self.inner.next();
-        self.hist = gh! { self.hist.push((*old, x)) };
-        x
-    }
-}
-
-impl<I: Iter> Invariant for Hist<I> {
-    #[predicate]
-    #[open(self)]
-    fn invariant(self) -> bool {
-        pearlite! {
-            (forall<i: Int> 0 < i && i < self.hist.len() ==> self.hist[i-1].0.produces(self.hist[i-1].1, self.hist[i].0)) &&
-            self.hist[self.hist.len()-1].0.produces(self.hist[self.hist.len()-1].1, self.inner)
-        }
-    }
-}
-*/
-
 struct SkipZerosHist<I: Iter> {
     inner: I,
     hist: Ghost<Seq<(I, u32)>>,
@@ -197,6 +84,7 @@ impl<I: Iter> Invariant for SkipZerosHist<I> {
     }
 }
 
+/*
 pub fn client<I: Iter + Clone>(i: I, max: usize) {
     let mut i2 = SkipZerosHist::new(i.clone());
     let mut nz2 = Vec::new();
@@ -230,3 +118,4 @@ pub fn client<I: Iter + Clone>(i: I, max: usize) {
 
     proof_assert! { nz1@ == nz2@ };
 }
+*/

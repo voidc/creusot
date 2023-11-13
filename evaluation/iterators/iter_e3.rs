@@ -65,6 +65,7 @@ impl<I: Iter> Iter for SkipZeros<I> {
     }
 }
 
+/*
 pub fn client<I: Iter + Clone>(i: I, max: usize) {
     let mut i2 = SkipZeros { inner: i.clone() };
     let mut nz2 = Vec::new();
@@ -98,3 +99,4 @@ pub fn client<I: Iter + Clone>(i: I, max: usize) {
 
     proof_assert! { nz1@ == nz2@ };
 }
+*/

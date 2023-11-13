@@ -1,7 +1,0 @@
-../evaluation/vecmap/vecmap: time=17.89 steps=5806848
-../evaluation/vecmap/vecmap.noopt: time=24.70 steps=6680855
-../evaluation/vecmap/vecmap_manual: time=14.08 steps=2378494
-
-SLOCs
-vecmap: 95/404
-vecmap_manual: 116/424

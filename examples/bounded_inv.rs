@@ -17,6 +17,7 @@ impl Invariant for SumTo10<i32> {
 fn foo() {
     let mut s = SumTo10 { a: 3, b: 7i32 };
     let r = &mut s;
+    bar(r);
 }
 
 #[ensures((^s).a == 0)]
